@@ -1,0 +1,58 @@
+/* Design System Variables */
+:root {
+  /* Primary Colors */
+  --color-primary: #ff6767;
+  --color-primary-light: #ff8080;
+  --color-primary-dark: #e85555;
+  
+  /* Accent Colors */
+  --color-accent-blue: #3abeff;
+  --color-accent-green: #04c400;
+  --color-accent-red: #f21e1e;
+  --color-accent-purple: #0225ff;
+  
+  /* Neutral Colors */
+  --color-background: #f5f8ff;
+  --color-surface: #f8f8f8;
+  --color-surface-alt: #ffffff;
+  --color-border: rgba(161, 163, 171, 0.63);
+  
+  /* Text Colors */
+  --color-text-primary: #000000;
+  --color-text-secondary: #747474;
+  --color-text-muted: #a1a3ab;
+  --color-text-white: #ffffff;
+  
+  /* Shadows */
+  --shadow-sm: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0px 4px 12px 0px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0px 4px 12px 0px rgba(0, 0, 0, 0.08);
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  
+  /* Layout */
+  --sidebar-width: 280px;
+  --header-height: 100px;
+  
+  /* Typography */
+  --font-family: 'Inter', sans-serif;
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 15px;
+  --font-size-lg: 16px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 32px;
+  --font-size-3xl: 36px;
+}
