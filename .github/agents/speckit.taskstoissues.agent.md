@@ -1,5 +1,6 @@
 ---
 description: Convert existing tasks into actionable, dependency-ordered GitHub issues for the feature based on available design artifacts.
+model: Claude Sonnet 4.5
 tools: ['github/github-mcp-server/issue_write']
 ---
 

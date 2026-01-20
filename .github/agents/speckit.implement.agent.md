@@ -1,5 +1,6 @@
 ---
 description: Execute the implementation plan by processing and executing all tasks defined in tasks.md
+model: Claude Opus 4.5
 ---
 
 ## User Input

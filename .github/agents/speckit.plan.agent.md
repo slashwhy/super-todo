@@ -1,5 +1,6 @@
 ---
 description: Execute the implementation planning workflow using the plan template to generate design artifacts.
+model: Claude Haiku 4.5
 handoffs: 
   - label: Create Tasks
     agent: speckit.tasks
