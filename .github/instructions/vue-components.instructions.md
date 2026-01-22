@@ -1,4 +1,5 @@
 ---
+description: 'Vue 3 component patterns with Composition API, TypeScript, and project conventions'
 applyTo: '**/*.vue'
 ---
 

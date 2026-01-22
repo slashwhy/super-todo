@@ -1,4 +1,5 @@
 ---
+description: 'Playwright E2E testing with Page Objects, API mocking, and data-testid selectors'
 applyTo: 'e2e/**/*.ts, **/*.e2e.ts, **/*.e2e-spec.ts'
 ---
 

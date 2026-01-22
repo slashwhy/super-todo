@@ -1,4 +1,5 @@
 ---
+description: 'Prisma schema conventions, migrations, seeding, and query patterns'
 applyTo: 'backend/prisma/**'
 ---
 

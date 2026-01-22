@@ -1,4 +1,5 @@
 ---
+description: 'Vue component testing with Vitest, Vue Test Utils, and Pinia mocking'
 applyTo: 'src/**/*.{spec,test}.ts'
 ---
 

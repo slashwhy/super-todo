@@ -1,148 +1,83 @@
-# Copilot Instructions for Todo App
+# Todo App - Copilot Instructions
 
-## Quick Links
+A monorepo task management app with Vue 3 frontend and Express/Prisma backend.
 
-**Detailed Instructions by Domain:**
-- [Vue Components](instructions/vue-components.instructions.md) | [Composables](instructions/vue-composables.instructions.md) | [Pinia Stores](instructions/pinia-stores.instructions.md)
-- [Backend Routes](instructions/backend-routes.instructions.md) | [Prisma Database](instructions/prisma-database.instructions.md)
-- [Styling](instructions/styling.instructions.md)
-- [Testing: Frontend](instructions/testing-frontend.instructions.md) | [Backend](instructions/testing-backend.instructions.md) | [E2E](instructions/testing-e2e.instructions.md)
+## Tech Stack
 
-## Architecture Overview
+| Layer | Technologies |
+|-------|--------------|
+| **Frontend** | Vue 3, TypeScript, Vite, Pinia, Vue Router |
+| **Backend** | Express, Prisma ORM, PostgreSQL |
+| **Testing** | Vitest, Vue Test Utils, Supertest |
 
-This is a **monorepo** with a Vue 3 frontend and an Express/Prisma backend:
+## Project Structure
 
 ```
-/                   # Vue 3 SPA (Vite, TypeScript, Pinia)
-/backend/           # Express REST API (Prisma ORM, PostgreSQL)
+/                      # Vue 3 SPA (Vite + TypeScript + Pinia)
+  src/components/      # Reusable Vue components
+  src/views/           # Route-level page components
+  src/stores/          # Pinia stores
+/backend/              # Express REST API
+  src/routes/          # API route handlers
+  src/lib/prisma.ts    # Prisma client singleton
+  prisma/schema.prisma # Database schema
 ```
 
-**Key architectural decisions:**
-- Frontend and backend are independent apps with separate `package.json` files
-- Prisma Client is generated to `backend/src/generated/prisma/` (custom output path)
-- Backend uses ESM modules (`.js` extensions required in imports)
-- Frontend uses `@` alias for `src/` directory imports
-
-## Development Workflow
-
-### Starting the Stack
+## Quick Start Commands
 
 ```bash
-# Terminal 1: Backend (requires Docker for PostgreSQL)
-cd backend
-docker compose up -d          # Start PostgreSQL on :5432
+# Backend (requires Docker)
+cd backend && docker compose up -d
 npm install && npm run db:migrate && npm run db:seed
-npm run dev                   # API on http://localhost:3000
+npm run dev                    # API → http://localhost:3000
 
-# Terminal 2: Frontend
-npm install && npm run dev    # App on http://localhost:5173
+# Frontend
+npm install && npm run dev     # App → http://localhost:5173
 ```
 
-### Key Backend Commands
+## Critical Rules
 
-| Command | Purpose |
-|---------|---------|
-| `npm run db:migrate` | Apply Prisma migrations |
-| `npm run db:seed` | Populate sample data (clears existing) |
-| `npm run db:studio` | Open Prisma Studio GUI |
-| `npm run db:reset` | Full reset: drop, recreate, migrate |
+**Always:**
+- Use `.js` extension in backend ESM imports: `import { prisma } from "../lib/prisma.js"`
+- Include relations in Prisma queries: `include: { status: true, priority: true }`
+- Use `<script setup lang="ts">` for Vue components
+- Use CSS variables from `src/assets/styles/variables.css`
+- Whitelist fields explicitly in route handlers (never pass `req.body` directly to Prisma)
 
-## Code Conventions
-
-### Vue Components
-
-- Use `<script setup lang="ts">` for all components
-- Component naming: `PascalCase.vue`
-- CSS class naming: BEM-style with component prefix (e.g., `.dashboard__header`, `.dashboard__title`)
-- Use CSS variables from [src/assets/styles/variables.css](src/assets/styles/variables.css) for all styling
-- Layout components live in `src/components/layout/`
-- Views (routed pages) live in `src/views/`
-
-### Backend Routes
-
-- Routes defined in `backend/src/routes/` with resourceful naming
-- All routes use async handlers with try/catch error handling
-- Include all relations in Prisma queries (`include: { status: true, ... }`)
-- Return appropriate HTTP status codes (201 for create, 404 for not found)
-
-### Prisma Patterns
-
-```typescript
-// Always use the singleton from lib/prisma.ts
-import { prisma } from "../lib/prisma.js";  // Note: .js extension required
-
-// Filtering pattern used in routes
-const tasks = await prisma.task.findMany({
-  where: {
-    ...(status && { status: { name: status as string } }),
-  },
-  include: { status: true, priority: true, category: true, owner: true },
-});
-```
-
-## Data Model
-
-Core entities in [backend/prisma/schema.prisma](backend/prisma/schema.prisma):
-- **Task** - has `status`, `priority`, `category`, `owner`, `assignee` relations
-- **TaskStatus** / **TaskPriority** - configurable enums with `color` and `order`
-- **Category** - for organizing tasks with `color` and `icon`
-- **User** - can be task owner or assignee
+**Never:**
+- Use `v-if` with `v-for` on the same element
+- Mutate Pinia state directly from components
+- Hardcode colors or spacing values
 
 ## API Endpoints
 
-| Resource | Base Path | Notes |
-|----------|-----------|-------|
-| Tasks | `/api/tasks` | Supports query filters: `status`, `priority`, `isVital`, `ownerId` |
-| Users | `/api/users` | CRUD operations |
-| Categories | `/api/categories` | CRUD operations |
-| Config | `/api/config/statuses`, `/api/config/priorities` | Manage status/priority options |
+| Resource | Path | Notes |
+|----------|------|-------|
+| Tasks | `/api/tasks` | Filters: `status`, `priority`, `isVital`, `ownerId` |
+| Users | `/api/users` | CRUD |
+| Categories | `/api/categories` | CRUD |
+| Config | `/api/config/statuses`, `/api/config/priorities` | Lookup tables |
 
-## Styling System
+## Data Model
 
-Use CSS custom properties defined in `src/assets/styles/variables.css`:
-- Colors: `--color-primary`, `--color-background`, `--color-text-*`
-- Spacing: `--spacing-xs` through `--spacing-2xl`
-- Layout: `--sidebar-width: 280px`, `--header-height: 100px`
-- Typography: `--font-size-*` scale from `xs` to `3xl`
+- **Task** → `status`, `priority`, `category`, `owner`, `assignee` relations
+- **TaskStatus/TaskPriority** → configurable with `color` and `order`
+- **Category** → `color` and `icon` properties
+- **User** → can be task owner or assignee
 
 ## Testing
 
-Both frontend and backend use **Vitest**. Tests live alongside source files as `*.spec.ts`.
-
-### Backend Tests
-
-- Use `supertest` for HTTP integration tests
-- Mock Prisma with `vi.mock('../lib/prisma.js')`
-- Test success and error paths (400, 404, 500)
-
-### Frontend Tests
-
-- Use `@vue/test-utils` for component tests
-- Mock stores and router as needed
-
-### Commands
-
 ```bash
-# Frontend
-npm run test
-
-# Backend
-cd backend && npm run test:run
+npm run test                    # Frontend tests
+cd backend && npm run test:run  # Backend tests
 ```
 
-## Common Pitfalls
+- Tests live alongside source as `*.spec.ts`
+- Mock Prisma with `vi.mock('../lib/prisma.js')`
+- Use `data-testid` attributes for stable selectors
 
-**Backend:**
-- Missing `.js` extension in ESM imports → Import errors
-- Passing `req.body` directly to Prisma → Security vulnerabilities
-- Forgetting to include relations → Missing nested data
+## Debugging
 
-**Frontend:**
-- Using `v-if` with `v-for` on same element → Performance issues
-- Mutating Pinia state directly → Reactivity breaks
-- Missing `data-testid` attributes → Brittle tests
-
-**Debugging:**
-- Backend: Use Prisma Studio (`npm run db:studio`) to inspect database
-- Frontend: Vue DevTools for component/store inspection
-- Tests: Run with `--reporter=verbose` for detailed output
+- **Database:** `npm run db:studio` (Prisma Studio)
+- **Frontend:** Vue DevTools
+- **Tests:** `--reporter=verbose` for detailed output

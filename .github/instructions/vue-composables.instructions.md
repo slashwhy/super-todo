@@ -1,4 +1,5 @@
 ---
+description: 'Patterns for Vue 3 composables with reactive state, cleanup, and TypeScript'
 applyTo: '**/composables/**/*.ts'
 ---
 

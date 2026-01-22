@@ -1,4 +1,5 @@
 ---
+description: 'Express route testing with Vitest, Supertest, and Prisma mocking'
 applyTo: 'backend/**/*.{spec,test}.ts'
 ---
 
@@ -131,59 +132,6 @@ beforeEach(() => {
 })
 ```
 
-## Testing Patterns
-
-### Testing Error Handling
-
-```typescript
-it('returns 500 on database error', async () => {
-  vi.mocked(prisma.task.findMany).mockRejectedValue(new Error('DB Error'))
-
-  const response = await request(app).get('/api/tasks')
-
-  expect(response.status).toBe(500)
-  expect(response.body).toEqual({ error: 'Failed to fetch tasks' })
-})
-```
-
-### Testing with Query Parameters
-
-```typescript
-it('supports multiple filters', async () => {
-  await request(app).get('/api/tasks?status=Todo&priority=High&isVital=true')
-
-  expect(prisma.task.findMany).toHaveBeenCalledWith(
-    expect.objectContaining({
-      where: {
-        status: { name: 'Todo' },
-        priority: { name: 'High' },
-        isVital: true,
-      },
-    })
-  )
-})
-```
-
-### Testing PATCH Updates
-
-```typescript
-it('updates task fields', async () => {
-  const updates = { title: 'Updated Title' }
-  vi.mocked(prisma.task.update).mockResolvedValue({ id: '1', ...updates })
-
-  const response = await request(app)
-    .patch('/api/tasks/1')
-    .send(updates)
-
-  expect(response.status).toBe(200)
-  expect(prisma.task.update).toHaveBeenCalledWith({
-    where: { id: '1' },
-    data: updates,
-    include: expect.any(Object),
-  })
-})
-```
-
 ## Best Practices
 
 - Mock at the module level with `vi.mock()`
@@ -191,32 +139,11 @@ it('updates task fields', async () => {
 - Clear mocks between tests with `vi.clearAllMocks()`
 - Test both success and error paths
 - Verify Prisma was called with correct parameters
-- Use supertest for HTTP-level integration tests
-- Keep test data minimal but realistic
 - Use descriptive test names: "returns 404 when task not found"
 
-## Anti-Patterns
+## Common Pitfalls
 
-```typescript
-// ❌ Not mocking Prisma
-import { prisma } from '../lib/prisma.js'  // Uses real DB
-
-// ✅ Mock at module level
-vi.mock('../lib/prisma.js', () => ({ prisma: { task: { findMany: vi.fn() }}}))
-
-// ❌ Not clearing mocks between tests
-test('first', () => { /* ... */ })
-test('second', () => { /* mock still has calls from first */ })
-
-// ✅ Clear in beforeEach
-beforeEach(() => { vi.clearAllMocks() })
-
-// ❌ Testing only success path
-it('creates task', async () => {
-  expect(response.status).toBe(201)
-})
-
-// ✅ Test error paths too
-it('returns 400 on validation error', async () => { /* ... */ })
-it('returns 500 on database error', async () => { /* ... */ })
-```
+- ❌ Not mocking Prisma → Uses real DB
+- ❌ Not clearing mocks between tests → Mock has calls from previous test
+- ❌ Testing only success path → Missing error handling coverage
+- ❌ Not verifying Prisma parameters → Missing query validation

@@ -1,4 +1,5 @@
 ---
+description: 'CSS variables, BEM naming, spacing scale, and responsive patterns'
 applyTo: '**/*.css, **/*.scss, **/*.vue'
 ---
 

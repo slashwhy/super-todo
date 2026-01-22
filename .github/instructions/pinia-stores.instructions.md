@@ -1,4 +1,5 @@
 ---
+description: 'Pinia store patterns using Setup Store syntax with TypeScript'
 applyTo: '**/stores/**/*.ts'
 ---
 
