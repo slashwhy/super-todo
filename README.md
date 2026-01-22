@@ -106,8 +106,17 @@ npm run dev
 | `npm run dev` | Start dev server with hot-reload |
 | `npm run build` | Type-check & build for production |
 | `npm run preview` | Preview production build |
+| `npm run test` | Run frontend tests (Vitest) |
 | `npm run lint` | Lint & auto-fix with ESLint |
 | `npm run format` | Format with Prettier |
+
+### Backend Scripts
+
+```bash
+cd backend
+npm run dev           # Start API server
+npm run test:run      # Run backend tests
+```
 
 ---
 
