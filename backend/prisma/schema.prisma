@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// User model - represents app users
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  avatar    String?  // URL to avatar image
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  tasks     Task[]   @relation("TaskOwner")
+  assignedTasks Task[] @relation("TaskAssignee")
+
+  @@map("users")
+}
+
+// Task Status - configurable statuses (Not Started, In Progress, Completed)
+model TaskStatus {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  color     String   @default("#6b7280") // Hex color for UI
+  order     Int      @default(0) // For sorting in UI
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  tasks     Task[]
+
+  @@map("task_statuses")
+}
+
+// Task Priority - configurable priorities (Extreme, Moderate, Low)
+model TaskPriority {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  color     String   @default("#6b7280") // Hex color for UI
+  order     Int      @default(0) // For sorting (lower = higher priority)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  tasks     Task[]
+
+  @@map("task_priorities")
+}
+
+// Category - for organizing tasks
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  color       String   @default("#3b82f6") // Hex color for UI
+  icon        String?  // Icon name or URL
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  tasks       Task[]
+
+  @@map("categories")
+}
+
+// Task - main task entity
+model Task {
+  id          String   @id @default(cuid())
+  title       String
+  description String?  @db.Text // Long text for task details
+  image       String?  // URL to task image
+  isVital     Boolean  @default(false) // Marks task as vital/important
+  dueDate     DateTime?
+  completedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  statusId    String
+  status      TaskStatus   @relation(fields: [statusId], references: [id])
+  
+  priorityId  String
+  priority    TaskPriority @relation(fields: [priorityId], references: [id])
+  
+  categoryId  String?
+  category    Category?    @relation(fields: [categoryId], references: [id])
+  
+  ownerId     String
+  owner       User         @relation("TaskOwner", fields: [ownerId], references: [id])
+  
+  assigneeId  String?
+  assignee    User?        @relation("TaskAssignee", fields: [assigneeId], references: [id])
+
+  @@index([statusId])
+  @@index([priorityId])
+  @@index([categoryId])
+  @@index([ownerId])
+  @@index([assigneeId])
+  @@index([isVital])
+  @@map("tasks")
+}
