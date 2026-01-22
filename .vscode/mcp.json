@@ -1,15 +1,26 @@
 {
 	"servers": {
+		// ==================
+		// Design Tools
+		// ==================
 		"figma-desktop": {
 			"type": "http",
 			"url": "http://127.0.0.1:3845/mcp"
 		},
+
+		// ==================
+		// Project Management
+		// ==================
 		"atlassian/atlassian-mcp-server": {
 			"type": "http",
 			"url": "https://mcp.atlassian.com/v1/sse",
 			"gallery": "https://api.mcp.github.com",
 			"version": "1.0.0"
 		},
+
+		// ==================
+		// Browser & DevTools
+		// ==================
 		"io.github.ChromeDevTools/chrome-devtools-mcp": {
 			"command": "npx",
 			"args": [
@@ -19,7 +30,11 @@
 			"env": {},
 			"type": "stdio"
 		},
-		 "awesome-copilot": {
+
+		// ==================
+		// Utilities
+		// ==================
+		"awesome-copilot": {
 			"type": "stdio",
 			"command": "docker",
 			"args": [

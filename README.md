@@ -14,6 +14,7 @@
 - [About This Project](#-about-this-project)
 - [Tech Stack](#-tech-stack)
 - [Getting Started](#-getting-started)
+- [Backend](./backend/README.md)
 - [Showcase: A Day in the Life of a Developer](#-showcase-a-day-in-the-life-of-a-developer)
   - [🌅 Morning: Understand & Explore Code](#-morning-understand--explore-code-10-min)
   - [☀️ Late Morning: Write & Refactor Code](#%EF%B8%8F-late-morning-write--refactor-code-10-min)
