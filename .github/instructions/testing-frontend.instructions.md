@@ -168,30 +168,11 @@ vi.mock('@/composables/useTasks', () => ({
 - Prefer `mount` for integration tests, `shallowMount` for isolation
 - Always await async operations with `flushPromises`
 - Clean up mocks in `beforeEach` or `afterEach`
-- Group related tests with `describe` blocks
 - Use meaningful test descriptions: "should X when Y"
 
-## Anti-Patterns
+## Common Pitfalls
 
-```typescript
-// ❌ Testing implementation details
-expect(wrapper.vm.internalCounter).toBe(5)
-
-// ✅ Test user-facing behavior
-expect(wrapper.find('[data-testid="count"]').text()).toBe('5')
-
-// ❌ Brittle CSS selectors
-wrapper.find('.btn-primary > span:first-child')
-
-// ✅ Semantic or data-testid selectors
-wrapper.find('[data-testid="submit-btn"]')
-
-// ❌ Not awaiting async
-wrapper.vm.fetchData()
-expect(wrapper.vm.data).toBeDefined()
-
-// ✅ Properly handle async
-await wrapper.vm.fetchData()
-await flushPromises()
-expect(wrapper.vm.data).toBeDefined()
-```
+- ❌ Testing implementation (`wrapper.vm.internal`) → Test user-facing behavior
+- ❌ Brittle CSS selectors → Use `data-testid` attributes
+- ❌ Not awaiting async → Use `await flushPromises()`
+- ❌ Not clearing mocks → Add `vi.clearAllMocks()` in `beforeEach`

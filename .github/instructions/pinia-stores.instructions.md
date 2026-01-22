@@ -5,6 +5,8 @@ applyTo: '**/stores/**/*.ts'
 
 # Pinia Store Development
 
+> Create stores in `src/stores/` directory when needed.
+
 ## Store Structure
 
 Use the Setup Store syntax for better TypeScript support:
@@ -133,24 +135,4 @@ export const useNotificationsStore = defineStore('notifications', () => {
 })
 ```
 
-## Persistence
-
-Use Pinia plugins for persistence:
-
-```typescript
-import { createPinia } from 'pinia'
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-
-const pinia = createPinia()
-pinia.use(piniaPluginPersistedstate)
-```
-
-Then in store:
-
-```typescript
-export const useSettingsStore = defineStore('settings', () => {
-  // ... store logic
-}, {
-  persist: true
-})
-```
+> For persistence, use `pinia-plugin-persistedstate` with `{ persist: true }` option.

@@ -5,6 +5,8 @@ applyTo: 'e2e/**/*.ts, **/*.e2e.ts, **/*.e2e-spec.ts'
 
 # End-to-End Testing with Playwright
 
+> Create E2E tests in `e2e/` directory. Install Playwright: `npm create playwright@latest`
+
 ## Test File Structure
 
 ```typescript
@@ -164,39 +166,17 @@ await Promise.all([
 
 ## Best Practices
 
-- Use `data-testid` attributes in components for stable selectors
+- Use `data-testid` attributes for stable selectors
 - Implement Page Object Pattern for complex pages
 - Mock APIs for predictable test data
 - Run tests in isolation - each test should be independent
 - Use `beforeEach` to reset state
-- Prefer role-based and semantic selectors
 - Wait for network idle before assertions
-- Take screenshots on failure for debugging
-- Run tests in parallel for speed
-- Use trace viewer for debugging failures
 
-## Anti-Patterns
+## Common Pitfalls
 
-```typescript
-// ❌ Brittle selectors
-page.locator('.submit-button > span')
-
-// ✅ Stable selectors
-page.locator('[data-testid="submit-btn"]')
-
-// ❌ Not waiting for async
-await page.click('[data-testid="load-btn"]')
-expect(page.locator('[data-testid="data"]')).toBeVisible()  // Flaky!
-
-// ✅ Wait for state
-await page.click('[data-testid="load-btn"]')
-await page.waitForLoadState('networkidle')
-await expect(page.locator('[data-testid="data"]')).toBeVisible()
-
-// ❌ Sharing state between tests
-test('first', async () => { await page.fill('input', 'value') })
-test('second', async () => { /* assumes input still has value */ })
-
-// ✅ Reset in beforeEach
-test.beforeEach(async ({ page }) => { await page.goto('/') })
+- ❌ Brittle CSS selectors → Use `data-testid` or role-based selectors
+- ❌ Not waiting for async → Use `waitForLoadState('networkidle')`
+- ❌ Sharing state between tests → Reset in `beforeEach`
+- ❌ Hardcoded waits → Use proper wait strategies
 ```

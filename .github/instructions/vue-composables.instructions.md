@@ -5,6 +5,8 @@ applyTo: '**/composables/**/*.ts'
 
 # Vue Composables Development
 
+> Create composables in `src/composables/` directory when needed.
+
 ## Composable Structure
 
 Create reusable logic functions that encapsulate reactive state and side effects:

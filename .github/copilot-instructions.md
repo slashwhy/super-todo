@@ -16,7 +16,7 @@ A monorepo task management app with Vue 3 frontend and Express/Prisma backend.
 /                      # Vue 3 SPA (Vite + TypeScript + Pinia)
   src/components/      # Reusable Vue components
   src/views/           # Route-level page components
-  src/stores/          # Pinia stores
+  src/router/          # Vue Router configuration
 /backend/              # Express REST API
   src/routes/          # API route handlers
   src/lib/prisma.ts    # Prisma client singleton

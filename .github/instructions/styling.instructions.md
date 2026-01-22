@@ -28,7 +28,7 @@ Use design tokens from `src/assets/styles/variables.css`:
   
   /* Layout tokens */
   max-width: var(--content-max-width);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--radius-md);
 }
 ```
 
