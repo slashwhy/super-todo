@@ -173,3 +173,29 @@ await Promise.all([
 - Take screenshots on failure for debugging
 - Run tests in parallel for speed
 - Use trace viewer for debugging failures
+
+## Anti-Patterns
+
+```typescript
+// ❌ Brittle selectors
+page.locator('.submit-button > span')
+
+// ✅ Stable selectors
+page.locator('[data-testid="submit-btn"]')
+
+// ❌ Not waiting for async
+await page.click('[data-testid="load-btn"]')
+expect(page.locator('[data-testid="data"]')).toBeVisible()  // Flaky!
+
+// ✅ Wait for state
+await page.click('[data-testid="load-btn"]')
+await page.waitForLoadState('networkidle')
+await expect(page.locator('[data-testid="data"]')).toBeVisible()
+
+// ❌ Sharing state between tests
+test('first', async () => { await page.fill('input', 'value') })
+test('second', async () => { /* assumes input still has value */ })
+
+// ✅ Reset in beforeEach
+test.beforeEach(async ({ page }) => { await page.goto('/') })
+```

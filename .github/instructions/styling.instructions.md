@@ -173,3 +173,10 @@ Mobile-first approach with breakpoints:
 - Use `gap` instead of margins for flex/grid layouts
 - Add focus states for accessibility
 - Test with dark mode if supported
+
+## Common Pitfalls
+
+- ❌ Hardcoding colors → Use CSS variables from `variables.css`
+- ❌ Magic numbers → Use spacing scale tokens
+- ❌ Not testing mobile → Use mobile-first approach
+- ❌ Missing hover/focus states → Add for all interactive elements

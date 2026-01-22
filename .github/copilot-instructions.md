@@ -1,5 +1,13 @@
 # Copilot Instructions for Todo App
 
+## Quick Links
+
+**Detailed Instructions by Domain:**
+- [Vue Components](instructions/vue-components.instructions.md) | [Composables](instructions/vue-composables.instructions.md) | [Pinia Stores](instructions/pinia-stores.instructions.md)
+- [Backend Routes](instructions/backend-routes.instructions.md) | [Prisma Database](instructions/prisma-database.instructions.md)
+- [Styling](instructions/styling.instructions.md)
+- [Testing: Frontend](instructions/testing-frontend.instructions.md) | [Backend](instructions/testing-backend.instructions.md) | [E2E](instructions/testing-e2e.instructions.md)
+
 ## Architecture Overview
 
 This is a **monorepo** with a Vue 3 frontend and an Express/Prisma backend:
@@ -121,3 +129,20 @@ npm run test
 # Backend
 cd backend && npm run test:run
 ```
+
+## Common Pitfalls
+
+**Backend:**
+- Missing `.js` extension in ESM imports → Import errors
+- Passing `req.body` directly to Prisma → Security vulnerabilities
+- Forgetting to include relations → Missing nested data
+
+**Frontend:**
+- Using `v-if` with `v-for` on same element → Performance issues
+- Mutating Pinia state directly → Reactivity breaks
+- Missing `data-testid` attributes → Brittle tests
+
+**Debugging:**
+- Backend: Use Prisma Studio (`npm run db:studio`) to inspect database
+- Frontend: Vue DevTools for component/store inspection
+- Tests: Run with `--reporter=verbose` for detailed output
