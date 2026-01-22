@@ -93,3 +93,10 @@ const props = withDefaults(defineProps<{
 - Add ARIA attributes for dynamic content
 - Ensure keyboard navigation works
 - Provide meaningful `alt` text for images
+
+## Common Pitfalls
+
+- ❌ Using `v-if` with `v-for` on same element → Use computed property to filter first
+- ❌ Complex logic in templates → Extract to computed properties
+- ❌ Missing `:key` in `v-for` → Add unique key (never use index)
+- ❌ Direct state mutation in templates → Use methods or computed setters

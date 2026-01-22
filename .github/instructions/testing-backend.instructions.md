@@ -194,3 +194,29 @@ it('updates task fields', async () => {
 - Use supertest for HTTP-level integration tests
 - Keep test data minimal but realistic
 - Use descriptive test names: "returns 404 when task not found"
+
+## Anti-Patterns
+
+```typescript
+// ❌ Not mocking Prisma
+import { prisma } from '../lib/prisma.js'  // Uses real DB
+
+// ✅ Mock at module level
+vi.mock('../lib/prisma.js', () => ({ prisma: { task: { findMany: vi.fn() }}}))
+
+// ❌ Not clearing mocks between tests
+test('first', () => { /* ... */ })
+test('second', () => { /* mock still has calls from first */ })
+
+// ✅ Clear in beforeEach
+beforeEach(() => { vi.clearAllMocks() })
+
+// ❌ Testing only success path
+it('creates task', async () => {
+  expect(response.status).toBe(201)
+})
+
+// ✅ Test error paths too
+it('returns 400 on validation error', async () => { /* ... */ })
+it('returns 500 on database error', async () => { /* ... */ })
+```

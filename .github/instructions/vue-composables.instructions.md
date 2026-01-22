@@ -103,6 +103,13 @@ export function useLocalStorage<T>(key: string, defaultValue: T) {
 - Type return values for better IDE support
 - Accept options object for configuration
 
+## Common Pitfalls
+
+- ❌ Not cleaning up timers/listeners → Memory leaks (use `onUnmounted`)
+- ❌ Accessing `.value` in template → Not needed, Vue unwraps automatically
+- ❌ Creating composables inside components → Define at module level
+- ❌ Mixing concerns in one composable → Split into focused units
+
 ## Testing Composables
 
 Test composables by mounting a simple component wrapper:

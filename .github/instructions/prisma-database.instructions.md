@@ -131,3 +131,10 @@ const [deletedTask, updatedStats] = await prisma.$transaction([
 - Use optional relations (`?`) appropriately
 - Add indexes for frequently queried fields
 - Use `@unique` for fields that must be unique
+
+## Common Pitfalls
+
+- ❌ Forgetting to run migrations after schema changes → Client out of sync
+- ❌ Deleting in wrong order → Foreign key constraint errors
+- ❌ Not using transactions for multi-step operations → Data inconsistency
+- ❌ Missing `.js` extension in imports → ESM module errors

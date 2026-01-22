@@ -169,3 +169,28 @@ vi.mock('@/composables/useTasks', () => ({
 - Clean up mocks in `beforeEach` or `afterEach`
 - Group related tests with `describe` blocks
 - Use meaningful test descriptions: "should X when Y"
+
+## Anti-Patterns
+
+```typescript
+// ❌ Testing implementation details
+expect(wrapper.vm.internalCounter).toBe(5)
+
+// ✅ Test user-facing behavior
+expect(wrapper.find('[data-testid="count"]').text()).toBe('5')
+
+// ❌ Brittle CSS selectors
+wrapper.find('.btn-primary > span:first-child')
+
+// ✅ Semantic or data-testid selectors
+wrapper.find('[data-testid="submit-btn"]')
+
+// ❌ Not awaiting async
+wrapper.vm.fetchData()
+expect(wrapper.vm.data).toBeDefined()
+
+// ✅ Properly handle async
+await wrapper.vm.fetchData()
+await flushPromises()
+expect(wrapper.vm.data).toBeDefined()
+```

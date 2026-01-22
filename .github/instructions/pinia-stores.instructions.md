@@ -109,6 +109,13 @@ const { tasks, loading } = storeToRefs(tasksStore)
 const { fetchTasks, createTask } = tasksStore
 ```
 
+## Common Pitfalls
+
+- ❌ Destructuring without `storeToRefs()` → Loses reactivity
+- ❌ Mutating state outside actions → Breaks DevTools time-travel
+- ❌ Circular store dependencies → Use callbacks or events instead
+- ❌ Storing computed values as state → Use getters instead
+
 ## Store Composition
 
 Stores can use other stores:
