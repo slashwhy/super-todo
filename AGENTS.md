@@ -4,14 +4,24 @@ A guide for AI coding agents working on the super-todo project. This file contai
 
 ## Project Overview
 
-Super-todo is a Vue 3 + TypeScript task management application built with Vite. It features:
+Super-todo is a **Vue 3 + TypeScript** task management application built with **Vite**, designed as a GitHub Copilot onboarding showcase. The project demonstrates Copilot capabilities in a realistic full-stack application with both frontend and backend.
+
+**Frontend Features:**
 - Dashboard and task management views
 - Category-based task organization
 - Vital tasks prioritization
 - Settings and help documentation
 - Component-based architecture with layouts
 
+**Backend Features:**
+- Express.js API with TypeScript
+- Prisma ORM for database management
+- PostgreSQL database with migrations
+- RESTful routes for tasks, categories, and users
+
 ## Setup Commands
+
+### Frontend Setup
 
 - **Install dependencies:** `npm install` or `pnpm install`
 - **Start dev server:** `npm run dev` or `pnpm dev`
@@ -19,10 +29,28 @@ Super-todo is a Vue 3 + TypeScript task management application built with Vite. 
 - **Preview production build:** `npm run preview` or `pnpm preview`
 - **Run linting:** `npm run lint` or `pnpm lint`
 
+### Backend Setup
+
+- **Navigate to backend:** `cd backend`
+- **Install dependencies:** `npm install` or `pnpm install`
+- **Setup environment:** Copy `.env.example` to `.env` and configure database connection
+- **Database setup:** `npx prisma migrate dev` (creates database and runs migrations)
+- **Seed database:** `npm run seed` or `npx ts-node prisma/seed.ts`
+- **Start server:** `npm run dev` (runs on http://localhost:3000 by default)
+- **Generate Prisma client:** `npx prisma generate` (auto-run after migrations)
+
+### Docker Setup (Optional)
+
+- **Start PostgreSQL:** `docker-compose up -d` (from backend directory)
+- **View logs:** `docker-compose logs -f postgres`
+- **Stop services:** `docker-compose down`
+
 ## Code Style
 
+### Frontend (Vue 3 + TypeScript)
+
 - **Language:** TypeScript with strict type checking enabled
-- **Framework:** Vue 3 with Composition API preferred
+- **Framework:** Vue 3 with Composition API and `<script setup>` syntax
 - **Component structure:** Single-file components (.vue)
 - **Imports:** Use ES6 module syntax
 - **Naming conventions:**
@@ -30,8 +58,20 @@ Super-todo is a Vue 3 + TypeScript task management application built with Vite. 
   - Composables: camelCase with `use` prefix (e.g., `useTaskManager`)
   - Files: kebab-case for utilities, PascalCase for components
 - **CSS:** Scoped styles within components using `<style scoped>`
+- **State Management:** Pinia stores using Composition API setup syntax
+
+### Backend (Express.js + TypeScript)
+
+- **Language:** TypeScript with strict type checking
+- **Framework:** Express.js with TypeScript
+- **Database:** Prisma ORM with PostgreSQL
+- **Code organization:** Routes in `/src/routes/`, utilities in `/src/lib/`
+- **API style:** RESTful endpoints
+- **Type generation:** Use Prisma-generated types for database models
 
 ## Project Structure
+
+### Frontend
 
 - `/src/components/` - Reusable Vue components
 - `/src/views/` - Page-level components for routing
@@ -39,6 +79,14 @@ Super-todo is a Vue 3 + TypeScript task management application built with Vite. 
 - `/src/stores/` - Pinia store definitions
 - `/src/assets/` - Static assets and stylesheets
 - `/src/main.ts` - Application entry point
+
+### Backend
+
+- `/backend/src/routes/` - API route handlers (tasks, categories, users, config)
+- `/backend/src/lib/` - Utility functions and helpers (Prisma client)
+- `/backend/prisma/` - Database schema, migrations, and seed files
+- `/backend/src/generated/` - Prisma-generated types and client
+- `/backend/.env` - Environment variables (database connection, etc.)
 
 ## Testing Instructions
 
@@ -67,6 +115,9 @@ Super-todo is a Vue 3 + TypeScript task management application built with Vite. 
 - Use Vue Router for all navigation
 - Update tests whenever modifying functionality
 - Keep components under 300 lines when possible
+- Use Prisma types from generated client instead of defining database types manually
+- Always run migrations before committing schema changes
+- Document API endpoints with clear request/response examples
 
 ## Deployment
 
