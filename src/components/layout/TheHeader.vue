@@ -1,57 +1,54 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import AppIcon from '@/components/icons/AppIcon.vue'
 
 const searchQuery = ref('')
-const currentDate = new Date()
-const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' })
-const formattedDate = currentDate.toLocaleDateString('en-GB', {
-  day: '2-digit',
-  month: '2-digit',
-  year: 'numeric'
-})
+
+// Use computed for reactive date values (updates if component remounts)
+const currentDate = computed(() => new Date())
+const dayName = computed(() => 
+  currentDate.value.toLocaleDateString('en-US', { weekday: 'long' })
+)
+const formattedDate = computed(() => 
+  currentDate.value.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  })
+)
 </script>
 
 <template>
-  <header class="header">
+  <header class="header" role="banner">
     <div class="header__brand">
       <h1 class="header__logo">
         <span class="header__logo-accent">Dash</span>board
       </h1>
     </div>
 
-    <div class="header__search">
+    <div class="header__search" role="search">
       <input
         v-model="searchQuery"
         type="search"
         class="header__search-input"
         placeholder="Search your task here..."
+        aria-label="Search tasks"
       />
-      <button class="header__search-btn" aria-label="Search">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8" />
-          <path d="m21 21-4.35-4.35" />
-        </svg>
+      <button class="header__search-btn" type="button" aria-label="Search">
+        <AppIcon name="search" />
       </button>
     </div>
 
     <div class="header__actions">
-      <button class="header__action-btn header__action-btn--notification" aria-label="Notifications">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-          <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-        </svg>
+      <button class="header__action-btn header__action-btn--notification" type="button" aria-label="Notifications">
+        <AppIcon name="notification" :size="18" />
       </button>
 
-      <button class="header__action-btn header__action-btn--calendar" aria-label="Calendar">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
-          <line x1="16" x2="16" y1="2" y2="6" />
-          <line x1="8" x2="8" y1="2" y2="6" />
-          <line x1="3" x2="21" y1="10" y2="10" />
-        </svg>
+      <button class="header__action-btn header__action-btn--calendar" type="button" aria-label="Calendar">
+        <AppIcon name="calendar" :size="14" />
       </button>
 
-      <div class="header__date">
+      <div class="header__date" aria-label="Current date">
         <span class="header__date-day">{{ dayName }}</span>
         <span class="header__date-full">{{ formattedDate }}</span>
       </div>

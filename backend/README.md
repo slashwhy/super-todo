@@ -21,6 +21,25 @@ npm run dev                   # Start server → http://localhost:3000
 | `npm run db:seed` | Seed database |
 | `npm run db:studio` | Prisma Studio GUI |
 | `npm run db:reset` | Reset & re-migrate |
+| `npm run test` | Run tests (watch mode) |
+| `npm run test:run` | Run tests once |
+| `npm run test:coverage` | Run tests with coverage |
+
+## Testing
+
+Tests use **Vitest** + **Supertest** with mocked Prisma.
+
+```bash
+npm run test:run      # Run all tests
+npm run test          # Watch mode
+```
+
+| Test File | Coverage |
+|-----------|----------|
+| `tasks.spec.ts` | CRUD, filters, stats |
+| `users.spec.ts` | CRUD operations |
+| `categories.spec.ts` | CRUD operations |
+| `config.spec.ts` | Statuses & priorities |
 
 ## API Endpoints
 
