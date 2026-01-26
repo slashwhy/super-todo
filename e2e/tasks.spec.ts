@@ -28,11 +28,11 @@ test.describe('Task CRUD Operations', () => {
 
     test('shows loading state while fetching tasks', async ({ page }) => {
       // Create new page to catch initial load
-      const newTasksPage = new TasksPage(page)
+      new TasksPage(page)
       const loadingPromise = page.goto('/my-tasks')
       
       // Should show loading indicator during fetch
-      const loadingVisible = await page.locator('[data-testid="task-list-loading"]').isVisible()
+      await page.locator('[data-testid="task-list-loading"]').isVisible()
         .catch(() => false) // May load too fast to catch
       
       await loadingPromise
