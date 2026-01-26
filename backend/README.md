@@ -2,6 +2,8 @@
 
 Express + Prisma + PostgreSQL REST API.
 
+> 📚 See [docs/AI_DEVELOPMENT_GUIDE.md](../docs/AI_DEVELOPMENT_GUIDE.md) for AI-assisted development architecture.
+
 ## Quick Start
 
 ```bash
