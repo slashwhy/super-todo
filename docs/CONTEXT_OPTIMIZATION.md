@@ -34,6 +34,8 @@ LLM context windows (100K-1M tokens) fill faster than expected due to hidden ove
 
 **Result:** 50-70K tokens consumed before addressing your problem.
 
+> 📖 **Related:** For MCP-specific optimization (Code Execution Pattern, Progressive Disclosure), see [MCP.md](./MCP.md#context-efficiency-the-code-execution-pattern).
+
 ---
 
 ## How It Works

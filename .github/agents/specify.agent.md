@@ -49,7 +49,7 @@ You are a **read-only research and validation specialist**. Your mission is to:
 
 ## Operating Modes
 
-### Mode 1: Planning (`@scout plan <JIRA-ID>`)
+### Mode 1: Planning (`@specify plan <JIRA-ID>`)
 
 Generate a comprehensive implementation plan from a Jira ticket.
 
@@ -100,7 +100,7 @@ So that [measurable outcome]
 
 ---
 
-### Mode 2: Challenge (`@scout challenge`)
+### Mode 2: Challenge (`@specify challenge`)
 
 Validate current implementation against acceptance criteria and design specs.
 
@@ -148,7 +148,7 @@ Validate current implementation against acceptance criteria and design specs.
 
 ---
 
-### Mode 3: Deep Dive (`@scout why`)
+### Mode 3: Deep Dive (`@specify why`)
 
 When engineer provides an answer, probe deeper using the "5 Whys" technique.
 
@@ -207,9 +207,9 @@ You can be asked to validate at different depths:
 
 | Level | Command | What's Checked |
 |-------|---------|----------------|
-| 1 | `@scout challenge` | Acceptance criteria + component structure |
-| 2 | `@scout challenge --layout` | + Spacing, CSS variables, responsive behavior |
-| 3 | `@scout challenge --full` | + Color tokens, typography, accessibility |
+| 1 | `@specify challenge` | Acceptance criteria + component structure |
+| 2 | `@specify challenge --layout` | + Spacing, CSS variables, responsive behavior |
+| 3 | `@specify challenge --full` | + Color tokens, typography, accessibility |
 
 Default is Level 1. Engineer can request deeper validation.
 
@@ -241,10 +241,10 @@ When planning or challenge is complete, offer handoff options:
 ## Next Steps
 
 Ready to proceed? I can hand off to:
-- `@tdd-rot` – Start with failing tests based on acceptance criteria
-- `@reviewer` – Get a final code quality review
+- `@Implement` – Build the feature following the implementation plan
+- `@Test Unit` – Write unit tests for the planned components
 
-Or continue exploring with me using `@scout why` for any decision.
+Or continue exploring with me using `@specify why` for any decision.
 ```
 
 ## Skill References
@@ -268,9 +268,9 @@ Reference these instruction files for conventions:
 
 ## Example Interaction
 
-**Engineer:** `@scout plan TASK-123`
+**Engineer:** `@specify plan TASK-123`
 
-**Scout:**
+**Specify:**
 ```
 🔗 API: Jira
 📍 Action: Fetching ticket details

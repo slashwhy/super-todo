@@ -97,6 +97,20 @@ This project implements a complete **reference implementation** of AI-assisted d
 | Rules for **specific file types** | Path-Specific Instructions | `.github/instructions/*.instructions.md` |
 | A **different persona/permissions** | Custom Agent | `.github/agents/*.agent.md` |
 | **Complex procedures/scripts** | Agent Skill | `.github/skills/*/SKILL.md` |
+| **Reusable task templates** | Custom Prompts | `.github/prompts/*.prompt.md` |
+
+### Feature Index
+
+Quick lookup for all Copilot customization features:
+
+| Feature | Purpose | Documentation |
+|---------|---------|---------------|
+| **Smart Actions** | Built-in IDE commands (no setup) | [AI Guide](docs/AI_DEVELOPMENT_GUIDE.md#built-in-smart-actions) |
+| **Custom Prompts** | Reusable task templates | [CUSTOM_PROMPTS.md](docs/CUSTOM_PROMPTS.md) |
+| **Custom Instructions** | Coding standards & conventions | [CUSTOM_INSTRUCTIONS.md](docs/CUSTOM_INSTRUCTIONS.md) |
+| **Custom Agents** | Specialized AI personas | [CUSTOM_AGENTS.md](docs/CUSTOM_AGENTS.md) |
+| **Skills** | On-demand knowledge modules | [CUSTOM_AGENTS.md](docs/CUSTOM_AGENTS.md#skills-reference) |
+| **MCP** | External tool connections | [MCP.md](docs/MCP.md) |
 
 ### Architecture at a Glance
 
@@ -185,16 +199,25 @@ npm run test:run      # Run backend tests
 
 | Document | Purpose |
 |----------|----------|
-| [docs/AI_DEVELOPMENT_GUIDE.md](docs/AI_DEVELOPMENT_GUIDE.md) | How AI-assisted development works – agents, instructions, MCP |
-| [docs/GOVERNANCE.md](docs/GOVERNANCE.md) | **Your responsibilities** – security, safety, oversight |
-| [docs/AGENTS.md](docs/AGENTS.md) | Detailed agent definitions – what each agent does and how to use it |
+| [AI_DEVELOPMENT_GUIDE.md](docs/AI_DEVELOPMENT_GUIDE.md) | Overview – agents, instructions, smart actions, MCP |
+| [GOVERNANCE.md](docs/GOVERNANCE.md) | **Your responsibilities** – security, safety, oversight |
+| [CUSTOM_AGENTS.md](docs/CUSTOM_AGENTS.md) | Agent definitions – what each agent does |
 | [backend/README.md](backend/README.md) | Backend API documentation and setup |
 
-### Reference Docs
+### Customization Guides
 
 | Document | Description |
 |----------|-------------|
-| [docs/CONTEXT_OPTIMIZATION.md](docs/CONTEXT_OPTIMIZATION.md) | **Advanced**: Strategies for optimizing LLM context usage |
+| [CUSTOM_PROMPTS.md](docs/CUSTOM_PROMPTS.md) | Reusable prompt templates (`.prompt.md`) |
+| [CUSTOM_INSTRUCTIONS.md](docs/CUSTOM_INSTRUCTIONS.md) | Instruction hierarchy and best practices |
+| [MCP.md](docs/MCP.md) | Model Context Protocol integrations |
+
+### Advanced Topics
+
+| Document | Description |
+|----------|-------------|
+| [CONTEXT_OPTIMIZATION.md](docs/CONTEXT_OPTIMIZATION.md) | Strategies for optimizing LLM context usage |
+| [GIT_WORKTREES.md](docs/GIT_WORKTREES.md) | Parallel AI development with Git worktrees |
 
 ### Archive Documents (German)
 

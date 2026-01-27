@@ -10,7 +10,7 @@
 
 | Agent | Role | Writes Code? | Typical Use |
 |-------|------|--------------|-------------|
-| **@Scout** | Planning & validation | ❌ Read-only | `@scout plan PROJ-123`, `@scout challenge` |
+| **@Specify & Validate** | Planning & validation | ❌ Read-only | `@specify plan PROJ-123`, `@specify challenge` |
 | **@Implement** | Feature implementation | ✅ Yes | `@implement`, `@implement from-design` |
 | **@Test Unit** | Unit & integration tests | ✅ Yes | After implementation |
 | **@Test E2E** | End-to-end tests | ✅ Yes | After unit tests pass |
@@ -33,7 +33,7 @@ Custom agents are specialized AI personas in `.github/agents/*.agent.md`. Each h
 ## Workflow
 
 ```
-@Scout (Plan)           →  "Start Implementation"
+@Specify (Plan)         →  "Start Implementation"
        ↓
 @Implement (Build)      →  "Add Unit Tests"
        ↓
@@ -41,7 +41,7 @@ Custom agents are specialized AI personas in `.github/agents/*.agent.md`. Each h
        ↓
 @Test E2E               →  "Validate Complete"
        ↓
-@Scout (Validate)       →  Ready for merge
+@Specify (Validate)     →  Ready for merge
 ```
 
 Each arrow is a **handoff**—you review before the next agent begins.
@@ -52,15 +52,15 @@ Each arrow is a **handoff**—you review before the next agent begins.
 
 | Agent | Purpose | Key Constraints |
 |-------|---------|-----------------|
-| **@Scout** | Creates implementation plans from Jira/Figma; validates completed work | Cannot modify files; asks clarifying questions |
+| **@Specify & Validate** | Creates implementation plans from Jira/Figma; validates completed work | Cannot modify files; asks clarifying questions |
 | **@Implement** | Builds features step-by-step from plans | Follows CSS variables, Prisma conventions, confirms before each step |
 | **@Test Unit** | Writes Vitest tests for components and routes | Never modifies production code; uses AAA pattern |
 | **@Test E2E** | Writes Playwright tests for user flows | Uses `data-testid` selectors; Page Object pattern |
 
 **Modes:**
-- `@scout plan <JIRA-ID>` – Generate implementation plan
-- `@scout challenge` – Validate implementation against acceptance criteria
-- `@scout challenge --layout` – Include spacing/responsive checks
+- `@specify plan <JIRA-ID>` – Generate implementation plan
+- `@specify challenge` – Validate implementation against acceptance criteria
+- `@specify challenge --layout` – Include spacing/responsive checks
 - `@implement from-design` – Build component from Figma
 - `@implement fix` – Quick targeted fix
 
@@ -277,6 +277,7 @@ tools:
 
 ## Related
 
+- [Custom Prompts](./CUSTOM_PROMPTS.md) – Reusable task templates
 - [Custom Instructions](./CUSTOM_INSTRUCTIONS.md) – Instruction hierarchy
 - [MCP Integrations](./MCP.md) – External tool connections
 - [Governance & Security](./GOVERNANCE.md) – Agent security constraints

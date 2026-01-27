@@ -44,6 +44,55 @@ Returns ticket data to agent
 
 ---
 
+## Context Efficiency: The Code Execution Pattern
+
+Traditional tool-calling consumes excessive tokens. Modern MCP uses **code execution** for efficiency:
+
+### The Problem: Direct Tool-Calling
+
+```
+200K Context Window
+├─ Tool definitions (all loaded)  50K   ← Hidden overhead
+├─ Tool results (full response)   30K   ← Often unnecessary
+└─ Your actual work              120K
+```
+
+**Issues:**
+- Loading 100+ tool definitions wastes tokens
+- Full API responses bloat context
+- Each tool chain multiplies token usage
+
+### The Solution: Code Execution
+
+Agents write code to interact with MCP servers, not direct calls:
+
+| Technique | How It Works | Token Savings |
+|-----------|--------------|---------------|
+| **Progressive Disclosure** | Explore tools as filesystem, load only what's needed | 30-40% |
+| **Local Filtering** | Filter data locally, pass summaries to model | 60-70% |
+| **Privacy-Preserving** | Sensitive data stays in execution environment | N/A (security) |
+| **State Persistence** | Write intermediate results to files | Enables multi-step |
+
+### Example: Efficient Design Fetch
+
+```typescript
+// ✅ Efficient: Filter locally, return summary
+const design = await figmaApi.getDesign(componentId)
+return {
+  name: design.name,
+  bounds: design.absoluteBoundingBox,
+  fills: design.fills,
+  // Omit: children, effects, interactions (~48K tokens saved)
+}
+
+// ❌ Wasteful: Full response to context
+return await figmaApi.getDesign(componentId) // 50K tokens
+```
+
+> 📖 **Deep Dive:** [CONTEXT_OPTIMIZATION.md](./CONTEXT_OPTIMIZATION.md) for general token management strategies.
+
+---
+
 ## Configured Servers
 
 ### Atlassian (Jira & Confluence)
@@ -193,6 +242,27 @@ Sensitive data from one project appears in another.
 | ✅ Workspace-specific MCP configs |
 | ✅ Clear context between projects |
 | ✅ Separate credentials per project |
+
+### 4. Token Passthrough Anti-Pattern
+
+An MCP server should **never** accept tokens not explicitly issued for it.
+
+```typescript
+// ❌ DANGEROUS: Passing through external tokens
+server.use(req.headers.externalApiToken)
+
+// ✅ CORRECT: Validate token audience
+const token = validateAudience(req.token, 'mcp-server-id')
+if (!token.valid) throw new AuthError('Invalid audience')
+```
+
+| Risk | Why It Matters |
+|------|----------------|
+| Bypasses server authorization | Client impersonates user |
+| Breaks audit trail | Server can't log who did what |
+| Enables privilege escalation | Downstream APIs trust the token |
+
+**Rule:** MCP servers must validate all tokens were issued specifically for them.
 
 ---
 

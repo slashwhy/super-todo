@@ -181,6 +181,74 @@ console.log(`Token: ${apiToken.slice(0, 4)}...`)
 
 ---
 
+## AI-Assisted Version Control
+
+Copilot provides built-in features for version control tasks. Use them, but review the output.
+
+### Available Features
+
+| Feature | Access | Review Requirement |
+|---------|--------|-------------------|
+| **Commit Messages** | Sparkle icon in Source Control | ✅ Review before commit |
+| **PR Descriptions** | GitHub PR extension | ✅ Review before opening |
+| **Merge Conflict Resolution** | "Resolve with AI" button | ⚠️ **Careful review** required |
+| **Code Review** | Right-click → Review | Use as input, not final answer |
+
+### Commit Message Generation
+
+The AI summarizes staged changes into a commit message.
+
+```
+✅ Good workflow:
+1. Stage changes
+2. Click sparkle → Generate message
+3. Read and edit the message
+4. Commit
+
+⚠️ Bad workflow:
+1. Stage changes
+2. Click sparkle → Accept blindly → Commit
+```
+
+**Always verify:**
+- Message accurately describes changes
+- No sensitive information included
+- Follows project conventions (if any)
+
+### Merge Conflict Resolution
+
+> ⚠️ **High risk.** AI may choose the wrong resolution.
+
+```
+Conflict: Both branches modified the same function
+
+AI suggestion: Keep branch A changes
+Reality: Branch B has the critical fix
+
+→ Always verify merge resolutions line-by-line
+```
+
+**When to use AI for conflicts:**
+- Simple text conflicts (documentation, comments)
+- Obvious additions (new imports, new functions)
+
+**When to resolve manually:**
+- Logic changes in the same function
+- Security-related code
+- Complex refactors
+
+### PR Description Generation
+
+The AI creates title and description from diff.
+
+**Review checklist:**
+- [ ] Title is concise and accurate
+- [ ] Description explains *why*, not just *what*
+- [ ] Breaking changes called out
+- [ ] No internal/sensitive references exposed
+
+---
+
 ## When to Use AI vs. Manual
 
 ### ✅ Use AI For
