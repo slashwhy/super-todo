@@ -49,150 +49,151 @@ Standardized, consistent output
 
 ## Creating Prompts
 
-### File Structure
+### Minimal Agent Delegation (Preferred)
+
+When a prompt invokes a custom agent via the `agent:` property, keep the prompt **minimal**. The agent already knows conventions, patterns, and workflows—your prompt just triggers it.
 
 ```markdown
 ---
 description: Brief description shown in prompt picker
+agent: AgentName
 ---
 
-# Prompt Title
+# Task Title
 
-Your prompt instructions here...
+One-sentence description of what to generate.
 
-## Context
-Describe what context the AI should consider.
-
-## Output Format
-Describe the expected output structure.
-
-## Constraints
-- List any rules or limitations
-- The AI should follow
+**Specify:** What the user needs to provide.
 ```
 
-### Example: Component Generator
+**Include:**
+- 1-2 sentence task description
+- `**Specify:**` section for user-provided parameters
+
+**Exclude (agent handles these):**
+- Workflow steps
+- Coding conventions
+- Tool usage patterns
+- Output format details
+
+### Example: Component Generator (Minimal)
 
 **File:** `.github/prompts/generate-component.prompt.md`
 
 ```markdown
 ---
 description: Generate a Vue 3 component following project conventions
+agent: Implement
 ---
 
 # Generate Vue Component
 
-Create a new Vue 3 component with the following specifications:
+Generate a Vue 3 component with TypeScript, props/emits, and scoped styles.
 
-## Requirements
-- Use `<script setup lang="ts">`
-- Define props with `defineProps<T>()` interface syntax
-- Define emits with `defineEmits<T>()` interface syntax
-- Use CSS variables from `src/assets/styles/variables.css`
-- Include `data-testid` attributes for testing
-
-## Output
-Provide the complete component file content.
-
-## Constraints
-- Never use `v-if` with `v-for` on the same element
-- Never hardcode colors or spacing values
-- Always include proper TypeScript types
+**Specify:** Component name, purpose, props, and events.
 ```
 
-### Example: API Mock Generator
+**Why this works:** The `Implement` agent already references `vue-components.instructions.md`, knows CSS variable conventions, and includes `data-testid` attributes. No need to repeat.
 
-**File:** `.github/prompts/generate-api-mock.prompt.md`
+### When to Include More Detail
+
+Add domain-specific content when it's **NOT** in the agent or skills:
 
 ```markdown
 ---
-description: Generate Vitest mock for backend API endpoint
+description: Generate GraphQL resolver with caching
+agent: Implement
 ---
 
-# Generate API Mock
+# Generate GraphQL Resolver
 
-Create a mock for the specified API endpoint.
+Generate a GraphQL resolver with Redis caching.
 
-## Requirements
-- Use Vitest's `vi.mock()` syntax
-- Mock the Prisma client appropriately
-- Include success and error scenarios
-- Follow the AAA pattern (Arrange, Act, Assert)
+**Specify:** Query/mutation name, return type, cache TTL.
 
-## Output Format
-```typescript
-// Mock setup
-vi.mock('../lib/prisma.js', () => ({
-  prisma: {
-    // mocked methods
-  }
-}))
-
-// Test cases
-describe('endpoint', () => {
-  // tests
-})
+**Caching Strategy:**
+- Cache reads for 5 minutes by default
+- Invalidate on related mutations
+- Use user-scoped cache keys for personalized data
 ```
-```
+
+**Why:** Caching strategy is task-specific, not in the agent's general knowledge.
 
 ---
 
-## Prompt vs Instruction vs Agent
+## Prompt vs Instruction vs Agent vs Skill
 
-| Feature | Custom Prompt | Custom Instruction | Custom Agent |
-|---------|---------------|-------------------|--------------|
-| **Purpose** | Single-task template | Coding standards | Specialized persona |
-| **Persistence** | On-demand | Always applied | On-demand |
-| **Scope** | One interaction | All matching files | Entire workflow |
-| **File type** | `.prompt.md` | `.instructions.md` | `.agent.md` |
-| **Best for** | Repetitive tasks | Conventions | Multi-step processes |
+| Feature | Custom Prompt | Custom Instruction | Custom Agent | Skill |
+|---------|---------------|-------------------|--------------|-------|
+| **Purpose** | Trigger agent for task | Coding standards | Specialized persona | Reusable knowledge |
+| **Persistence** | On-demand | Always applied | On-demand | On-demand |
+| **Scope** | One interaction | All matching files | Entire workflow | Referenced by agents |
+| **File type** | `.prompt.md` | `.instructions.md` | `.agent.md` | `SKILL.md` |
+| **Best for** | Quick task triggers | Conventions | Multi-step processes | Domain checklists |
 
 ---
 
 ## Patterns
 
-### ✅ Do This
+### ✅ Do This: Minimal Agent Proxy
 
 ```markdown
 ---
 description: Generate changelog entry for a release
+agent: Implement
 ---
 
 # Generate Changelog Entry
 
-Based on the commits since the last release tag, generate a changelog entry.
+Generate a changelog entry from commits since the last release tag.
 
-## Format
-- Group by: Features, Fixes, Breaking Changes
-- Use conventional commit prefixes
-- Link to relevant PRs
-
-## Output
-Return markdown formatted for CHANGELOG.md
+**Specify:** Release version and date range.
 ```
 
-**Why:** Clear purpose, structured output, specific constraints.
+**Why:** Agent handles format, conventions, and workflow. Prompt is just a trigger.
 
-### ⚠️ Avoid This
+### ⚠️ Avoid This: Repeating Agent Knowledge
 
 ```markdown
-Write a changelog.
+---
+description: Generate a Vue 3 component
+agent: Implement
+---
+
+# Generate Vue Component
+
+## Requirements
+- Use `<script setup lang="ts">`
+- Use CSS variables from variables.css
+- Include data-testid attributes
+...30 more lines...
 ```
 
-**Why:** Too vague—no structure, no constraints, inconsistent results.
+**Why:** The `Implement` agent already knows all this from its instructions and skills.
 
 ---
 
-### ✅ Do This: Include Context References
+### ✅ Do This: Extract Domain Knowledge to Skills
+
+When you have domain-specific checklists or patterns that multiple prompts/agents need:
+
+1. Create a skill: `.github/skills/security-review/SKILL.md`
+2. Reference it in the agent or prompt
 
 ```markdown
-## Context
-Reference these files for conventions:
-- `src/assets/styles/variables.css` for CSS variables
-- `.github/instructions/vue-components.instructions.md` for component patterns
+---
+description: Security review checklist
+agent: Specify & Validate
+---
+
+# Security Review
+
+Perform a read-only security review using the security-review skill.
+
+**Specify:** File paths or feature to review.
 ```
 
-**Why:** Prompts can reference project files for consistent output.
+**Why:** Skills are reusable across agents. Update the checklist in one place.
 
 ### ⚠️ Avoid This: External URLs
 
@@ -213,11 +214,12 @@ Follow the style guide at https://example.com/style-guide
 | `#generate-pinia-store` | Pinia Setup Store scaffold | `Implement` |
 | `#generate-e2e-test` | Playwright test with Page Object | `Test E2E` |
 | `#generate-unit-test` | Vitest test for component or route | `Test Unit` |
-| `#review-security` | Security review checklist | `Specify & Validate` |
+| `#review-security` | Security review (uses `security-review` skill) | `Specify & Validate` |
+| `#specify` | Create implementation plan | `Specify & Validate` |
 
-> 💡 **Tip:** Prompts reference agents for tool inheritance — update tools in one place.
+> 💡 **Tip:** Prompts are thin wrappers around agents. Keep them minimal—agents have the knowledge.
 > 
-> 💡 **Tip:** Create prompts for any task you do more than twice.
+> 💡 **Tip:** Extract reusable domain knowledge (checklists, patterns) into skills.
 
 ---
 
