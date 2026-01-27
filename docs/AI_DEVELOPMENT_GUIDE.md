@@ -114,7 +114,7 @@ This project uses **4 specialized agents** with defined roles and constrained to
 - Handoffs require human approval
 - Critical changes need explicit consent
 
-See [GOVERNANCE.md](./GOVERNANCE.md) for detailed developer responsibilities.
+See [RESPONSIBILITIES_AND_SECURITY.md](./RESPONSIBILITIES_AND_SECURITY.md) for detailed developer responsibilities.
 
 ---
 
@@ -148,7 +148,20 @@ Complete guide covering:
 
 **Start here if:** You want to understand how project conventions are encoded and enforced.
 
-### 3. Understanding MCP Integrations
+### 3. Understanding Custom Prompts
+
+**File:** [CUSTOM_PROMPTS.md](./CUSTOM_PROMPTS.md)
+
+Reusable task templates covering:
+- What custom prompts are and when to use them
+- Minimal agent delegation pattern
+- Prompts vs Instructions vs Agents vs Skills
+- All 7 custom prompts in `.github/prompts/`
+- Best practices for creating new prompts
+
+**Start here if:** You want to create reusable task templates or understand how to trigger agents for specific tasks.
+
+### 4. Understanding MCP Integrations
 
 **File:** [MCP.md](./MCP.md)
 
@@ -162,9 +175,9 @@ In-depth guide covering:
 
 **Start here if:** You want to understand how agents connect to external services.
 
-### 4. Governance & Security
+### 5. Responsibilities & Security
 
-**File:** [GOVERNANCE.md](./GOVERNANCE.md)
+**File:** [RESPONSIBILITIES_AND_SECURITY.md](./RESPONSIBILITIES_AND_SECURITY.md)
 
 Covers:
 - Developer responsibilities checklist
@@ -175,7 +188,7 @@ Covers:
 
 **Start here if:** You have security concerns or want to understand developer accountability.
 
-### 5. Advanced: Context Optimization
+### 6. Advanced: Context Optimization
 
 **File:** [CONTEXT_OPTIMIZATION.md](./CONTEXT_OPTIMIZATION.md)
 
@@ -186,6 +199,18 @@ For developers who want to:
 - Memory management strategies
 
 **Start here if:** You're working with large codebases and need context optimization.
+
+---
+
+## When to Use What?
+
+| Need | Solution | Location |
+|------|----------|----------|
+| Rules that apply **always** | Global Instructions | `.github/copilot-instructions.md` |
+| Rules for **specific file types** | Path-Specific Instructions | `.github/instructions/*.instructions.md` |
+| A **different persona/permissions** | Custom Agent | `.github/agents/*.agent.md` |
+| **Complex procedures/scripts** | Agent Skill | `.github/skills/*/SKILL.md` |
+| **Reusable task templates** | Custom Prompts | `.github/prompts/*.prompt.md` |
 
 ---
 
@@ -204,7 +229,7 @@ docs/
 ├── CUSTOM_INSTRUCTIONS.md       # Instruction hierarchy + best practices
 ├── CUSTOM_AGENTS.md             # Agent definitions + skills
 ├── MCP.md                       # Model Context Protocol guide
-├── GOVERNANCE.md                # Security & responsibilities
+├── RESPONSIBILITIES_AND_SECURITY.md  # Security & responsibilities
 ├── CONTEXT_OPTIMIZATION.md      # Advanced: context window optimization
 └── GIT_WORKTREES.md             # Advanced: parallel AI development
 ```
@@ -256,7 +281,7 @@ START HERE
 │  ├─ "How do conventions work?" → CUSTOM_INSTRUCTIONS.md
 │  ├─ "What agents exist?" → CUSTOM_AGENTS.md
 │  ├─ "What's MCP?" → MCP.md
-│  ├─ "What's my responsibility?" → GOVERNANCE.md
+│  ├─ "What's my responsibility?" → RESPONSIBILITIES_AND_SECURITY.md
 │  └─ "How do I optimize context?" → CONTEXT_OPTIMIZATION.md
 │
 ├─ Advanced Topics:
@@ -279,7 +304,7 @@ START HERE
 | How do agents work? | This file | [CUSTOM_AGENTS.md](./CUSTOM_AGENTS.md) |
 | How do instructions work? | This file | [CUSTOM_INSTRUCTIONS.md](./CUSTOM_INSTRUCTIONS.md) |
 | What is MCP? | This file | [MCP.md](./MCP.md) |
-| What's my responsibility? | [GOVERNANCE.md](./GOVERNANCE.md) | Security section |
+| What's my responsibility? | [RESPONSIBILITIES_AND_SECURITY.md](./RESPONSIBILITIES_AND_SECURITY.md) | Security section |
 | Need to optimize context? | [CONTEXT_OPTIMIZATION.md](./CONTEXT_OPTIMIZATION.md) | Advanced patterns |
 | Parallel AI development? | [GIT_WORKTREES.md](./GIT_WORKTREES.md) | Advanced |
 

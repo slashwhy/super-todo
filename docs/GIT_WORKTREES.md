@@ -244,5 +244,5 @@ code --add ../todo_app-feature
 ## Related
 
 - [Custom Agents](./CUSTOM_AGENTS.md) – Agent definitions
-- [Governance](./GOVERNANCE.md) – Review process for agent work
+- [Responsibilities & Security](./RESPONSIBILITIES_AND_SECURITY.md) – Review process for agent work
 - [Git Worktree Docs](https://git-scm.com/docs/git-worktree)

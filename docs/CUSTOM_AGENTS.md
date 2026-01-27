@@ -280,4 +280,4 @@ tools:
 - [Custom Prompts](./CUSTOM_PROMPTS.md) – Reusable task templates
 - [Custom Instructions](./CUSTOM_INSTRUCTIONS.md) – Instruction hierarchy
 - [MCP Integrations](./MCP.md) – External tool connections
-- [Governance & Security](./GOVERNANCE.md) – Agent security constraints
+- [Responsibilities & Security](./RESPONSIBILITIES_AND_SECURITY.md) – Agent security constraints

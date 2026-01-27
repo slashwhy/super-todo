@@ -307,6 +307,6 @@ Connecting MCP servers without understanding what data flows through them.
 ## Related
 
 - [Custom Agents](./CUSTOM_AGENTS.md) – Which agents use which MCP tools
-- [Governance & Security](./GOVERNANCE.md) – MCP security details
+- [Responsibilities & Security](./RESPONSIBILITIES_AND_SECURITY.md) – MCP security details
 - [MCP Official Site](https://modelcontextprotocol.io/)
 - [MCP Architecture](https://modelcontextprotocol.io/docs/learn/architecture)

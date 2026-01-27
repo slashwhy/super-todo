@@ -1,6 +1,6 @@
-# 🛡️ Governance & Security
+# 🛡️ Responsibilities & Security
 
-> Responsible AI use with proper safeguards and developer accountability.
+> Your accountability as a developer using AI assistance – security safeguards and best practices.
 
 **Audience:** All developers using AI assistance | **Prerequisites:** None
 
