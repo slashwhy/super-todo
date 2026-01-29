@@ -1,7 +1,7 @@
 ---
 name: 'Test Unit'
 description: 'Unit and integration testing specialist using Vitest, Vue Test Utils, and Supertest for comprehensive test coverage.'
-tools: ['execute', 'read', 'edit', 'search', 'agent', 'todo']
+tools: ['vscode', 'execute', 'read', 'agent', 'edit', 'search', 'todo']
 model: Claude Sonnet 4.5
 handoffs:
   - label: "Add E2E Tests"
