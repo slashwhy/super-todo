@@ -89,7 +89,6 @@
 - Node.js `^20.19.0` or `>=22.12.0`
 - Docker (for PostgreSQL)
 - VS Code with [GitHub Copilot Extension][copilot-extension]
-- [Vue (Official)][vue-extension] extension
 
 ### Quick Start
 
