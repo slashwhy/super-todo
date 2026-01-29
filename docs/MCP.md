@@ -2,33 +2,30 @@
 
 > Model Context Protocol servers that extend agent capabilities with external tools.
 
-**Audience:** Developers configuring or using MCP tools | **Prerequisites:** [Custom Agents](./CUSTOM_AGENTS.md)
+**Audience:** Developers configuring or using MCP tools | **Prerequisites:** [Custom Agents][custom-agents]
 
----
 
-## Quick Reference
+## 📋 Quick Reference
 
 | Server | Purpose | Used By |
 |--------|---------|---------|
-| **Atlassian** | Jira tickets, Confluence docs | @Specify |
-| **Figma Desktop** | Design specs, tokens | @Specify, @Implement |
-| **Chrome DevTools** | DOM inspection, debugging | @Test E2E |
-| **Playwright** | E2E test execution | @Test E2E |
+| **Atlassian** | Jira tickets, Confluence docs | [@Specify][agent-specify] |
+| **Figma Desktop** | Design specs, tokens | [@Specify][agent-specify], [@Implement][agent-implement] |
+| **Chrome DevTools** | DOM inspection, debugging | [@Test E2E][agent-test-e2e] |
+| **Playwright** | E2E test execution | [@Test E2E][agent-test-e2e] |
 
----
 
-## What & Why
+## 🎯 What & Why
 
-[MCP (Model Context Protocol)](https://modelcontextprotocol.io/) is an open standard connecting AI applications to external systems. Think of it as **USB-C for AI**—a standardized interface to connect to any compatible service.
+MCP (Model Context Protocol) is an open standard connecting AI applications to external systems. Think of it as **USB-C for AI**—a standardized interface to connect to any compatible service.
 
 MCP enables agents to:
 - Access external data (Jira, Figma, databases)
 - Execute workflows (browser automation, test runs)
 - Integrate with services without custom code
 
----
 
-## How It Works
+## 🔄 How It Works
 
 ```
 Agent wants ticket details
@@ -42,9 +39,8 @@ Jira API
 Returns ticket data to agent
 ```
 
----
 
-## Context Efficiency: The Code Execution Pattern
+## ⚡ Context Efficiency: The Code Execution Pattern
 
 Traditional tool-calling consumes excessive tokens. Modern MCP uses **code execution** for efficiency:
 
@@ -89,11 +85,10 @@ return {
 return await figmaApi.getDesign(componentId) // 50K tokens
 ```
 
-> 📖 **Deep Dive:** [CONTEXT_OPTIMIZATION.md](./CONTEXT_OPTIMIZATION.md) for general token management strategies.
+> 📖 **Deep Dive:** [Context Optimization][context-optimization] for general token management strategies.
 
----
 
-## Configured Servers
+## 🖥️ Configured Servers
 
 ### Atlassian (Jira & Confluence)
 
@@ -113,8 +108,6 @@ return await figmaApi.getDesign(componentId) // 50K tokens
   → search("PROJ-123 design") → Linked Figma design
   → Generate implementation plan
 ```
-
----
 
 ### Figma Desktop
 
@@ -138,8 +131,6 @@ Font: Inter 14px    →    --font-body
 
 > 📌 **Note:** Requires Figma desktop app to be running.
 
----
-
 ### Chrome DevTools
 
 **Server:** `io.github.chromedevtools/chrome-devtools-mcp`
@@ -162,8 +153,6 @@ Font: Inter 14px    →    --font-body
 
 > ⚠️ **Security:** Limited to localhost, test environments only.
 
----
-
 ### Playwright
 
 **Server:** `playwright`
@@ -175,9 +164,8 @@ Font: Inter 14px    →    --font-body
 | Report generation | Create reports |
 | Screenshot capture | Save evidence |
 
----
 
-## Configuration
+## ⚙️ Configuration
 
 **Location:** `~/.copilot/mcp-servers.json`
 
@@ -210,9 +198,8 @@ Font: Inter 14px    →    --font-body
 }
 ```
 
----
 
-## Security Risks & Mitigations
+## 🔒 Security Risks & Mitigations
 
 ### 1. Confused Deputy Problem
 
@@ -264,11 +251,10 @@ if (!token.valid) throw new AuthError('Invalid audience')
 
 **Rule:** MCP servers must validate all tokens were issued specifically for them.
 
----
 
-## Patterns
+## ✅ Patterns
 
-### ✅ Do This: Minimal Permissions
+### Do This: Minimal Permissions
 
 ```yaml
 # @Specify agent: read-only
@@ -288,25 +274,38 @@ tools:
   - execute/*
 ```
 
----
-
-### ✅ Do This: Document Data Flow
+### Do This: Document Data Flow
 
 | Agent | MCP | Data Flow | Sensitivity |
 |-------|-----|-----------|-------------|
-| @Specify | Atlassian | Read requirements | Public |
-| @Specify | Figma | Read designs | Public |
-| @Test E2E | DevTools | Debug tests | Test only |
+| [@Specify][agent-specify] | Atlassian | Read requirements | Public |
+| [@Specify][agent-specify] | Figma | Read designs | Public |
+| [@Test E2E][agent-test-e2e] | DevTools | Debug tests | Test only |
 
 ### ⚠️ Avoid This: Unknown Data Paths
 
 Connecting MCP servers without understanding what data flows through them.
 
----
 
-## Related
+## 🔗 Related
 
-- [Custom Agents](./CUSTOM_AGENTS.md) – Which agents use which MCP tools
-- [Responsibilities & Security](./RESPONSIBILITIES_AND_SECURITY.md) – MCP security details
-- [MCP Official Site](https://modelcontextprotocol.io/)
-- [MCP Architecture](https://modelcontextprotocol.io/docs/learn/architecture)
+- [Custom Agents][custom-agents] – Which agents use which MCP tools
+- [Responsibilities & Security][responsibilities] – MCP security details
+- [MCP Official Site][mcp-site] – Introduction and core concepts
+- [MCP Architecture][mcp-architecture] – How MCP works under the hood
+- [Building MCP Servers][mcp-build-servers] – Create custom MCP integrations
+
+<!-- Project Documentation -->
+[custom-agents]: ./CUSTOM_AGENTS.md
+[responsibilities]: ./RESPONSIBILITIES_AND_SECURITY.md
+[context-optimization]: ./CONTEXT_OPTIMIZATION.md
+
+<!-- Agent Files -->
+[agent-specify]: ../.github/agents/specify.agent.md
+[agent-implement]: ../.github/agents/implement.agent.md
+[agent-test-e2e]: ../.github/agents/test-e2e.agent.md
+
+<!-- Model Context Protocol -->
+[mcp-site]: https://modelcontextprotocol.io/
+[mcp-architecture]: https://modelcontextprotocol.io/docs/learn/architecture
+[mcp-build-servers]: https://modelcontextprotocol.io/docs/develop/build-server

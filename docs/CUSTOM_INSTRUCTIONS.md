@@ -4,9 +4,9 @@
 
 **Audience:** Developers customizing Copilot behavior | **Prerequisites:** None
 
-> 📖 **Official Docs:** [VS Code Custom Instructions](https://code.visualstudio.com/docs/copilot/customization/custom-instructions) · [GitHub Repository Instructions](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions)
+> 📖 **Official Docs:** [VS Code Custom Instructions][vscode-instructions] · [GitHub Repository Instructions][github-instructions]
 
----
+## 🚀 Quick Start – Choose Your Agent
 
 ## Quick Reference
 
@@ -16,15 +16,13 @@
 | **Path-specific** | `.github/instructions/*.instructions.md` | Rules for specific file types (uses `applyTo` glob) |
 | **AGENTS.md** | Root or subfolders | Multi-agent workflows (CLI, coding agent) |
 | **Agent** | `.github/agents/*.agent.md` | Specialized personas with tools & handoffs |
-| **Skills** | `.github/skills/*/SKILL.md` | Reusable workflows with scripts (see [Skills](./CUSTOM_AGENTS.md#skills-reference)) |
+| **Skills** | `.github/skills/*/SKILL.md` | Reusable workflows with scripts (see [Skills Reference][skills-reference]) |
 
 **Priority:** Personal > Repository > Organization (all combined, conflicts favor more specific)
 
 > 💡 **Tip:** Custom instructions affect chat and agent mode, not inline suggestions as you type.
 
----
-
-## What & Why
+## 📚 What & Why
 
 Custom instructions define common guidelines that automatically influence how Copilot generates code. Instead of repeating context in every prompt, store it once:
 
@@ -35,9 +33,7 @@ Custom instructions define common guidelines that automatically influence how Co
 
 Instructions are combined from multiple sources and added to chat context automatically.
 
----
-
-## How It Works
+## 🔄 How It Works
 
 When you start a chat or invoke an agent, Copilot gathers applicable instructions:
 
@@ -70,11 +66,9 @@ User starts @Implement to edit TaskCard.vue
 
 **Verification:** Check the **References** section in chat responses to see which instruction files were included.
 
----
+## 📖 Instruction Types
 
-## Instruction Types
-
-### Global Instructions
+### 🌍 Global Instructions
 
 **File:** `.github/copilot-instructions.md`
 
@@ -101,11 +95,9 @@ Always loaded. Keep short (1-2 pages):
 - Hardcode API keys
 ```
 
-See [copilot-instructions.md](../.github/copilot-instructions.md) for this project's example.
+See [copilot-instructions.md][global-instructions] for this project's example.
 
----
-
-### Path-Specific Instructions
+### 🎯 Path-Specific Instructions
 
 **Location:** `.github/instructions/*.instructions.md`
 
@@ -155,9 +147,7 @@ Use `<script setup lang="ts">` syntax...
 | `testing-backend.instructions.md` | `backend/**/*.{spec,test}.ts` |
 | `testing-e2e.instructions.md` | `e2e/**/*.ts` |
 
----
-
-### AGENTS.md (Multi-Agent Support)
+### 🤖 AGENTS.md (Multi-Agent Support)
 
 **Location:** Root of workspace (or subfolders with experimental setting)
 
@@ -177,90 +167,13 @@ npm run test
 
 > 📌 **Note:** Enable with `chat.useAgentsMdFile` setting. For subfolder support, enable `chat.useNestedAgentsMdFiles` (experimental).
 
----
-
-### Agent Instructions
+### 🎭 Agent Instructions
 
 **Location:** `.github/agents/*.agent.md`
 
-Loaded when an agent is invoked. See [Custom Agents](./CUSTOM_AGENTS.md) for details.
+Loaded when an agent is invoked. See [Custom Agents][custom-agents] for details.
 
----
-
-## Patterns
-
-### ✅ Do This
-
-Be specific with actionable rules:
-
-```markdown
-## Prisma Queries
-
-Always include relations:
-
-```typescript
-const task = await prisma.task.findUnique({
-  where: { id },
-  include: { status: true, priority: true }
-})
-```
-
-Whitelist fields explicitly:
-
-```typescript
-await prisma.task.create({
-  data: {
-    title: req.body.title,
-    description: req.body.description
-  }
-})
-```
-```
-
-### ⚠️ Avoid This
-
-Vague instructions don't help:
-
-```markdown
-## Code Quality
-
-Write clean, maintainable code.
-Follow best practices.
-Use good naming conventions.
-```
-
----
-
-### ✅ Do This
-
-Pair examples showing correct and incorrect approaches:
-
-```markdown
-### Component Props
-
-✅ Correct:
-```typescript
-const props = defineProps<{ task: Task }>()
-```
-
-⚠️ Avoid:
-```typescript
-const props = defineProps(['task'])  // No type safety
-```
-```
-
-### ⚠️ Avoid This
-
-Instructions without examples or context:
-
-```markdown
-Use TypeScript properly.
-Don't write bad code.
-```
-
----
-
-## Writing Tips
+## 💡 Writing Tips
 
 | Principle | Example |
 |-----------|---------|
@@ -279,9 +192,7 @@ Don't write bad code.
 | Path-specific | 50-150 lines |
 | Agent | 100-200 lines |
 
----
-
-## Troubleshooting
+## 🔍 Troubleshooting
 
 **Instructions not being applied?**
 
@@ -290,14 +201,26 @@ Don't write bad code.
 3. Check **References** section in chat response to see which files were used
 4. Enable `github.copilot.chat.codeGeneration.useInstructionFiles` setting for global file
 
----
+## 🔗 Related
 
-## Related
+- [Custom Agents][custom-agents] – Agent definitions
+- [MCP Integrations][mcp] – External tool connections
 
-- [Custom Agents](./CUSTOM_AGENTS.md) – Agent definitions
-- [MCP Integrations](./MCP.md) – External tool connections
+<!-- Internal Docs -->
+[global-instructions]: ../.github/copilot-instructions.md
+[custom-agents]: ./CUSTOM_AGENTS.md
+[mcp]: ./MCP.md
 
-**External:**
-- [VS Code Custom Instructions](https://code.visualstudio.com/docs/copilot/customization/custom-instructions)
-- [GitHub Repository Instructions](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions)
-- [Custom Instructions Support Matrix](https://docs.github.com/en/copilot/reference/custom-instructions-support)
+<!-- Agents -->
+[implement-agent]: ../.github/agents/implement.agent.md
+[specify-agent]: ../.github/agents/specify.agent.md
+[test-unit-agent]: ../.github/agents/test-unit.agent.md
+[test-e2e-agent]: ../.github/agents/test-e2e.agent.md
+
+<!-- Skills Reference -->
+[skills-reference]: ./CUSTOM_AGENTS.md#skills-reference
+
+<!-- External Documentation -->
+[vscode-instructions]: https://code.visualstudio.com/docs/copilot/customization/custom-instructions
+[github-instructions]: https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions
+[custom-instructions-matrix]: https://docs.github.com/en/copilot/reference/custom-instructions-support

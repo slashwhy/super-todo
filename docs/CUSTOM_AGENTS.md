@@ -2,35 +2,29 @@
 
 > Specialized AI agents with defined roles, minimal tools, and handoff patterns.
 
-**Audience:** Developers using or extending agents | **Prerequisites:** [Custom Instructions](./CUSTOM_INSTRUCTIONS.md)
+**Audience:** Developers using or extending agents | **Prerequisites:** [Custom Instructions][custom-instructions]
 
----
-
-## Quick Reference
+## 📋 Quick Reference
 
 | Agent | Role | Writes Code? | Typical Use |
 |-------|------|--------------|-------------|
-| **@Specify & Validate** | Planning & validation | ❌ Read-only | `@specify plan PROJ-123`, `@specify challenge` |
-| **@Implement** | Feature implementation | ✅ Yes | `@implement`, `@implement from-design` |
-| **@Test Unit** | Unit & integration tests | ✅ Yes | After implementation |
-| **@Test E2E** | End-to-end tests | ✅ Yes | After unit tests pass |
+| [**@Specify & Validate**][agent-specify] | Planning & validation | ❌ Read-only | Plan features , validate implementations, design reviews |
+| [**@Implement**][agent-implement] | Feature implementation | ✅ Yes | Build from scratch, from design, quick fixes |
+| [**@Test Unit**][agent-test-unit] | Unit & integration tests | ✅ Yes | After implementation, regression tests, component props/emits validation |
+| [**@Test E2E**][agent-test-e2e] | End-to-end tests | ✅ Yes | User interaction flows, complete workflows, cross-feature scenarios |
 
-> 📖 **Official Docs:** [VS Code Custom Agents](https://code.visualstudio.com/docs/copilot/customization/custom-agents) · [GitHub Custom Agents](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents)
+> 📖 **Official Docs:** [VS Code Custom Agents][vscode-agents] · [GitHub Custom Agents][github-agents]
 
----
+## 🎯 What & Why
 
-## What & Why
-
-Custom agents are specialized AI personas in `.github/agents/*.agent.md`. Each has a focused role, minimal tools, and defined handoffs.
+Custom agents are specialized AI personas in [`.github/agents/*.agent.md`][agent-files]. Each has a focused role, minimal tools, and defined handoffs.
 
 **Why separate agents?**
 - **Focus** – Each agent excels at one task type
 - **Safety** – Read-only agents can't accidentally modify code
-- **Least privilege** – Fewer tools = smaller attack surface, faster responses
+- **Least privilege** – Fewer tools = smaller attack surface, faster responses, less context usage
 
----
-
-## Workflow
+## 🔄 Workflow
 
 ```
 @Specify (Plan)         →  "Start Implementation"
@@ -46,27 +40,7 @@ Custom agents are specialized AI personas in `.github/agents/*.agent.md`. Each h
 
 Each arrow is a **handoff**—you review before the next agent begins.
 
----
-
-## Agent Overview
-
-| Agent | Purpose | Key Constraints |
-|-------|---------|-----------------|
-| **@Specify & Validate** | Creates implementation plans from Jira/Figma; validates completed work | Cannot modify files; asks clarifying questions |
-| **@Implement** | Builds features step-by-step from plans | Follows CSS variables, Prisma conventions, confirms before each step |
-| **@Test Unit** | Writes Vitest tests for components and routes | Never modifies production code; uses AAA pattern |
-| **@Test E2E** | Writes Playwright tests for user flows | Uses `data-testid` selectors; Page Object pattern |
-
-**Modes:**
-- `@specify plan <JIRA-ID>` – Generate implementation plan
-- `@specify challenge` – Validate implementation against acceptance criteria
-- `@specify challenge --layout` – Include spacing/responsive checks
-- `@implement from-design` – Build component from Figma
-- `@implement fix` – Quick targeted fix
-
----
-
-## Model Selection
+## ⚙️ Model Selection
 
 Choose the model that fits your task—don't default to the most powerful option.
 
@@ -86,15 +60,9 @@ Choose the model that fits your task—don't default to the most powerful option
 
 > 💡 **Tip:** Start with a balanced model. Upgrade if you hit reasoning limits; downgrade for routine work.
 
----
+## 🛠️ Tool Selection
 
-## Tool Selection Principles
-
-**The fewer tools, the better.** Each tool you grant an agent:
-- Increases potential for unintended actions
-- Expands the attack surface
-- Slows response time (more capabilities to consider)
-- Reduces focus on core task
+**The fewer tools, the better.** Each tool you grant an agent increases risk, slows responses, and uses more context. Apply these principles when creating agents:
 
 | Principle | Why |
 |-----------|-----|
@@ -103,7 +71,7 @@ Choose the model that fits your task—don't default to the most powerful option
 | **Scope MCP tools** | Use `server/specific-tool` not `server/*` when possible |
 | **Audit periodically** | Remove tools that aren't being used |
 
-### Tool Categories
+**Common Tool Categories:**
 
 | Category | When to Include |
 |----------|-----------------|
@@ -114,9 +82,7 @@ Choose the model that fits your task—don't default to the most powerful option
 | `agent` | Only if handoffs to other agents are required |
 | MCP tools | Only the specific integrations needed (Jira, Figma, etc.) |
 
----
-
-## Creating New Agents
+## 📝 Creating New Agents
 
 Add a file to `.github/agents/`:
 
@@ -134,13 +100,13 @@ handoffs:
     send: false
 ---
 
-# Reviewer – Code Quality Specialist
+# Reviewer – Code Quality Specialist with skill (see skills reference later)
 
-You analyze code changes for quality issues, convention violations, and potential bugs.
+You analyze code changes for quality issues, convention violations, and potential bugs. You automatically benefit from relevant [**skills**](#-skills-reference) like `code-documentation` to understand project standards.
 
 ## Role
 
-You are a **code reviewer**. You:
+You are a **code reviewer**: 
 - Read diffs and understand intent
 - Check against project conventions in `.github/instructions/`
 - Identify bugs, security issues, and style problems
@@ -180,30 +146,30 @@ You are a **code reviewer**. You:
 | `handoffs` | ❌ | Agents this can hand off to |
 | `handoffs[].send` | ❌ | Auto-submit handoff (default: false) |
 
-> 📖 **Full spec:** [Agent Configuration Reference](https://docs.github.com/en/copilot/reference/custom-agents-configuration)
+> 📖 **Full spec:** [Agent Configuration Reference][agent-config-ref]
 
----
+## 🎓 Skills Reference
 
-## Skills Reference
+Skills are folders of instructions, scripts, and resources that Copilot loads on-demand. Unlike custom instructions (which define coding standards), skills enable specialized capabilities with scripts, examples, and other resources. 
 
-Skills are folders of instructions, scripts, and resources that Copilot loads on-demand. Unlike custom instructions (which define coding standards), skills enable specialized capabilities with scripts, examples, and other resources.
+**Location:** Project skills in `.github/skills/<skill-name>/SKILL.md` or `.claude/skills/<skill-name>/SKILL.md` · Personal skills in `~/.copilot/skills/<skill-name>/SKILL.md`
 
-**Location:** `.github/skills/<skill-name>/SKILL.md`
+> 📖 **Learn more:** [About Agent Skills][github-about-agent-skills]
 
 ### This Project's Skills
 
 | Skill | Description |
 |-------|-------------|
-| `vue-components` | Vue 3 Composition API patterns, props, emits, slots |
-| `vue-composables` | Reusable composition functions with `use*` naming |
-| `pinia-stores` | State management with Setup Store syntax |
-| `prisma-database` | ORM queries, migrations, relations |
-| `backend-routes` | Express handlers, async/await, field whitelisting |
-| `styling` | CSS variables, BEM naming, responsive patterns |
-| `unit-testing` | Vitest patterns, AAA, mocking |
-| `e2e-testing` | Playwright Page Objects, `data-testid` selectors |
-| `code-documentation` | TSDoc patterns, when to document |
-| `architectural-documentation` | Implementation plans, ADRs, README updates |
+| [`vue-components`][skill-vue-components] | Vue 3 Composition API patterns, props, emits, slots |
+| [`vue-composables`][skill-vue-composables] | Reusable composition functions with `use*` naming |
+| [`pinia-stores`][skill-pinia-stores] | State management with Setup Store syntax |
+| [`prisma-database`][skill-prisma-database] | ORM queries, migrations, relations |
+| [`backend-routes`][skill-backend-routes] | Express handlers, async/await, field whitelisting |
+| [`styling`][skill-styling] | CSS variables, BEM naming, responsive patterns |
+| [`unit-testing`][skill-unit-testing] | Vitest patterns, AAA, mocking |
+| [`e2e-testing`][skill-e2e-testing] | Playwright Page Objects, `data-testid` selectors |
+| [`code-documentation`][skill-code-documentation] | TSDoc patterns, when to document |
+| [`architectural-documentation`][skill-architectural-documentation] | Implementation plans, ADRs, README updates |
 
 ### How Skills Work (Progressive Disclosure)
 
@@ -219,65 +185,55 @@ This means you can install many skills without consuming context—only relevant
 
 | Aspect | Agent Skills | Custom Instructions |
 |--------|--------------|---------------------|
-| **Purpose** | Teach specialized capabilities and workflows | Define coding standards and guidelines |
+| **Purpose** |  Specialized capabilities and workflows | Define coding standards and guidelines |
 | **Portability** | VS Code, Copilot CLI, and coding agent | VS Code and GitHub.com only |
 | **Content** | Instructions, scripts, examples, resources | Instructions only |
 | **Scope** | Task-specific, loaded on-demand | Always applied (or via glob patterns) |
-| **Standard** | Open standard ([agentskills.io](https://agentskills.io/)) | VS Code-specific |
+| **Standard** | Open standard ([agentskills.io][agentskills]) | VS Code-specific |
+| **When to use** | More detailed instructions for specialized tasks | Simple rules relevant to almost every task |
 
-> 📖 **Docs:** [VS Code Agent Skills](https://code.visualstudio.com/docs/copilot/customization/agent-skills) · [Skills Standard](https://agentskills.io/) · [Reference Skills](https://github.com/anthropics/skills)
+> 📖 **Docs:** [VS Code Agent Skills][vscode-agent-skills] · [GitHub About Agent Skills][github-about-agent-skills] · [Skills Standard][agentskills] · [Reference Skills][reference-skills]
 
----
 
-## Patterns
+## 🔗 Related
 
-### ✅ Do This
+- [Custom Prompts][custom-prompts] – Reusable task templates
+- [Custom Instructions][custom-instructions] – Instruction hierarchy
+- [MCP Integrations][mcp] – External tool connections
+- [Responsibilities & Security][responsibilities] – Agent security constraints
 
-```yaml
-# Minimal, focused tools for a read-only agent
-name: 'Reviewer'
-tools:
-  - read
-  - search
-# Why: Can't accidentally modify code; fast; focused
-```
+<!-- Agent Files -->
+[agent-specify]: ../.github/agents/specify.agent.md
+[agent-implement]: ../.github/agents/implement.agent.md
+[agent-test-unit]: ../.github/agents/test-unit.agent.md
+[agent-test-e2e]: ../.github/agents/test-e2e.agent.md
+[agent-files]: ../.github/agents/
 
-```yaml
-# Scoped MCP access
-tools:
-  - 'atlassian/atlassian-mcp-server/getJiraIssue'
-  - 'atlassian/atlassian-mcp-server/search'
-# Why: Only the Jira tools needed, not full Confluence access
-```
+<!-- Skill Files -->
+[skill-vue-components]: ../.github/skills/vue-components/SKILL.md
+[skill-vue-composables]: ../.github/skills/vue-composables/SKILL.md
+[skill-pinia-stores]: ../.github/skills/pinia-stores/SKILL.md
+[skill-prisma-database]: ../.github/skills/prisma-database/SKILL.md
+[skill-backend-routes]: ../.github/skills/backend-routes/SKILL.md
+[skill-styling]: ../.github/skills/styling/SKILL.md
+[skill-unit-testing]: ../.github/skills/unit-testing/SKILL.md
+[skill-e2e-testing]: ../.github/skills/e2e-testing/SKILL.md
+[skill-code-documentation]: ../.github/skills/code-documentation/SKILL.md
+[skill-architectural-documentation]: ../.github/skills/architectural-documentation/SKILL.md
 
-### ⚠️ Avoid This
+<!-- Project Documentation -->
+[custom-prompts]: ./CUSTOM_PROMPTS.md
+[custom-instructions]: ./CUSTOM_INSTRUCTIONS.md
+[mcp]: ./MCP.md
+[responsibilities]: ./RESPONSIBILITIES_AND_SECURITY.md
 
-```yaml
-# Overpowered agent
-tools:
-  - execute
-  - read
-  - edit
-  - delete
-  - git
-  - deploy
-  - 'atlassian/*'
-  - 'figma-desktop/*'
-# Why: Security risk; slow; unfocused; hard to audit
-```
+<!-- GitHub Copilot Documentation -->
+[vscode-agents]: https://code.visualstudio.com/docs/copilot/customization/custom-agents
+[github-agents]: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents
+[agent-config-ref]: https://docs.github.com/en/copilot/reference/custom-agents-configuration
 
-```yaml
-# Wildcard MCP access when specific tools suffice
-tools:
-  - 'figma-desktop/*'
-# Why: Grants 7 tools when you might only need get_screenshot
-```
-
----
-
-## Related
-
-- [Custom Prompts](./CUSTOM_PROMPTS.md) – Reusable task templates
-- [Custom Instructions](./CUSTOM_INSTRUCTIONS.md) – Instruction hierarchy
-- [MCP Integrations](./MCP.md) – External tool connections
-- [Responsibilities & Security](./RESPONSIBILITIES_AND_SECURITY.md) – Agent security constraints
+<!-- Agent Skills & Standards -->
+[vscode-agent-skills]: https://code.visualstudio.com/docs/copilot/customization/agent-skills
+[github-about-agent-skills]: https://docs.github.com/en/copilot/concepts/agents/about-agent-skills
+[agentskills]: https://agentskills.io/
+[reference-skills]: https://github.com/anthropics/skills

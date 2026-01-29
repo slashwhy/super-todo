@@ -2,21 +2,27 @@
 
 > Run multiple AI agents simultaneously without context pollution.
 
-**Audience:** Advanced users scaling AI development | **Prerequisites:** [Custom Agents](./CUSTOM_AGENTS.md), Git fundamentals
+**Audience:** Advanced users scaling AI development | **Prerequisites:** [Custom Agents][custom-agents], Git fundamentals
 
----
 
-## Quick Reference
+## 📋 Quick Reference
 
 | Command | Purpose |
 |---------|---------|
-| `git worktree add ../feature-auth -b feature/auth` | Create isolated worktree |
+| `git worktree add .trees/feature-auth -b feature/auth` | Create isolated worktree |
 | `git worktree list` | Show all worktrees |
-| `git worktree remove ../feature-auth` | Clean up worktree |
+| `git worktree remove .trees/feature-auth` | Clean up worktree |
 
----
+> 💡 **Setup:** Add `.trees/` to your `.gitignore` to keep worktrees local and out of version control.
 
-## What & Why
+**⚡ Quick Start:** Create a worktree, install dependencies, and open VS Code in one command:
+
+```bash
+echo '.trees/' >> .gitignore && git worktree add .trees/feature-new -b feature/new && cd .trees/feature-new && npm install && code .
+```
+
+
+## 🎯 What & Why
 
 When multiple AI agents work in the same repository, their changes interfere:
 
@@ -28,21 +34,19 @@ Agent C: Modifies shared file → Conflicts with Agent A
 
 **Git worktrees** solve this by creating **isolated directories** for each agent, all linked to the same repository.
 
----
 
-## How It Works
+## 🔧 How It Works
 
 ```
-Main Repository (.git)
+todo_app/                        ← Main worktree (your primary work)
       │
-      ├── todo_app/              ← Main worktree (your primary work)
-      │     └── (all files)
+      ├── .git/                  ← Shared repository
+      ├── .gitignore             ← Contains ".trees/"
+      ├── (all project files)
       │
-      ├── todo_app-auth/         ← Agent A worktree (feature/auth)
-      │     └── (isolated copy)
-      │
-      └── todo_app-dashboard/    ← Agent B worktree (feature/dashboard)
-            └── (isolated copy)
+      └── .trees/                ← Local worktree folder (gitignored)
+            ├── feature-auth/    ← Agent A worktree
+            └── feature-dashboard/ ← Agent B worktree
 ```
 
 **Key insight:** All worktrees share the same `.git` history, but each has its own:
@@ -51,9 +55,16 @@ Main Repository (.git)
 - Test state
 - File modifications
 
----
 
-## Setting Up Worktrees
+## 🛠️ Setting Up Worktrees
+
+### First-Time Setup
+
+```bash
+# Add .trees to gitignore (one-time)
+echo '.trees/' >> .gitignore
+git add .gitignore && git commit -m "chore: add .trees to gitignore"
+```
 
 ### Create a Worktree
 
@@ -62,37 +73,36 @@ Main Repository (.git)
 cd todo_app
 
 # Create worktree for a new feature branch
-git worktree add ../todo_app-auth -b feature/auth
+git worktree add .trees/feature-auth -b feature/auth
 
 # Or for an existing branch
-git worktree add ../todo_app-fix fix/bug-123
+git worktree add .trees/bug-fix fix/bug-123
 ```
 
 ### List Active Worktrees
 
 ```bash
 git worktree list
-# /Users/dev/todo_app           abc1234 [main]
-# /Users/dev/todo_app-auth      def5678 [feature/auth]
-# /Users/dev/todo_app-dashboard ghi9012 [feature/dashboard]
+# /Users/dev/todo_app                     abc1234 [main]
+# /Users/dev/todo_app/.trees/feature-auth def5678 [feature/auth]
+# /Users/dev/todo_app/.trees/dashboard    ghi9012 [feature/dashboard]
 ```
 
 ### Clean Up
 
 ```bash
 # Remove a worktree (keeps the branch)
-git worktree remove ../todo_app-auth
+git worktree remove .trees/feature-auth
 
 # Force remove if there are uncommitted changes
-git worktree remove --force ../todo_app-auth
+git worktree remove --force .trees/feature-auth
 
 # Prune stale worktree references
 git worktree prune
 ```
 
----
 
-## Parallel Agent Workflow
+## 🔄 Parallel Agent Workflow
 
 ### Scenario: Three Features in Parallel
 
@@ -102,12 +112,12 @@ cd todo_app
 # Work normally here
 
 # Terminal 2: Agent working on auth
-cd ../todo_app-auth
+cd .trees/feature-auth
 npm install
 # Open in VS Code, use @Implement agent
 
 # Terminal 3: Agent working on dashboard
-cd ../todo_app-dashboard
+cd .trees/dashboard
 npm install
 # Open in VS Code, use @Implement agent
 ```
@@ -130,28 +140,38 @@ Each agent works in isolation.
 Developer reviews and merges results.
 ```
 
----
+> 💡 **Tip:** Use [@Implement][agent-implement] for feature work and [@Test Unit][agent-test-unit] for testing in separate worktrees. See [Custom Prompts][custom-prompts] for ready-to-use task templates.
 
-## Benefits
 
-| Benefit | How Worktrees Help |
-|---------|-------------------|
-| **Isolation** | Each agent's file changes stay separate |
-| **Parallel execution** | Run multiple agents simultaneously |
-| **Risk management** | Failed experiments deleted without affecting main |
-| **Clean context** | Each agent sees only its branch's state |
-| **Efficient** | Single `.git` folder, shared history |
+## ✅ Benefits & When to Use
 
----
+| Benefit | How Worktrees Help | Use Case |
+|---------|-------------------|----------|
+| **Isolation** | Each agent's file changes stay separate | Multiple independent features |
+| **Parallel execution** | Run multiple agents simultaneously | Long-running agent tasks |
+| **Risk management** | Failed experiments deleted without affecting main | Experimental/risky changes |
+| **Clean context** | Each agent sees only its branch's state | Complex refactoring |
+| **Efficient** | Single `.git` folder, shared history | Large codebase work |
 
-## Patterns
+> ⚠️ **Skip worktrees for:** Quick bug fixes (overkill) or single-feature focus (not needed).
 
-### ✅ Do This: Isolated Agent Work
+
+## 📝 Best Practices
+
+| ✅ Do This | ⚠️ Avoid This |
+|------------|---------------|
+| Create dedicated worktree per major feature | Multiple agents in the same directory |
+| Run `npm install` in each worktree | Assuming dependencies are shared |
+| Clean up worktrees after PR merge | Letting worktrees accumulate |
+| Keep worktrees in `.trees/` folder | Cluttering parent directory with worktrees |
+| Open each worktree in separate VS Code window | Mixing uncommitted changes across agents |
+
+**Isolated Agent Work Example:**
 
 ```bash
 # Create dedicated worktree per major feature
-git worktree add ../todo_app-feature -b feature/big-feature
-cd ../todo_app-feature
+git worktree add .trees/big-feature -b feature/big-feature
+cd .trees/big-feature
 npm install
 
 # Open in separate VS Code window
@@ -160,89 +180,40 @@ code .
 # Agent works here, completely isolated
 ```
 
-**Why:** Agent can modify files, install dependencies, run tests without affecting other work.
-
-### ⚠️ Avoid This: Multiple Agents Same Directory
-
-```bash
-# Both agents in same directory
-@Implement "Add auth"  # Modifies src/auth.ts
-@Implement "Add dashboard"  # Conflicts with auth changes
-
-# Result: Merge conflicts, confused context
-```
-
-**Why:** Agents see each other's uncommitted changes, leading to conflicts and incorrect context.
-
----
-
-### ✅ Do This: Clean Up After Merge
+**Clean Up After Merge:**
 
 ```bash
 # After PR is merged
-git worktree remove ../todo_app-feature
+git worktree remove .trees/big-feature
 git branch -d feature/big-feature
 ```
 
-**Why:** Prevents worktree sprawl and stale branches.
 
-### ⚠️ Avoid This: Forgotten Worktrees
+## 🔍 Troubleshooting
 
-```bash
-# Worktrees accumulating over time
-git worktree list
-# Shows 15 abandoned worktrees from old features
-```
+| Issue | Solution |
+|-------|----------|
+| **"Branch already checked out"** | Each branch can only be in one worktree. Create a new branch: `git worktree add .trees/auth-v2 -b feature/auth-v2` |
+| **Dependencies not working** | Each worktree needs its own `node_modules`. Run `npm install` in the worktree directory. |
+| **VS Code not recognizing worktree** | Open as separate workspace: `code .trees/feature-name` or use multi-root: `code --add .trees/feature-name` |
+| **Worktrees showing in git status** | Add `.trees/` to your `.gitignore` file. |
 
-**Why:** Disk space waste, confusion about which is current.
 
----
+## 🔗 Related
 
-## When to Use Worktrees
+- [Custom Agents][custom-agents] – Agent definitions ([@Implement][agent-implement], [@Test Unit][agent-test-unit], [@Test E2E][agent-test-e2e])
+- [Custom Prompts][custom-prompts] – Ready-to-use task templates
+- [Responsibilities & Security][responsibilities] – Review process for agent work
 
-| Scenario | Use Worktrees? |
-|----------|---------------|
-| Multiple independent features | ✅ Yes |
-| Long-running agent task | ✅ Yes |
-| Experimental/risky changes | ✅ Yes |
-| Quick bug fix | ❌ No (overkill) |
-| Single feature focus | ❌ No (not needed) |
+<!-- Project Documentation -->
+[custom-agents]: ./CUSTOM_AGENTS.md
+[custom-prompts]: ./CUSTOM_PROMPTS.md
+[responsibilities]: ./RESPONSIBILITIES_AND_SECURITY.md
 
----
+<!-- Agent Files -->
+[agent-implement]: ../.github/agents/implement.agent.md
+[agent-test-unit]: ../.github/agents/test-unit.agent.md
+[agent-test-e2e]: ../.github/agents/test-e2e.agent.md
 
-## Troubleshooting
-
-### "Branch already checked out"
-
-```bash
-# Error: 'feature/auth' is already checked out at '/path/to/worktree'
-
-# Solution: Each branch can only be in one worktree
-git worktree add ../new-worktree -b feature/auth-v2
-```
-
-### Dependencies Not Installed
-
-```bash
-# Each worktree needs its own node_modules
-cd ../todo_app-feature
-npm install  # Required for each worktree
-```
-
-### VS Code Not Recognizing Worktree
-
-```bash
-# Open worktree as separate workspace
-code ../todo_app-feature
-
-# Or use VS Code multi-root workspace
-code --add ../todo_app-feature
-```
-
----
-
-## Related
-
-- [Custom Agents](./CUSTOM_AGENTS.md) – Agent definitions
-- [Responsibilities & Security](./RESPONSIBILITIES_AND_SECURITY.md) – Review process for agent work
-- [Git Worktree Docs](https://git-scm.com/docs/git-worktree)
+<!-- External Resources -->
+[git-worktree-docs]: https://git-scm.com/docs/git-worktree
