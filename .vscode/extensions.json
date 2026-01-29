@@ -1,10 +1,8 @@
 {
   "recommendations": [
-    "dbaeumer.vscode-eslint",
-    "EditorConfig.EditorConfig",
     "prettier.prettier-vscode",
-    "prisma.prisma",
     "github.copilot-chat",
-    "github.vscode-pull-request-github"
+    "github.vscode-pull-request-github",
+    "vue.volar"
   ]
 }
