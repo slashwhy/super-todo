@@ -78,7 +78,7 @@ function handleClick() {
 1. **Always use `<script setup lang="ts">`**
 2. **Always include `data-testid` attributes** for testable elements
 3. **Never use `v-if` with `v-for`** on the same element
-4. **Use CSS variables** from `src/assets/styles/variables.css`
+4. **Use CSS variables** from `frontend/src/assets/styles/variables.css`
 5. **Never hardcode colors or spacing**
 
 ### Props Patterns
@@ -141,4 +141,4 @@ const emit = defineEmits<{
 
 - Components: `PascalCase.vue` (e.g., `TaskCard.vue`)
 - Tests: `ComponentName.spec.ts` alongside the component
-- Location: `src/components/` for reusable, `src/views/` for pages
+- Location: `frontend/src/components/` for reusable, `frontend/src/views/` for pages

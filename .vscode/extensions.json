@@ -3,6 +3,7 @@
     "prettier.prettier-vscode",
     "github.copilot-chat",
     "github.vscode-pull-request-github",
-    "vue.volar"
+    "vue.volar",
+    "ms-playwright.playwright"
   ]
 }

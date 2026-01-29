@@ -60,7 +60,7 @@ test.describe('Task Management', () => {
 ### Page Object Pattern
 
 ```typescript
-// e2e/pages/TasksPage.ts
+// frontend/e2e/pages/TasksPage.ts
 import { Page, Locator } from '@playwright/test'
 
 export class TasksPage {
@@ -224,7 +224,7 @@ Use Chrome DevTools MCP for:
 npx playwright test
 
 # Run specific test file
-npx playwright test e2e/tasks.spec.ts
+npx playwright test frontend/e2e/tasks.spec.ts
 
 # Debug mode
 npx playwright test --debug

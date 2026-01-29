@@ -31,7 +31,7 @@ export default defineConfig({
       timeout: 120000,
     },
     {
-      command: 'cd backend && npm run dev',
+      command: 'cd ../backend && npm run dev',
       url: 'http://localhost:3000/health',
       reuseExistingServer: !process.env.CI,
       timeout: 120000,

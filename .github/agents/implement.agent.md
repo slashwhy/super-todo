@@ -161,7 +161,7 @@ This project uses:
 ### Key File Locations
 
 ```
-src/
+frontend/src/
 ├── components/          # Vue components
 ├── views/               # Page components
 ├── stores/              # Pinia stores
@@ -240,7 +240,7 @@ Here's my TODO:
 
 ### Step 1: Create PriorityFilter Component
 
-I'll create `src/components/filters/PriorityFilter.vue` with:
+I'll create `frontend/src/components/filters/PriorityFilter.vue` with:
 - Dropdown using existing priority data from config store
 - Emits `@change` event with selected priority
 - Uses CSS variables for styling

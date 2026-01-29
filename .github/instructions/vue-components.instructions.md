@@ -53,9 +53,9 @@ const statusColor = computed(() => props.task.status.color)
 
 | Directory | Purpose |
 |-----------|---------|
-| `src/components/layout/` | Layout components (MainLayout, TheHeader, TheSidebar) |
-| `src/components/` | Reusable UI components |
-| `src/views/` | Route-level page components |
+| `frontend/src/components/layout/` | Layout components (MainLayout, TheHeader, TheSidebar) |
+| `frontend/src/components/` | Reusable UI components |
+| `frontend/src/views/` | Route-level page components |
 
 ## Props and Emits
 
@@ -75,7 +75,7 @@ const props = withDefaults(defineProps<{
 ## Best Practices
 
 - Keep components focused on single responsibility
-- Extract reusable logic into composables (`src/composables/`)
+- Extract reusable logic into composables (`frontend/src/composables/`)
 - Use `v-model` with `defineModel()` for two-way binding
 - Prefer `computed` over watchers for derived state
 - Use slots for flexible composition

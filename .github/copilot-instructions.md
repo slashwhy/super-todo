@@ -13,7 +13,7 @@ A monorepo task management app with Vue 3 frontend and Express/Prisma backend.
 ## Project Structure
 
 ```
-/                      # Vue 3 SPA (Vite + TypeScript + Pinia)
+/frontend/             # Vue 3 SPA (Vite + TypeScript + Pinia)
   src/components/      # Reusable Vue components
   src/views/           # Route-level page components
   src/router/          # Vue Router configuration
@@ -32,7 +32,7 @@ npm install && npm run db:migrate && npm run db:seed
 npm run dev                    # API → http://localhost:3000
 
 # Frontend
-npm install && npm run dev     # App → http://localhost:5173
+cd frontend && npm install && npm run dev     # App → http://localhost:5173
 ```
 
 ## Critical Rules
@@ -41,7 +41,7 @@ npm install && npm run dev     # App → http://localhost:5173
 - Use `.js` extension in backend ESM imports: `import { prisma } from "../lib/prisma.js"`
 - Include relations in Prisma queries: `include: { status: true, priority: true }`
 - Use `<script setup lang="ts">` for Vue components
-- Use CSS variables from `src/assets/styles/variables.css`
+- Use CSS variables from `frontend/src/assets/styles/variables.css`
 - Whitelist fields explicitly in route handlers (never pass `req.body` directly to Prisma)
 
 **Never:**
@@ -68,7 +68,7 @@ npm install && npm run dev     # App → http://localhost:5173
 ## Testing
 
 ```bash
-npm run test                    # Frontend tests
+cd frontend && npm run test     # Frontend tests
 cd backend && npm run test:run  # Backend tests
 ```
 

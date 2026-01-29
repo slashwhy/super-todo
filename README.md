@@ -75,59 +75,51 @@
 
 ## 🛠 Tech Stack
 
-| Layer | Technologies |
-|-------|--------------|
-| **Frontend** | Vue 3, TypeScript, Vite, Pinia, Vue Router |
-| **Backend** | Express, Prisma ORM, PostgreSQL |
-| **Testing** | Vitest, Vue Test Utils, Supertest, Playwright |
-| **AI** | GitHub Copilot, Custom Agents, MCP |
+| Layer | Stack | Details |
+|-------|-------|---------|
+| **Frontend** | Vue 3 + TypeScript + Vite | [frontend/README.md][frontend-readme] |
+| **Backend** | Express + Prisma + PostgreSQL | [backend/README.md][backend-readme] |
+| **Testing** | Vitest, Playwright | Unit & E2E |
+| **AI** | GitHub Copilot, Custom Agents, MCP | See [docs/][ai-guide] |
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
 - Node.js `^20.19.0` or `>=22.12.0`
+- Docker (for PostgreSQL)
 - VS Code with [GitHub Copilot Extension][copilot-extension]
 - [Vue (Official)][vue-extension] extension
 
-### Installation
-
-```sh
-# Clone the repository
-git clone <repository-url>
-cd todo_app
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-```
-
-### Available Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start dev server with hot-reload |
-| `npm run build` | Type-check & build for production |
-| `npm run preview` | Preview production build |
-| `npm run test` | Run frontend tests (Vitest) |
-| `npm run lint` | Lint & auto-fix with ESLint |
-| `npm run format` | Format with Prettier |
-
-### Backend Scripts
+### Quick Start
 
 ```bash
+# Clone and install all dependencies
+git clone <repository-url>
+cd todo_app
+npm run install:all
+
+# Start backend (requires Docker)
 cd backend
+docker compose up -d
+npm run db:migrate && npm run db:seed
+npm run dev                    # API → http://localhost:3000
+
+# Start frontend (new terminal)
+cd frontend
+npm run dev                    # App → http://localhost:5173
 ```
+
+### Workspace Scripts
 
 | Command | Description |
 |---------|-------------|
-| `npm run dev` | Start API server → http://localhost:3000 |
-| `npm run db:migrate` | Run database migrations |
-| `npm run db:seed` | Seed sample data |
-| `npm run db:studio ` | Prisma Studio GUI |
-| `npm run test:run` | Run backend tests |
+| `npm run dev` | Start frontend & backend concurrently |
+| `npm run install:all` | Install all dependencies |
+| `npm run test` | Run all tests |
+| `npm run test:e2e` | Run Playwright E2E tests |
+
+📖 See [frontend/README.md][frontend-readme] and [backend/README.md][backend-readme] for full command reference.
 
 ## 🔗 Official Resources
 
@@ -176,6 +168,7 @@ cd backend
 [responsibilities]: docs/RESPONSIBILITIES_AND_SECURITY.md
 [context-optimization]: docs/CONTEXT_OPTIMIZATION.md
 [git-worktrees]: docs/GIT_WORKTREES.md
+[frontend-readme]: frontend/README.md
 [backend-readme]: backend/README.md
 
 <!-- Features and Sections -->
