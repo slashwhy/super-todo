@@ -24,7 +24,48 @@ Custom agents are specialized AI personas in [`.github/agents/*.agent.md`][agent
 - **Safety** – Read-only agents can't accidentally modify code
 - **Least privilege** – Fewer tools = smaller attack surface, faster responses, less context usage
 
-## 🔄 Workflow
+## 🌐 Agent Environments
+
+VS Code supports four main categories of agents, each designed for different use cases and levels of interaction. Custom agents (defined in `.agent.md` files) can be used with local, background, and cloud agents to apply the same role or persona across environments.
+
+> 📖 **Official Docs:** [Agents Overview][vscode-agents-overview]
+
+| Type | Environment | Interaction | Best For |
+|------|-------------|-------------|----------|
+| [**Local**][vscode-local-agents] | VS Code on your machine | Interactive chat | Real-time feedback, brainstorming, tasks needing VS Code tools/MCP |
+| [**Background**][vscode-background-agents] | CLI on your machine | Autonomous | Well-defined tasks, isolated work via Git worktrees |
+| [**Cloud**][vscode-cloud-agents] | Remote infrastructure | Autonomous | Team collaboration via PRs, GitHub integration |
+| **Third-party** | External providers | Varies | OpenAI Codex, other AI agents in your workflow |
+
+### Local Agents
+
+Run directly within VS Code for **interactive chat-based tasks**. Local agents have full access to workspace files, all configured tools (built-in, MCP, extensions), and all available models including BYOK.
+
+**Best for:** Brainstorming, planning, tasks requiring immediate feedback, work needing VS Code context (linting errors, test results), or access to MCP servers.
+
+### Background Agents
+
+CLI-based agents that run **autonomously in the background**. Can use Git worktrees to work in isolation, preventing conflicts with your active development. Cannot access MCP or extension-provided tools.
+
+**Best for:** Well-scoped implementation tasks, autonomous work that doesn't need interactive feedback or VS Code runtime context.
+
+### Cloud Agents
+
+Run on **remote infrastructure** and integrate with GitHub repositories and pull requests. Operate via branches and PRs for team collaboration and code reviews. Can access MCP servers configured in the remote environment.
+
+**Best for:** Collaborative tasks requiring PR reviews, well-defined implementations, work that benefits from team oversight.
+
+### Handoffs Between Environments
+
+You can **hand off tasks between agent types** to leverage their unique strengths:
+
+1. **Plan with local agent** → Interactive refinement
+2. **Delegate to background** → Create proof-of-concept variants
+3. **Continue with cloud** → Implement in PR for team review
+
+Use the **Continue In** control in Chat view, or type `@cli` or `@cloud` in your prompt to delegate.
+
+## 🔄 Our local agents workflow
 
 ```
 @Specify (Plan)         →  "Start Implementation"
@@ -197,6 +238,7 @@ This means you can install many skills without consuming context—only relevant
 
 ## 🔗 Related
 
+- [Agents Overview][vscode-agents-overview] – VS Code agent types and environments
 - [Custom Prompts][custom-prompts] – Reusable task templates
 - [Custom Instructions][custom-instructions] – Instruction hierarchy
 - [MCP Integrations][mcp] – External tool connections
@@ -229,6 +271,10 @@ This means you can install many skills without consuming context—only relevant
 
 <!-- GitHub Copilot Documentation -->
 [vscode-agents]: https://code.visualstudio.com/docs/copilot/customization/custom-agents
+[vscode-agents-overview]: https://code.visualstudio.com/docs/copilot/agents/overview
+[vscode-local-agents]: https://code.visualstudio.com/docs/copilot/chat/copilot-chat
+[vscode-background-agents]: https://code.visualstudio.com/docs/copilot/agents/background-agents
+[vscode-cloud-agents]: https://code.visualstudio.com/docs/copilot/agents/cloud-agents
 [github-agents]: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents
 [agent-config-ref]: https://docs.github.com/en/copilot/reference/custom-agents-configuration
 

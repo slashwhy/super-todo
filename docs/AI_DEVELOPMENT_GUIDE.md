@@ -37,6 +37,7 @@ Quick lookup for all Copilot customization features:
 | Feature | Purpose | File Type | Documentation |
 |---------|---------|-----------|---------------|
 | **Smart Actions** | Built-in IDE commands (no setup needed) | N/A | [VS Code Copilot][copilot-smart-actions] |
+| **Agent Environments** | Local, background, and cloud agent types | N/A | [Agents Overview][vscode-agents-overview] |
 | **Custom Prompts** | Reusable task templates | `.prompt.md` | [CUSTOM_PROMPTS.md][custom-prompts] |
 | **Custom Instructions** | Coding standards & conventions | `.instructions.md` | [CUSTOM_INSTRUCTIONS.md][custom-instructions] |
 | **Custom Agents** | Specialized AI personas with roles | `.agent.md` | [CUSTOM_AGENTS.md][custom-agents] |
@@ -81,6 +82,18 @@ This project uses **4 specialized agents** with defined roles and constrained to
 
 **Typical Flow:** `@Specify` → `@Implement` → `@Test Unit` → `@Test E2E` → `@Specify` (validate)
 
+### Agent Environments
+
+VS Code supports different agent environments. Your custom agents (`.agent.md` files) can be used across all of them:
+
+| Type | Description | Best For |
+|------|-------------|----------|
+| [**Local**][vscode-local-agents] | Interactive chat in VS Code | Real-time feedback, planning, tasks needing MCP/extensions |
+| [**Background**][vscode-background-agents] | Autonomous CLI-based agents | Well-defined tasks, isolated via Git worktrees |
+| [**Cloud**][vscode-cloud-agents] | Remote execution with GitHub | Team collaboration via PRs, code reviews |
+
+> 📖 **Learn more:** [Agents Overview][vscode-agents-overview] · [CUSTOM_AGENTS.md][custom-agents]
+
 ### Key Principle: Human in Command
 
 > **AI is a co-pilot, not an autopilot.**
@@ -97,6 +110,7 @@ Pick a topic below to get started. Each guide includes real examples from this p
 
 | Topic | Best For |
 |-------|----------|
+| [🌐 **Agents Overview**][vscode-agents-overview] | Understanding agent environments (local, background, cloud), session management, and handoffs between agent types |
 | [🤖 **Agents**][custom-agents] | Understanding agent roles and responsibilities, model selection, tool constraints, and how each agent works in your workflow |
 | [📋 **Custom Instructions**][custom-instructions] | Learning the instruction hierarchy and best practices for encoding project conventions, coding standards, and patterns |
 | [🎯 **Custom Prompts**][custom-prompts] | Creating reusable prompt templates for recurring tasks, automating workflows, and triggering specific agent behaviors |
@@ -206,6 +220,10 @@ Optimize across four dimensions:
 [copilot-smart-actions]: https://code.visualstudio.com/docs/copilot/copilot-smart-actions
 [copilot-chat-features]: https://code.visualstudio.com/docs/copilot/chat/copilot-chat
 [vscode-copilot-docs]: https://code.visualstudio.com/docs/copilot/overview
+[vscode-agents-overview]: https://code.visualstudio.com/docs/copilot/agents/overview
+[vscode-local-agents]: https://code.visualstudio.com/docs/copilot/chat/copilot-chat
+[vscode-background-agents]: https://code.visualstudio.com/docs/copilot/agents/background-agents
+[vscode-cloud-agents]: https://code.visualstudio.com/docs/copilot/agents/cloud-agents
 
 <!-- Model Context Protocol -->
 [mcp-site]: https://modelcontextprotocol.io/
