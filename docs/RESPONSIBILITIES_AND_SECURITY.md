@@ -4,64 +4,70 @@
 
 **Audience:** All developers using AI assistance | **Prerequisites:** None
 
----
 
-## Quick Reference
+
+## AI-Slop
+
 
 > 🚨 **Golden Rule:** AI is a co-pilot, not an autopilot. You are responsible for code quality, security, and compliance.
 
-| Principle | Action |
-|-----------|--------|
-| **Review** | Read and understand AI-generated code |
-| **Validate** | Check against requirements and standards |
-| **Test** | Run full test suite before merging |
-| **Approve** | Explicit sign-off before deployment |
+⚡ **Blindly accepting AI-generated code feels fast.** You save 5 minutes writing code or reviewing a PR. Then you lose those 5 minutes—**and much more**—later when bugs surface and technical debt accumulates:
+
+### Timeline: What "Saving Time" Really Costs
+
+| Time | Event | Impact |
+|------|-------|--------|
+| T+0min | ✅ AI generates code in seconds | Feels productive |
+| T+5min | 🚀 You commit without reading it | No review friction |
+| T+1hr | 👀 Code review: "What is this doing?" | Questions arise |
+| T+2hr | 😅 Revert, rewrite, re-review | The real cost begins |
+| T+3hr | 🐛 Bug appears in production | Users report issues |
+| T+1week | 🛠️ Technical debt backlog grows | More rework needed |
+| T+6months | 💸 "Why is everything so slow?" | Systemic slowdown |
+
+**📊 Total cost: 1000x the 5 minutes you "saved"**
 
 ---
 
-## The True Cost of Skipping Review
-
-Blindly accepting AI-generated code feels fast. You save 5 minutes writing boilerplate. Then you lose those 5 minutes—**and much more**—later:
-
-```
-Timeline of "Fast" AI Development Without Review
-================================================
-T+0min     ✅ AI generates code in seconds
-T+5min     🚀 You commit without reading it
-T+1hr      👀 Code review: "What is this doing?"
-T+2hr      😅 Revert, rewrite, re-review
-T+3hr      🐛 Bug appears in production
-T+1week    🛠️ Technical debt backlog grows
-T+6months  💸 "Why is everything so slow?"
-
-→ Total cost: 1000x the 5 minutes you "saved"
-```
-
 ### The Compound Interest Problem
 
-```
-┌─────────────────────────────────────────────────────┐
-│  Skip Review              │  Review Properly        │
-├───────────────────────────┼─────────────────────────┤
-│  Time Saved: 5 min        │  Time Saved: 3 min      │
-│  Technical Debt: ∞        │  Technical Debt: Low    │
-│  Hidden Costs:            │  Hidden Costs:          │
-│   • Review cycles: +10min │   • None                │
-│   • Prod bugs: +2 hours   │                         │
-│   • Refactor: +1 week     │                         │
-│  ROI: Negative            │  ROI: +200%             │
-└───────────────────────────┴─────────────────────────┘
-```
+| Aspect | ❌ Skip Review | ✅ Review Properly |
+|--------|-----------|-----------------|
+| **Time Saved** | 5 min | 3 min |
+| **Technical Debt** | ∞ | Low |
+| **Review Cycles** | +10min | None |
+| **Prod Bugs** | +2 hours | None |
+| **Refactoring** | +1 week | Minimal |
+| **ROI** | **Negative** | **+200%** |
 
 ### Common "Slop" Patterns to Catch
 
-| Pattern | Example |
-|---------|--------|
-| Missing error handling | `await fetch()` without try/catch |
-| Implicit type coercions | `if (value)` instead of `if (value !== undefined)` |
-| N+1 queries | Loop with database call inside |
-| Security oversights | `req.body` passed directly to Prisma |
-| Convention violations | Hardcoded colors, wrong file structure |
+AI-generated code often exhibits predictable weaknesses. These **code smells** indicate problems that require deeper investigation:
+
+#### 🔴 Critical (Security & Data Loss)
+
+| Pattern | Red Flag | Why It Matters |
+|---------|----------|---|
+| 🛡️ **Exposed internals** | Raw objects passed to external layers | Security & API brittleness |
+| ✅ **Missing validation** | Accepts user input without checking | Injection attacks, data corruption |
+| 🚨 **Silent data loss** | Catches errors without logging/rethrowing | Bugs disappear into void |
+
+#### 🟠 High (Performance & Stability)
+
+| Pattern | Red Flag | Why It Matters |
+|---------|----------|---|
+| ⚡ **N+1 queries** | Database calls inside loops | Terrible performance at scale |
+| 💥 **Missing error handling** | No try/catch, null checks, or fallbacks | Silent failures in production |
+| 🎯 **Implicit assumptions** | Assumes happy path, ignores edge cases | Crashes on unexpected input |
+
+#### 🟡 Medium (Maintainability & Testing)
+
+| Pattern | Red Flag | Why It Matters |
+|---------|----------|---|
+| 🔢 **Magic numbers & strings** | Hardcoded values scattered throughout | Impossible to maintain |
+| 📋 **Duplicated logic** | Similar code in multiple places | Inconsistencies when fixing bugs |
+| 🎪 **God objects** | Huge functions/classes doing everything | Unmaintainable, impossible to test |
+| 📦 **Too many parameters** | Functions with 5+ arguments | Hard to test, easy to confuse |
 
 ### The Bottom Line
 
@@ -70,53 +76,32 @@ T+6months  💸 "Why is everything so slow?"
 
 The productivity gain is real—**but only if you do the work right.**
 
----
+
 
 ## What & Why
 
-AI-assisted development boosts productivity but requires discipline. Every AI suggestion—especially for security, complexity, or architecture—must go through human review.
 
-**The workflow:**
+AI boosts productivity—but only with discipline. Every AI suggestion passes through **human checkpoints**, especially for security, complexity, and architecture. This project demonstrates a workflow where **you make the calls** and AI handles the grunt work.
+
+### The Human-in-the-Loop Workflow
+
 ```
-@Specify (Plan) → [You approve] → @Implement → [You confirm each step]
-     ↓
-@Test → [You review results] → @Specify (Validate) → [You approve] → Merge
+YOU PLAN          YOU CONFIRM      YOU REVIEW       YOU APPROVE
+   ↓                 ↓                ↓                ↓
+@Specify → [✅ You] → @Implement → [✅ You] → @Test → [✅ You] → Merge
+   
+Key: AI generates ideas. You decide what ships.
 ```
 
----
+**Critical approval points (all require human sign-off):**
+- ✅ **Specification** – Scope & acceptance criteria
+- ✅ **Implementation** – Each code change confirmed
+- ✅ **Testing** – Results validated, edge cases checked
+- ✅ **Merge** – Final review before production
 
-## Developer Checklists
+This isn't "let AI do the work." It's "let AI do the repetitive work while you focus on quality, security, and decision-making."
 
-### Every Feature
 
-- [ ] Review all AI-generated code before committing
-- [ ] Run full test suite
-- [ ] Verify project conventions (CSS, TypeScript, naming)
-- [ ] Check accessibility (WCAG compliance)
-- [ ] Check performance (N+1 queries, bundle size)
-
-### Security Changes
-
-- [ ] Manual deep review of security logic
-- [ ] Peer security review
-- [ ] No hardcoded secrets
-- [ ] Test edge cases and error scenarios
-
-### Database Changes
-
-- [ ] Schema matches requirements
-- [ ] Test migrations on fresh database
-- [ ] Check backward compatibility
-- [ ] Verify indexes exist
-
-### API Changes
-
-- [ ] Compare against API specification
-- [ ] Input validation in place
-- [ ] All error paths covered
-- [ ] Authorization enforced
-
----
 
 ## Data Privacy
 
@@ -137,49 +122,37 @@ Your Code → MCP Server → External Service → AI Model
 
 Always:
 - Use `.env` for secrets, never commit
+- Use `.gitignore` to exclude sensitive files
 - Use local MCP servers when possible
-- Rotate credentials regularly
-
----
 
 ## MCP Security Risks
 
-### 1. Confused Deputy Problem
+**New to MCP?** The [Model Context Protocol][mcp-docs] allows AI agents to access external tools and data. Learn how [this project uses MCP][mcp-integrations] and understand the security implications when you grant agents permissions. 
 
-**Risk:** Agent combines permissions in unintended ways.
+### 1. 🔓 Confused Deputy Problem
 
-```
-Agent has: read code + write to Jira
-Unintended: reads secrets, posts them to public Jira ticket
-```
+| Aspect | Details |
+|--------|---------|
+| **Risk** | Agent combines permissions in unintended ways |
+| **Example** | Agent has read code + write to Jira → reads secrets, posts to public Jira |
+| **Prevention** | Minimal permissions per custom agent and server, separate read-only & write access |
 
-**Mitigation:**
-- ✅ Minimal permissions per MCP server
-- ✅ Separate read-only and write-access servers
+### 2. 🔑 Credential Exposure
 
-### 2. Credential Exposure
+| Aspect | Details |
+|--------|---------|
+| **Risk** | API keys logged or exposed in output/errors |
+| **❌ Bad** | `console.log(\`Token: ${apiToken}\`)` |
+| **✅ Good** | `console.log(\`Token: ${apiToken.slice(0, 4)}...\`)` |
 
-**Risk:** API keys logged or exposed.
-
-```typescript
-// ⚠️ Avoid
-console.log(`Token: ${apiToken}`)
-
-// ✅ Do This
-console.log(`Token: ${apiToken.slice(0, 4)}...`)
-```
-
-### 3. Agent Tool Overreach
-
-**Risk:** Agent has too many capabilities.
+### 3. 🎯 Agent Tool Overreach
 
 | Agent | Can Access | Cannot Access |
 |-------|------------|---------------|
 | @Specify | Read code, Jira/Figma (read-only) | Write files, execute code |
-| @Implement | Create/edit files, dev execution | Production database, delete without confirm |
-| @Test | Edit test files, run tests | Production code, infrastructure |
+| @Implement | Create/edit files, dev execution | Prod database, delete without confirm |
+| @Test | Edit test files, run tests | Prod code, infrastructure |
 
----
 
 ## AI-Assisted Version Control
 
@@ -194,26 +167,25 @@ Copilot provides built-in features for version control tasks. Use them, but revi
 | **Merge Conflict Resolution** | "Resolve with AI" button | ⚠️ **Careful review** required |
 | **Code Review** | Right-click → Review | Use as input, not final answer |
 
-### Commit Message Generation
+### 💬 Commit Message Generation
 
-The AI summarizes staged changes into a commit message.
+The AI summarizes staged changes into a commit message. **You decide if it's accurate.**
 
-```
-✅ Good workflow:
-1. Stage changes
-2. Click sparkle → Generate message
-3. Read and edit the message
-4. Commit
+#### Workflow Comparison
 
-⚠️ Bad workflow:
-1. Stage changes
-2. Click sparkle → Accept blindly → Commit
-```
+| Step | ✅ Good Workflow | ⚠️ Bad Workflow |
+|------|-----------------|-----------------|
+| 1 | Stage changes | Stage changes |
+| 2 | Click sparkle → Generate message | Click sparkle → Generate message |
+| 3 | **Read & edit** the message | Accept blindly |
+| 4 | Commit | Commit |
 
-**Always verify:**
-- Message accurately describes changes
-- No sensitive information included
-- Follows project conventions (if any)
+#### Verification Checklist
+
+Before committing an AI-generated message:
+- [ ] 📝 Message accurately describes all changes
+- [ ] 🔒 No sensitive information included
+- [ ] 📋 Follows project conventions (if any)
 
 ### Merge Conflict Resolution
 
@@ -237,98 +209,52 @@ Reality: Branch B has the critical fix
 - Security-related code
 - Complex refactors
 
-### PR Description Generation
-
-The AI creates title and description from diff.
-
-**Review checklist:**
-- [ ] Title is concise and accurate
-- [ ] Description explains *why*, not just *what*
-- [ ] Breaking changes called out
-- [ ] No internal/sensitive references exposed
-
----
 
 ## When to Use AI vs. Manual
 
-### ✅ Use AI For
+| Task Category | ✅ AI Excels | ⚠️ You Handle |
+|---|---|---|
+| **Boilerplate** | Following conventions | ❌ Never skip |
+| **Testing** | Scaffolding, setup | Security-critical tests |
+| **Refactoring** | Within patterns | Novel architecture |
+| **Docs** | Initial drafts, formatting | Security docs |
+| **Features** | Initial drafts | Complex logic, auth, encryption |
 
-- Boilerplate following conventions
-- Test scaffolding
-- Refactoring within patterns
-- Documentation
-
-### ⚠️ Code Manually
-
-- Security-critical logic
-- Authentication/authorization
-- Data encryption
-- Novel algorithms
-- Architecture decisions
-
----
+**Golden Rule:** If it involves security, novel decisions, or your domain's core logic—you write it.
 
 ## Incident Response
 
-### Security Issue Found
+### 🚨 Agent Misbehavior
 
-1. **Stop** – Don't commit or deploy
-2. **Isolate** – Create private branch
-3. **Audit** – Review data exposure
-4. **Fix** – Manual security fix
-5. **Review** – Peer/security review
-6. **Rotate** – Rotate exposed credentials
-7. **Document** – Record incident
+| Step | Action | Details |
+|------|--------|---------|
+| 1️⃣ | 🛑 **Disable** | Remove tool access immediately |
+| 2️⃣ | 👀 **Review** | Examine what happened & root cause |
+| 3️⃣ | 🔧 **Fix** | Update agent constraints/permissions |
+| 4️⃣ | ✅ **Test** | Verify constraints work before re-enabling |
 
-### Agent Misbehavior
 
-1. **Disable** – Remove tool access
-2. **Review** – Examine what happened
-3. **Fix** – Update agent constraints
-4. **Test** – Verify before re-enabling
+## 🔒 Pre-Deployment Security Checklist
 
----
+Before shipping AI-assisted code:
 
-## Security Checklist
+| Category | Checklist Item | Why? |
+|----------|---|---|
+| 🔐 **Secrets** | No hardcoded credentials, all in `.env` | Prevents credential leaks |
+| 👥 **Agents** | Minimal permissions, combinations reviewed | Limits attack surface |
+| 📡 **MCP** | Isolated environments, data flow understood | Prevents confused deputy |
+| 📝 **Code** | Manually reviewed, tests passing | Catches AI slop & bugs |
+| 📊 **Data** | No sensitive data in logs, compliance met | GDPR/privacy requirements |
 
-Before deploying AI-assisted code:
-
-- [ ] **Secrets:** No hardcoded credentials, all in `.env`
-- [ ] **Agents:** Minimal permissions, combinations reviewed
-- [ ] **MCP:** Isolated environments, data flow understood
-- [ ] **Code:** Manually reviewed, tests passing
-- [ ] **Data:** No sensitive data in logs, compliance met
-
----
-
-## Patterns
-
-### ✅ Do This
-
-```typescript
-// Explicit field whitelisting
-await prisma.task.create({
-  data: {
-    title: req.body.title,
-    description: req.body.description
-  }
-})
-```
-
-### ⚠️ Avoid This
-
-```typescript
-// Passing raw input to database
-await prisma.task.create({
-  data: req.body  // Dangerous: any field accepted
-})
-```
-
----
 
 ## Related
 
-- [Custom Agents](./CUSTOM_AGENTS.md) – Agent tool restrictions
-- [MCP Integrations](./MCP.md) – Server security details
-- [GitHub Copilot Trust](https://copilot.github.trust.page/)
-- [OWASP Security](https://owasp.org/)
+- [Custom Agents][custom-agents] – Agent tool restrictions
+- [MCP Integrations][mcp-integrations] – Server security details
+- [GitHub Copilot Trust][copilot-trust]
+
+<!-- Reference Links -->
+[custom-agents]: ./CUSTOM_AGENTS.md
+[mcp-integrations]: ./MCP.md
+[mcp-docs]: https://modelcontextprotocol.io/
+[copilot-trust]: https://copilot.github.trust.page/

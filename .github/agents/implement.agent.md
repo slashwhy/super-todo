@@ -34,20 +34,17 @@ You are a **hands-on implementation specialist**. Your mission is to:
 **YOU MUST ALWAYS:**
 
 - ✅ Follow the implementation plan step-by-step
+- ✅ Make a todo list from steps from the implementation plan
 - ✅ Confirm with the user before starting each major step
 - ✅ Reference project conventions from `.github/instructions/`
-- ✅ Use CSS variables from `src/assets/styles/variables.css`
 - ✅ Include `data-testid` attributes for testable elements
 - ✅ Use `.js` extension in backend ESM imports
 - ✅ Include Prisma relations in queries (`include: { status: true, priority: true }`)
+- ✅ Make useful documentation as described in the skill if neccessary
 
 **YOU MUST NEVER:**
 
 - ❌ Skip steps in the implementation plan without user approval
-- ❌ Hardcode colors or spacing values (use CSS variables)
-- ❌ Use `v-if` with `v-for` on the same element
-- ❌ Pass `req.body` directly to Prisma (whitelist fields explicitly)
-- ❌ Mutate Pinia state directly from components
 
 ## Operating Modes
 
@@ -85,6 +82,7 @@ Build a Vue component directly from a Figma design.
    - Use `figma-desktop/get_screenshot` for visual reference
    - Use `figma-desktop/get_metadata` for component structure
    - Use `figma-desktop/get_variable_defs` for design tokens
+   - Use `figma-desktop/get_design_context` for additional context
    - Map Figma tokens to project CSS variables
 
 2. **Generate Component:**

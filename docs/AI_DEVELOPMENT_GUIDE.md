@@ -4,16 +4,31 @@
 
 This is a **showcase project** demonstrating best practices for using GitHub Copilot to orchestrate the full software development lifecycle through specialized agents, enforced conventions, and secure integrations.
 
----
+
+## 🚨 Developer Responsibilities
+
+> **AI is a co-pilot, not an autopilot.** You are responsible for code quality, security, and compliance.
+
+### Your Accountability
+
+| | Responsibility | Action |
+|---|---|---|
+| 👁️ | **Review** | Read and understand all AI-generated code before committing |
+| ✅ | **Validate** | Check against requirements and project standards |
+| 🧪 | **Test** | Run full test suite before merging |
+| 🔒 | **Security** | Verify auth, credentials, and data handling |
+| 💡 | **Understand** | Know what changed and why it changed |
+
+📖 **[Read the full guide →][responsibilities]** – detailed checklists, incident response, and MCP security
+
 
 ## Quick Start
 
-- **New here?** Start with [What is AI-Assisted Development?](#what-is-ai-assisted-development)
-- **Know what you need?** Use the [Feature Index](#feature-index)
-- **Ready to use agents?** Jump to [The Multi-Agent System](#the-multi-agent-system)
-- **Want detailed guides?** See [Documentation by Topic](#documentation-by-topic)
+- **New here?** Start with [What is AI-Assisted Development?][what-is-ai]
+- **Know what you need?** Use the [Feature Index][feature-index]
+- **Ready to use agents?** Jump to [The Multi-Agent System][multi-agent]
+- **Want detailed guides?** See [Documentation by Topic][doc-by-topic]
 
----
 
 ## Feature Index
 
@@ -21,61 +36,24 @@ Quick lookup for all Copilot customization features:
 
 | Feature | Purpose | File Type | Documentation |
 |---------|---------|-----------|---------------|
-| **Smart Actions** | Built-in IDE commands (no setup needed) | N/A | [Below](#built-in-smart-actions) |
-| **Custom Prompts** | Reusable task templates | `.prompt.md` | [CUSTOM_PROMPTS.md](./CUSTOM_PROMPTS.md) |
-| **Custom Instructions** | Coding standards & conventions | `.instructions.md` | [CUSTOM_INSTRUCTIONS.md](./CUSTOM_INSTRUCTIONS.md) |
-| **Custom Agents** | Specialized AI personas with roles | `.agent.md` | [CUSTOM_AGENTS.md](./CUSTOM_AGENTS.md) |
-| **Skills** | On-demand knowledge modules | `SKILL.md` | [CUSTOM_AGENTS.md](./CUSTOM_AGENTS.md#skills-reference) |
-| **MCP** | External tool connections | `mcp-servers.json` | [MCP.md](./MCP.md) |
+| **Smart Actions** | Built-in IDE commands (no setup needed) | N/A | [VS Code Copilot][copilot-smart-actions] |
+| **Custom Prompts** | Reusable task templates | `.prompt.md` | [CUSTOM_PROMPTS.md][custom-prompts] |
+| **Custom Instructions** | Coding standards & conventions | `.instructions.md` | [CUSTOM_INSTRUCTIONS.md][custom-instructions] |
+| **Custom Agents** | Specialized AI personas with roles | `.agent.md` | [CUSTOM_AGENTS.md][custom-agents] |
+| **Skills** | On-demand knowledge modules | `SKILL.md` | [CUSTOM_AGENTS.md][skills-reference] |
+| **MCP** | External tool connections | `mcp-servers.json` | [MCP.md][mcp] |
 
 **Learning path:** Smart Actions → Prompts → Instructions → Agents → MCP
 
----
 
 ## Built-in Smart Actions
 
-Before customizing Copilot, know these built-in features—they work out of the box:
+GitHub Copilot includes many built-in features that work out of the box—code generation, fixing errors, understanding code, version control assistance, and more. Rather than duplicating documentation here, see the official resources for the most current information:
 
-### Code Generation & Fixing
+- **[VS Code Copilot Overview][vscode-copilot-docs]** – Core features and capabilities
+- **[Smart Actions][copilot-smart-actions]** – Built-in AI-powered editor actions
+- **[Copilot Chat][copilot-chat-features]** – Natural language chat interface
 
-| Action | How to Access | Use Case |
-|--------|--------------|----------|
-| **Fix Errors** | Lightbulb on error → "Fix with Copilot" | Resolve compile/lint errors |
-| **Generate Tests** | Right-click → Generate Code → Generate Tests | Quick test scaffolding |
-| **Generate Docs** | Right-click → Generate Code → Generate Docs | Document functions/classes |
-| **Implement TODO** | Lightbulb on TODO comment → "Delegate to Copilot" | Auto-implement TODOs |
-| **Rename Symbol** | F2 on symbol → AI suggestions appear | Context-aware renaming |
-
-### Understanding & Debugging
-
-| Action | How to Access | Use Case |
-|--------|--------------|----------|
-| **Explain Code** | Right-click → Explain | Understand unfamiliar code |
-| **Fix Terminal Error** | Sparkle icon after failed command | Debug terminal failures |
-| **Fix Test Failure** | Sparkle in Test Explorer | Fix failing tests |
-| **Start Debugging** | Chat: `/startDebugging` | Generate launch.json |
-| **Debug Command** | Terminal: `copilot-debug node app.js` | Debug any command |
-
-### Version Control
-
-| Action | How to Access | Use Case |
-|--------|--------------|----------|
-| **Generate Commit Message** | Sparkle in Source Control | Summarize staged changes |
-| **Generate PR Description** | GitHub PR extension | Title + description |
-| **Resolve Merge Conflict** | "Resolve with AI" button | AI-guided conflict resolution |
-| **Code Review** | Right-click → Generate Code → Review | Review selected code |
-
-### Search & Navigation
-
-| Action | How to Access | Use Case |
-|--------|--------------|----------|
-| **Semantic Search** | Search view toggle | Find conceptually related code |
-| **Search Settings** | Settings: natural language query | "increase font size" |
-| **Generate Alt Text** | Lightbulb on Markdown image | Accessibility |
-
-> 💡 **Tip:** These actions require no configuration. Start here before building custom agents.
-
----
 
 ## What is AI-Assisted Development?
 
@@ -83,26 +61,23 @@ AI-assisted development is a **paradigm shift** in how teams build software with
 
 ### The Key Insight
 
-```
-General AI (less effective)        →        Specialized Agents (more effective)
-                                              • Each agent has one job
-Generic suggestions              →        • Agents follow project conventions
-Lots of manual filtering         →        • Humans review at handoff points
-Inconsistent results             →        • Consistent, testable results
-```
+| Aspect | General AI | Specialized Agents |
+|--------|------------|-------------------|
+| **Approach** | Autocomplete mindset | Orchestrated agents with defined roles |
+| **Output** | Generic suggestions | Follow project conventions |
+| **Process** | Manual filtering required | Human review at handoff points |
+| **Results** | Inconsistent | Consistent, testable |
 
-**Benefits:**
-- Consistency: Agents follow the same rules every time
-- Focus: Each agent has one responsibility
-- Safety: Humans remain in command
-- Productivity: Developers focus on problem-solving
-- Traceability: Clear audit trail of who did what
-
----
+**What this means for your team:**
+- ✅ **Consistency** – Agents follow the same rules every time
+- ✅ **Focus** – Each agent has one responsibility
+- ✅ **Safety** – Humans remain in command
+- ✅ **Productivity** – Developers focus on problem-solving
+- ✅ **Traceability** – Clear audit trail of who did what
 
 ## The Multi-Agent System
 
-This project uses **4 specialized agents** with defined roles and constrained tool access. See the [README](../README.md#multi-agent-system) for the full agent table.
+This project uses **4 specialized agents** with defined roles and constrained tool access. See the [README][readme-agents] for the full agent table.
 
 **Typical Flow:** `@Specify` → `@Implement` → `@Test Unit` → `@Test E2E` → `@Specify` (validate)
 
@@ -114,208 +89,130 @@ This project uses **4 specialized agents** with defined roles and constrained to
 - Handoffs require human approval
 - Critical changes need explicit consent
 
-See [RESPONSIBILITIES_AND_SECURITY.md](./RESPONSIBILITIES_AND_SECURITY.md) for detailed developer responsibilities.
-
----
+See [RESPONSIBILITIES_AND_SECURITY.md][responsibilities] for detailed developer responsibilities.
 
 ## Documentation by Topic
 
-### 1. Understanding Agents
+Pick a topic below to get started. Each guide includes real examples from this project.
 
-**File:** [CUSTOM_AGENTS.md](./CUSTOM_AGENTS.md)
-
-Comprehensive guide covering:
-- Detailed definition of each agent
-- Role, constraints, and tool access for each
-- Agent interaction patterns
-- **NEW:** Skills system (11 specialized knowledge modules)
-- How agents use MCP tools
-- Operating modes and examples
-
-**Start here if:** You want to know exactly what each agent does and how to use them.
-
-### 2. Understanding Custom Instructions
-
-**File:** [CUSTOM_INSTRUCTIONS.md](./CUSTOM_INSTRUCTIONS.md)
-
-Complete guide covering:
-- Instruction hierarchy (Global → Path-Specific → Agent-Specific)
-- How to write effective instructions
-- Common pitfalls and best practices
-- All 9 path-specific instructions in the project
-- Do's and Don'ts for instruction writing
-- Real examples from this project
-
-**Start here if:** You want to understand how project conventions are encoded and enforced.
-
-### 3. Understanding Custom Prompts
-
-**File:** [CUSTOM_PROMPTS.md](./CUSTOM_PROMPTS.md)
-
-Reusable task templates covering:
-- What custom prompts are and when to use them
-- Minimal agent delegation pattern
-- Prompts vs Instructions vs Agents vs Skills
-- All 7 custom prompts in `.github/prompts/`
-- Best practices for creating new prompts
-
-**Start here if:** You want to create reusable task templates or understand how to trigger agents for specific tasks.
-
-### 4. Understanding MCP Integrations
-
-**File:** [MCP.md](./MCP.md)
-
-In-depth guide covering:
-- What is Model Context Protocol (USB-C analogy)
-- 4 MCP servers configured in this project (Atlassian, Figma, Chrome DevTools, Playwright)
-- How agents use MCP tools
-- Security risks and mitigations
-- Best practices for MCP usage
-- Typical usage patterns
-
-**Start here if:** You want to understand how agents connect to external services.
-
-### 5. Responsibilities & Security
-
-**File:** [RESPONSIBILITIES_AND_SECURITY.md](./RESPONSIBILITIES_AND_SECURITY.md)
-
-Covers:
-- Developer responsibilities checklist
-- Human in Command principle
-- MCP security risks and mitigations
-- Incident response procedures
-- Audit and compliance
-
-**Start here if:** You have security concerns or want to understand developer accountability.
-
-### 6. Advanced: Context Optimization
-
-**File:** [CONTEXT_OPTIMIZATION.md](./CONTEXT_OPTIMIZATION.md)
-
-For developers who want to:
-- Maximize LLM context window efficiency
-- Optimize instruction loading
-- Advanced patterns for large projects
-- Memory management strategies
-
-**Start here if:** You're working with large codebases and need context optimization.
-
----
+| Topic | Best For |
+|-------|----------|
+| [🤖 **Agents**][custom-agents] | Understanding agent roles and responsibilities, model selection, tool constraints, and how each agent works in your workflow |
+| [📋 **Custom Instructions**][custom-instructions] | Learning the instruction hierarchy and best practices for encoding project conventions, coding standards, and patterns |
+| [🎯 **Custom Prompts**][custom-prompts] | Creating reusable prompt templates for recurring tasks, automating workflows, and triggering specific agent behaviors |
+| [🔌 **MCP Integrations**][mcp] | Connecting external services, APIs, databases, and specialized tools to extend agent capabilities |
+| [🔒 **Responsibilities & Security**][responsibilities] | Understanding your accountability, security risks, compliance requirements, and incident response procedures |
+| [⚡ **Context Optimization**][context-optimization] | Maximizing efficiency with large codebases, optimizing token usage, and advanced patterns for scaling |
 
 ## When to Use What?
 
-| Need | Solution | Location |
-|------|----------|----------|
-| Rules that apply **always** | Global Instructions | `.github/copilot-instructions.md` |
-| Rules for **specific file types** | Path-Specific Instructions | `.github/instructions/*.instructions.md` |
-| A **different persona/permissions** | Custom Agent | `.github/agents/*.agent.md` |
-| **Complex procedures/scripts** | Agent Skill | `.github/skills/*/SKILL.md` |
-| **Reusable task templates** | Custom Prompts | `.github/prompts/*.prompt.md` |
+Choose the right tool for your needs:
 
----
+| Need | Solution | File |
+|------|----------|------|
+| 🌍 Rules that apply **everywhere** | [Global Instructions][when-global-instructions] | `.github/copilot-instructions.md` |
+| 📋 Rules for **specific file types** or **folders** | [Path-Specific Instructions][custom-instructions] | `.github/instructions/*.instructions.md` |
+| 🤖 A **different persona/permissions** | [Custom Agent][custom-agents] | `.github/agents/*.agent.md` |
+| 🛠️ **Complex procedures/scripts** | [Agent Skill][skills-reference] | `.github/skills/*/SKILL.md` |
+| 🎯 **Reusable task templates** | [Custom Prompts][custom-prompts] | `.github/prompts/*.prompt.md` |
 
 ## Project Structure
 
 ```
 .github/
-├── copilot-instructions.md      # Global: Tech stack, conventions, rules
-├── agents/                       # 4 agent definitions (@Specify, @Implement, etc.)
-├── instructions/                 # 9 path-specific instruction files
-└── prompts/                      # Reusable prompt templates (.prompt.md)
+├── copilot-instructions.md              # 🌍 Global rules: Tech stack, conventions, security
+├── agents/                              # 🤖 4 specialized agent definitions
+├── instructions/                        # 📋 9 path-specific instruction files
+├── prompts/                             # 🎯 7 reusable prompt templates
+└── skills/                              # ⚡ 11 specialized knowledge modules
 
 docs/
-├── AI_DEVELOPMENT_GUIDE.md      # ← You are here (high-level overview)
-├── CUSTOM_PROMPTS.md            # Reusable prompt files
-├── CUSTOM_INSTRUCTIONS.md       # Instruction hierarchy + best practices
-├── CUSTOM_AGENTS.md             # Agent definitions + skills
-├── MCP.md                       # Model Context Protocol guide
-├── RESPONSIBILITIES_AND_SECURITY.md  # Security & responsibilities
-├── CONTEXT_OPTIMIZATION.md      # Advanced: context window optimization
-└── GIT_WORKTREES.md             # Advanced: parallel AI development
+├── AI_DEVELOPMENT_GUIDE.md              # ← You are here (high-level overview)
+├── CUSTOM_AGENTS.md                     # 🤖 Agent definitions & skills
+├── CUSTOM_INSTRUCTIONS.md               # 📋 Instruction hierarchy & best practices
+├── CUSTOM_PROMPTS.md                    # 🎯 Reusable prompt templates
+├── MCP.md                               # 🔌 Model Context Protocol guide
+├── RESPONSIBILITIES_AND_SECURITY.md     # 🔒 Security & responsibilities
+├── CONTEXT_OPTIMIZATION.md              # ⚡ Advanced: context optimization
+└── GIT_WORKTREES.md                     # 🌳 Advanced: parallel development
 ```
-
----
 
 ## Key Principles
 
-1. **Separation of Concerns** – Each agent has one job
-2. **Convention Over Configuration** – Standards encoded in instructions
-3. **Progressive Disclosure** – Skills load on-demand, not all at once
-4. **Human Remains in Control** – Developers make final decisions
-5. **Auditable Workflow** – Clear record of what each agent did
+> Core values that guide AI-assisted development in this project.
 
----
+| | Principle | Description |
+|---|-----------|-------------|
+| 🎯 | **Separation of Concerns** | Each agent has one, clearly defined job |
+| 📋 | **Convention Over Configuration** | Standards are encoded in instructions, not config files |
+| 📦 | **Progressive Disclosure** | Skills load on-demand, not all at once |
+| 👤 | **Human Remains in Control** | Developers make final decisions; |
+| 📝 | **Auditable Workflow** | Clear record of what each agent did and why |
 
 ## Model Selection
 
-Choose the right model for the task—don't default to the most powerful option:
+> Match model capabilities to task complexity—don't default to the most powerful option.
 
 | Task Type | Recommended Model | Why |
 |-----------|-------------------|-----|
-| **Architecture & System Design** | High-reasoning (e.g., GPT-5.2) | Complex logic, bottleneck analysis |
-| **Production Refactoring** | High-precision (e.g., Claude Opus 4.5) | Strict convention adherence |
-| **Large Codebase Analysis** | High-context (e.g., Gemini 3 Pro) | 1M token window for full-repo analysis |
-| **Rapid Debugging** | Fast model (e.g., GPT-5 mini) | Low latency, quick iterations |
-| **Bulk/Routine Tasks** | Cost-efficient model | Documentation, repetitive work |
+| 🏗️ **Architecture & System Design** | High-reasoning (e.g., GPT-5.2) | Complex logic, bottleneck analysis |
+| 🔧 **Production Refactoring** | High-precision (e.g., Claude Opus 4.5) | Strict convention adherence |
+| 📚 **Large Codebase Analysis** | High-context (e.g., Gemini 3 Pro) | 1M token window for full-repo analysis |
+| 📝 **Bulk/Routine Tasks** | Cost-efficient model | Documentation, repetitive work |
 
-**Decision factors:**
-1. **Complexity** → More reasoning needed = higher-capability model
-2. **Context size** → Large codebase = high-context model
-3. **Speed** → Interactive work = low-latency model
-4. **Cost** → Routine tasks = efficient model
+### Decision Framework
+
+Optimize across four dimensions:
+
+| Factor | More → Better | Application |
+|--------|---------------|-------------|
+| 🧠 **Complexity** | Reasoning → higher-capability model | Architecture, design patterns |
+| 📦 **Context Size** | Large codebase → high-context model | Full-repo analysis |
+| ⚡ **Speed** | Interactive work → low-latency model | Documentation |
+| 💰 **Cost** | Routine tasks → efficient model | Repetitive, bulk work |
+
 
 > 💡 **Tip:** Start with a balanced model. Upgrade for reasoning limits; downgrade for routine work.
 
 ---
 
-## Learning Path
 
-```
-START HERE
-   ↓
-├─ Read this file (you are here)
-│
-├─ Choose a topic based on your question:
-│  ├─ "What built-in features exist?" → See Smart Actions above
-│  ├─ "How do I save reusable prompts?" → CUSTOM_PROMPTS.md
-│  ├─ "How do conventions work?" → CUSTOM_INSTRUCTIONS.md
-│  ├─ "What agents exist?" → CUSTOM_AGENTS.md
-│  ├─ "What's MCP?" → MCP.md
-│  ├─ "What's my responsibility?" → RESPONSIBILITIES_AND_SECURITY.md
-│  └─ "How do I optimize context?" → CONTEXT_OPTIMIZATION.md
-│
-├─ Advanced Topics:
-│  └─ "Parallel AI development?" → GIT_WORKTREES.md
-│
-└─ Dive deeper with official docs:
-   ├─ GitHub Copilot: https://docs.github.com/en/copilot
-   ├─ MCP Protocol: https://modelcontextprotocol.io/
-   └─ Your project instructions: .github/copilot-instructions.md
-```
+<!-- Internal Documentation -->
+[ai-guide]: #what-is-ai-assisted-development
+[feature-index]: #feature-index
+[multi-agent]: #the-multi-agent-system
+[doc-by-topic]: #documentation-by-topic
+[what-is-ai]: #what-is-ai-assisted-development
+[readme-agents]: ../README.md#multi-agent-system
 
----
+<!-- Documentation Files -->
+[custom-agents]: ./CUSTOM_AGENTS.md
+[custom-instructions]: ./CUSTOM_INSTRUCTIONS.md
+[custom-prompts]: ./CUSTOM_PROMPTS.md
+[mcp]: ./MCP.md
+[responsibilities]: ./RESPONSIBILITIES_AND_SECURITY.md
+[context-optimization]: ./CONTEXT_OPTIMIZATION.md
+[git-worktrees]: ./GIT_WORKTREES.md
 
-## Summary
+<!-- Anchor Links -->
+[skills-reference]: ./CUSTOM_AGENTS.md#skills-reference
+[built-in-smart-actions]: #built-in-smart-actions
+[when-global-instructions]: ../.github/copilot-instructions.md
 
-| Question | Learn In | Deep Dive |
-|----------|----------|-----------|
-| What built-in features exist? | [Smart Actions](#built-in-smart-actions) | VS Code docs |
-| How do I save reusable prompts? | This file | [CUSTOM_PROMPTS.md](./CUSTOM_PROMPTS.md) |
-| How do agents work? | This file | [CUSTOM_AGENTS.md](./CUSTOM_AGENTS.md) |
-| How do instructions work? | This file | [CUSTOM_INSTRUCTIONS.md](./CUSTOM_INSTRUCTIONS.md) |
-| What is MCP? | This file | [MCP.md](./MCP.md) |
-| What's my responsibility? | [RESPONSIBILITIES_AND_SECURITY.md](./RESPONSIBILITIES_AND_SECURITY.md) | Security section |
-| Need to optimize context? | [CONTEXT_OPTIMIZATION.md](./CONTEXT_OPTIMIZATION.md) | Advanced patterns |
-| Parallel AI development? | [GIT_WORKTREES.md](./GIT_WORKTREES.md) | Advanced |
+<!-- GitHub Copilot Documentation -->
+[copilot-what-is]: https://docs.github.com/en/copilot/get-started/what-is-github-copilot
+[copilot-custom-instructions]: https://code.visualstudio.com/docs/copilot/customization/custom-instructions
+[copilot-response-customization]: https://docs.github.com/en/copilot/concepts/prompting/response-customization
+[copilot-smart-actions]: https://code.visualstudio.com/docs/copilot/copilot-smart-actions
+[copilot-chat-features]: https://code.visualstudio.com/docs/copilot/chat/copilot-chat
+[vscode-copilot-docs]: https://code.visualstudio.com/docs/copilot/overview
 
----
+<!-- Model Context Protocol -->
+[mcp-site]: https://modelcontextprotocol.io/
+[mcp-architecture]: https://modelcontextprotocol.io/docs/learn/architecture
+[mcp-build-servers]: https://modelcontextprotocol.io/docs/develop/build-server
 
-## Official References
 
-- **GitHub Copilot Documentation:** https://docs.github.com/en/copilot
-- **Model Context Protocol:** https://modelcontextprotocol.io/
-- **Custom Instructions Guide:** https://docs.github.com/en/copilot/concepts/prompting/response-customization
-
----
-
-**This reference implementation demonstrates that AI-assisted development is not about replacing developers—it's about amplifying their capabilities while maintaining safety, consistency, and quality.**
+<p align="center">
+  <strong>This reference implementation demonstrates that AI-assisted development is not about replacing developers—it's about amplifying their capabilities while maintaining safety, consistency, and quality</strong><br>
+</p>

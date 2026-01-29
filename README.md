@@ -13,84 +13,36 @@
 
 ---
 
----
-
-## 📋 Table of Contents
-
-- [Developer Responsibilities](#-developer-responsibilities) ⬅️ **START HERE**
-- [About This Project](#-about-this-project)
-- [Tech Stack](#-tech-stack)
-- [Getting Started](#-getting-started)
-- [Documentation](#-documentation)
-- [Official Resources](#-official-resources)
-
-**Deep Dives:** [Custom Agents](docs/CUSTOM_AGENTS.md) · [Instructions](docs/CUSTOM_INSTRUCTIONS.md) · [MCP](docs/MCP.md) · [Responsibilities](docs/RESPONSIBILITIES_AND_SECURITY.md)
-
----
 
 ## 🚨 Developer Responsibilities
 
-> **AI is a co-pilot, not an autopilot.** You remain responsible for code quality, security, and compliance.
+> **AI is a co-pilot, not an autopilot.** You are responsible for code quality, security, and compliance.
 
-```
-┌─────────────────────────────────────────────────────┐
-│  Skip Review    │   Review Properly               │
-├─────────────────┼─────────────────────────────────┤
-│  Save 5 min     │   Save 3 min                    │
-│  Debt: ∞        │   Debt: Minimal                 │
-│  ROI: -1000%    │   ROI: +200%                    │
-└─────────────────┴─────────────────────────────────┘
-```
+### Your Accountability
 
-**Your checklist:**
-- ✅ **Review** all AI code before committing
-- ✅ **Test** – run full test suite
-- ✅ **Verify** security (auth, credentials, data handling)
-- ✅ **Understand** what changed and why
+| | Responsibility | Action |
+|---|---|---|
+| 👁️ | **Review** | Read and understand all AI-generated code before committing |
+| ✅ | **Validate** | Check against requirements and project standards |
+| 🧪 | **Test** | Run full test suite before merging |
+| 🔒 | **Security** | Verify auth, credentials, and data handling |
+| 💡 | **Understand** | Know what changed and why it changed |
 
-📖 **[Read the full guide →](docs/RESPONSIBILITIES_AND_SECURITY.md)** – detailed examples, checklists, and the true cost of "AI slop"
+📖 **[Read the full guide →][responsibilities]** – detailed checklists, incident response, and MCP security
 
----
 
-## 📖 About This Project
+## 📖 Let's start
 
-This project implements a complete **reference implementation** of AI-assisted development using GitHub Copilot's agent architecture.
+**New to this project?** Begin with the **[AI Development Guide][ai-guide]** for a complete overview of agents, instructions, MCP, and how everything works together.
 
-### Multi-Agent System
+**In This README:**
+- [Developer Responsibilities](#-developer-responsibilities) – Your accountability when working AI-Assisted
+- [Getting Started](#-getting-started) – Run locally in 3 steps
+- [System Architecture](#-system-architecture) – Visual overview
+- [Tech Stack](#-tech-stack) – Technologies used
+- [Documentation](#-documentation) – All learning resources
 
-| Agent | Role | Writes Code? |
-|-------|------|--------------|
-| **@Specify & Validate** | Plan features from Jira, validate against Figma | ❌ Read-only |
-| **@Implement** | Build features following project conventions | ✅ Yes |
-| **@Test Unit** | Write unit & integration tests | ✅ Yes |
-| **@Test E2E** | Write Playwright E2E tests | ✅ Yes |
 
-### Instruction Hierarchy
-
-**Global** → **Path-Specific** (9 files) → **Skills** (10 modules)
-
-📖 **[See full hierarchy →](docs/CUSTOM_INSTRUCTIONS.md#instruction-hierarchy)**
-
-### MCP Integrations
-
-**4 servers:** Atlassian (Jira/Confluence), Figma, Chrome DevTools, Playwright
-
-📖 **[See MCP Guide →](docs/MCP.md)**
-
-### Feature Index
-
-| Feature | Documentation |
-|---------|---------------|
-| **Smart Actions** | [AI Guide](docs/AI_DEVELOPMENT_GUIDE.md#built-in-smart-actions) |
-| **Custom Prompts** | [CUSTOM_PROMPTS.md](docs/CUSTOM_PROMPTS.md) |
-| **Custom Instructions** | [CUSTOM_INSTRUCTIONS.md](docs/CUSTOM_INSTRUCTIONS.md) |
-| **Custom Agents** | [CUSTOM_AGENTS.md](docs/CUSTOM_AGENTS.md) |
-| **Skills** | [CUSTOM_AGENTS.md](docs/CUSTOM_AGENTS.md#skills-reference) |
-| **MCP** | [MCP.md](docs/MCP.md) |
-
-📖 **[Full Feature Index →](docs/AI_DEVELOPMENT_GUIDE.md#feature-index)**
-
-### Architecture at a Glance
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────┐
@@ -121,8 +73,6 @@ This project implements a complete **reference implementation** of AI-assisted d
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
 
----
-
 ## 🛠 Tech Stack
 
 | Layer | Technologies |
@@ -132,15 +82,13 @@ This project implements a complete **reference implementation** of AI-assisted d
 | **Testing** | Vitest, Vue Test Utils, Supertest, Playwright |
 | **AI** | GitHub Copilot, Custom Agents, MCP |
 
----
-
 ## 🚀 Getting Started
 
 ### Prerequisites
 
 - Node.js `^20.19.0` or `>=22.12.0`
-- VS Code with [GitHub Copilot Extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)
-- [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) extension
+- VS Code with [GitHub Copilot Extension][copilot-extension]
+- [Vue (Official)][vue-extension] extension
 
 ### Installation
 
@@ -181,67 +129,30 @@ cd backend
 | `npm run db:studio ` | Prisma Studio GUI |
 | `npm run test:run` | Run backend tests |
 
----
-
-## 📚 Documentation
-
-### Essential Reading
-
-**Start here to understand this project:**
-
-| Document | Purpose |
-|----------|----------|
-| [AI_DEVELOPMENT_GUIDE.md](docs/AI_DEVELOPMENT_GUIDE.md) | Overview – agents, instructions, smart actions, MCP |
-| [RESPONSIBILITIES_AND_SECURITY.md](docs/RESPONSIBILITIES_AND_SECURITY.md) | **Your responsibilities** – security, safety, oversight |
-| [CUSTOM_AGENTS.md](docs/CUSTOM_AGENTS.md) | Agent definitions – what each agent does |
-| [backend/README.md](backend/README.md) | Backend API documentation and setup |
-
-### Customization Guides
-
-| Document | Description |
-|----------|-------------|
-| [CUSTOM_PROMPTS.md](docs/CUSTOM_PROMPTS.md) | Reusable prompt templates (`.prompt.md`) |
-| [CUSTOM_INSTRUCTIONS.md](docs/CUSTOM_INSTRUCTIONS.md) | Instruction hierarchy and best practices |
-| [MCP.md](docs/MCP.md) | Model Context Protocol integrations |
-
-### Advanced Topics
-
-| Document | Description |
-|----------|-------------|
-| [CONTEXT_OPTIMIZATION.md](docs/CONTEXT_OPTIMIZATION.md) | Strategies for optimizing LLM context usage |
-| [GIT_WORKTREES.md](docs/GIT_WORKTREES.md) | Parallel AI development with Git worktrees |
-
----
-
 ## 🔗 Official Resources
 
 ### GitHub Copilot Documentation
 
 | Resource | Purpose |
 |----------|---------|
-| [What is GitHub Copilot?](https://docs.github.com/en/copilot/get-started/what-is-github-copilot) | Overview and capabilities |
-| [Custom Instructions](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions) | How to configure custom instructions |
-| [Custom Instructions Guide](https://docs.github.com/en/copilot/tutorials/customization-library/custom-instructions) | Examples and best practices |
-| [Response Customization](https://docs.github.com/en/copilot/concepts/prompting/response-customization) | How Copilot uses instructions |
-| [Trust Center](https://copilot.github.trust.page/) | Security, privacy, and compliance |
+| [What is GitHub Copilot?][copilot-what-is] | Overview and capabilities |
+| [Response Customization][copilot-response-customization] | Examples and best practices |
+| [Trust Center][copilot-trust-center] | Security, privacy, and compliance |
 
 ### Model Context Protocol
 
 | Resource | Purpose |
 |----------|---------|
-| [MCP Official Site](https://modelcontextprotocol.io/) | Introduction and core concepts |
-| [MCP Architecture](https://modelcontextprotocol.io/docs/learn/architecture) | How MCP works under the hood |
-| [Building MCP Servers](https://modelcontextprotocol.io/docs/develop/build-server) | Create custom MCP integrations |
+| [MCP Official Site][mcp-site] | Introduction and core concepts |
+| [MCP Architecture][mcp-architecture] | How MCP works under the hood |
+| [Building MCP Servers][mcp-build-servers] | Create custom MCP integrations |
 
-### This Project
 
-| Document | Link |
-|----------|------|
-| **How to Use This Project** | [docs/AI_DEVELOPMENT_GUIDE.md](docs/AI_DEVELOPMENT_GUIDE.md) |
-| **Your Responsibilities** | [docs/RESPONSIBILITIES_AND_SECURITY.md](docs/RESPONSIBILITIES_AND_SECURITY.md) |
-| **Agent Definitions** | [docs/CUSTOM_AGENTS.md](docs/CUSTOM_AGENTS.md) |
+### Learning & Inspiration
 
----
+| Resource | Purpose |
+|----------|---------|
+| [Awesome Copilot][awesome-copilot] | Community examples and best practices |
 
 ## 📄 About This Project
 
@@ -252,6 +163,38 @@ cd backend
 ---
 
 <p align="center">
-  <strong>🧑‍✈️ Remember: You're the Pilot – AI is your co-pilot!</strong><br>
-  <strong>You remain responsible for code quality, security, and compliance.</strong>
+  <strong>🧑‍✈️ Remember: You are the Pilot – AI is your co-pilot!</strong><br>
+  <strong>You remain responsible for your output, code quality, security, and compliance.</strong>
 </p>
+
+<!-- Project Documentation -->
+[ai-guide]: docs/AI_DEVELOPMENT_GUIDE.md
+[custom-agents]: docs/CUSTOM_AGENTS.md
+[custom-instructions]: docs/CUSTOM_INSTRUCTIONS.md
+[custom-prompts]: docs/CUSTOM_PROMPTS.md
+[mcp]: docs/MCP.md
+[responsibilities]: docs/RESPONSIBILITIES_AND_SECURITY.md
+[context-optimization]: docs/CONTEXT_OPTIMIZATION.md
+[git-worktrees]: docs/GIT_WORKTREES.md
+[backend-readme]: backend/README.md
+
+<!-- Features and Sections -->
+[instruction-hierarchy]: docs/CUSTOM_INSTRUCTIONS.md#instruction-hierarchy
+[skills-reference]: docs/CUSTOM_AGENTS.md#skills-reference
+
+<!-- Extensions -->
+[copilot-extension]: https://marketplace.visualstudio.com/items?itemName=GitHub.copilot
+[vue-extension]: https://marketplace.visualstudio.com/items?itemName=Vue.volar
+
+<!-- GitHub Copilot Documentation -->
+[copilot-what-is]: https://docs.github.com/en/copilot/get-started/what-is-github-copilot
+[copilot-response-customization]: https://docs.github.com/en/copilot/concepts/prompting/response-customization
+[copilot-trust-center]: https://copilot.github.trust.page/
+
+<!-- Model Context Protocol -->
+[mcp-site]: https://modelcontextprotocol.io/
+[mcp-architecture]: https://modelcontextprotocol.io/docs/learn/architecture
+[mcp-build-servers]: https://modelcontextprotocol.io/docs/develop/build-server
+
+<!-- Community & Resources -->
+[awesome-copilot]: https://github.com/github/awesome-copilot
