@@ -66,7 +66,7 @@ Consult these skills for detailed patterns:
 
 ### Step 2: Write E2E Tests
 
-1. Create test file in `e2e/` directory
+2. Create test file in `frontend/e2e/` directory
 2. Use Page Objects for complex interactions
 3. Mock API when needed for isolation
 4. Include visual assertions where relevant
@@ -108,7 +108,7 @@ test.describe('Feature Name', () => {
 ### Page Object Pattern
 
 ```typescript
-// e2e/pages/TasksPage.ts
+// frontend/e2e/pages/TasksPage.ts
 import { Page, Locator } from '@playwright/test'
 
 export class TasksPage {
@@ -181,8 +181,8 @@ For each user flow:
 ## Project Context
 
 - **Framework:** Playwright
-- **Location:** `e2e/` directory
-- **Run:** `npx playwright test`
+- **Location:** `frontend/e2e/` directory
+- **Run:** `cd frontend && npx playwright test`
 - **Debug:** `npx playwright test --debug`
 - **Report:** `npx playwright show-report`
 

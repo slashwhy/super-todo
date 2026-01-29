@@ -1,11 +1,11 @@
 ---
 description: 'Playwright E2E testing with Page Objects, API mocking, and data-testid selectors'
-applyTo: 'e2e/**/*.ts, **/*.e2e.ts, **/*.e2e-spec.ts'
+applyTo: 'frontend/e2e/**/*.ts, **/*.e2e.ts, **/*.e2e-spec.ts'
 ---
 
 # End-to-End Testing with Playwright
 
-> Create E2E tests in `e2e/` directory. Install Playwright: `npm create playwright@latest`
+> Create E2E tests in `frontend/e2e/` directory. Install Playwright: `npm create playwright@latest`
 
 ## Test File Structure
 
@@ -51,7 +51,7 @@ test.describe('Task Management', () => {
 Create reusable page objects for complex pages:
 
 ```typescript
-// e2e/pages/TasksPage.ts
+// frontend/e2e/pages/TasksPage.ts
 import { Page, Locator } from '@playwright/test'
 
 export class TasksPage {

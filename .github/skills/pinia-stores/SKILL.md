@@ -25,7 +25,7 @@ For detailed patterns and conventions, see:
 ### Setup Store Structure
 
 ```typescript
-// src/stores/tasks.ts
+// frontend/src/stores/tasks.ts
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { Task } from '@/types/task'
@@ -164,5 +164,5 @@ async function updateTask(id: string, data: Partial<Task>) {
 ## File Naming
 
 - Stores: `featureName.ts` (e.g., `tasks.ts`)
-- Location: `src/stores/`
+- Location: `frontend/src/stores/`
 - Tests: `featureName.spec.ts` alongside

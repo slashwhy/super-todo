@@ -5,7 +5,7 @@ applyTo: '**/stores/**/*.ts'
 
 # Pinia Store Development
 
-> Create stores in `src/stores/` directory when needed.
+> Create stores in `frontend/src/stores/` directory when needed.
 
 ## Store Structure
 
@@ -93,7 +93,7 @@ export const useTasksStore = defineStore('tasks', () => {
 
 - Store files: `camelCase.ts` (e.g., `tasks.ts`)
 - Store function: `use[Name]Store` (e.g., `useTasksStore`)
-- Place in `src/stores/` directory
+- Place in `frontend/src/stores/` directory
 
 ## Best Practices
 

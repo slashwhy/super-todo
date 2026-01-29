@@ -1,6 +1,6 @@
 ---
 description: 'Vue component testing with Vitest, Vue Test Utils, and Pinia mocking'
-applyTo: 'src/**/*.{spec,test}.ts'
+applyTo: 'frontend/src/**/*.{spec,test}.ts'
 ---
 
 # Frontend Testing with Vue Test Utils

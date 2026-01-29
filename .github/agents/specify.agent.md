@@ -139,7 +139,7 @@ Validate current implementation against acceptance criteria and design specs.
 
 | # | Criterion | Status | Evidence |
 |---|-----------|--------|----------|
-| 1 | User can [action] | ✅ Fulfilled | `src/components/X.vue:45` |
+| 1 | User can [action] | ✅ Fulfilled | `frontend/src/components/X.vue:45` |
 | 2 | System shows [behavior] | ❌ Missing | No implementation found |
 | 3 | Error displays [message] | ⚠️ Partial | Error handling exists but message differs |
 
@@ -324,11 +324,11 @@ Add a dropdown filter to the task list that allows users to filter by priority l
 
 ## Implementation Steps
 1. **Create PriorityFilter component**
-   - File: `src/components/filters/PriorityFilter.vue`
+   - File: `frontend/src/components/filters/PriorityFilter.vue`
    - Use existing priority data from config store
 
 2. **Integrate with task store**
-   - File: `src/stores/tasks.ts`
+   - File: `frontend/src/stores/tasks.ts`
    - Add `filterByPriority` action
 
 ## Open Questions

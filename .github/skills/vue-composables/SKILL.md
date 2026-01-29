@@ -25,7 +25,7 @@ For detailed patterns and conventions, see:
 ### Basic Composable Structure
 
 ```typescript
-// src/composables/useFeature.ts
+// frontend/src/composables/useFeature.ts
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 export function useFeature(initialValue: string) {
@@ -138,5 +138,5 @@ export function useGlobalCounter() {
 ## File Naming
 
 - Composables: `useFeatureName.ts` (e.g., `useTaskFilter.ts`)
-- Location: `src/composables/`
+- Location: `frontend/src/composables/`
 - Tests: `useFeatureName.spec.ts` alongside

@@ -7,7 +7,7 @@ applyTo: '**/*.css, **/*.scss, **/*.vue'
 
 ## CSS Variables
 
-Use design tokens from `src/assets/styles/variables.css`:
+Use design tokens from `frontend/src/assets/styles/variables.css`:
 
 ```css
 .component {
@@ -177,7 +177,7 @@ Mobile-first approach with breakpoints:
 
 ## Common Pitfalls
 
-- ❌ Hardcoding colors → Use CSS variables from `variables.css`
+- ❌ Hardcoding colors → Use CSS variables from `frontend/src/assets/styles/variables.css`
 - ❌ Magic numbers → Use spacing scale tokens
 - ❌ Not testing mobile → Use mobile-first approach
 - ❌ Missing hover/focus states → Add for all interactive elements

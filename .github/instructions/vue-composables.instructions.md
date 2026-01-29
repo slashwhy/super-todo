@@ -5,7 +5,7 @@ applyTo: '**/composables/**/*.ts'
 
 # Vue Composables Development
 
-> Create composables in `src/composables/` directory when needed.
+> Create composables in `frontend/src/composables/` directory when needed.
 
 ## Composable Structure
 

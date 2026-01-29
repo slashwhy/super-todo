@@ -24,7 +24,7 @@ For detailed patterns and conventions, see:
 
 ### CSS Variables
 
-All styling must use CSS variables from `src/assets/styles/variables.css`:
+All styling must use CSS variables from `frontend/src/assets/styles/variables.css`:
 
 ```css
 /* Colors */
@@ -217,6 +217,6 @@ All styling must use CSS variables from `src/assets/styles/variables.css`:
 
 ## File Locations
 
-- Variables: `src/assets/styles/variables.css`
-- Base styles: `src/assets/styles/base.css`
+- Variables: `frontend/src/assets/styles/variables.css`
+- Base styles: `frontend/src/assets/styles/base.css`
 - Component styles: Scoped within `.vue` files
