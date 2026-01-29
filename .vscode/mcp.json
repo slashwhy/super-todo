@@ -32,6 +32,16 @@
 		},
 
 		// ==================
+		// Testing Tools
+		// ==================
+		"playwright": {
+			"command": "npx",
+			"args": [
+				"@playwright/mcp@latest"
+			]
+		},
+
+		// ==================
 		// Utilities
 		// ==================
 		"awesome-copilot": {

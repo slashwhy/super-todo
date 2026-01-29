@@ -3,6 +3,26 @@ import { prisma } from "../lib/prisma.js";
 
 const router = Router();
 
+// Helper: Validate that statusId and priorityId exist
+async function validateStatusAndPriority(
+  statusId?: string,
+  priorityId?: string
+): Promise<{ valid: boolean; error?: string }> {
+  if (statusId) {
+    const status = await prisma.taskStatus.findUnique({ where: { id: statusId } });
+    if (!status) {
+      return { valid: false, error: `Invalid statusId: ${statusId}` };
+    }
+  }
+  if (priorityId) {
+    const priority = await prisma.taskPriority.findUnique({ where: { id: priorityId } });
+    if (!priority) {
+      return { valid: false, error: `Invalid priorityId: ${priorityId}` };
+    }
+  }
+  return { valid: true };
+}
+
 // GET /api/tasks - Get all tasks with relations
 router.get("/", async (req, res) => {
   try {
@@ -80,6 +100,12 @@ router.post("/", async (req, res) => {
       });
     }
 
+    // Validate that statusId and priorityId exist
+    const validation = await validateStatusAndPriority(statusId, priorityId);
+    if (!validation.valid) {
+      return res.status(400).json({ error: validation.error });
+    }
+
     const task = await prisma.task.create({
       data: {
         title,
@@ -109,9 +135,18 @@ router.post("/", async (req, res) => {
   }
 });
 
-// PUT /api/tasks/:id - Update task
-router.put("/:id", async (req, res) => {
+// PATCH /api/tasks/:id - Update task
+router.patch("/:id", async (req, res) => {
   try {
+    // Check if task exists
+    const existingTask = await prisma.task.findUnique({
+      where: { id: req.params.id },
+    });
+
+    if (!existingTask) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+
     const {
       title,
       description,
@@ -124,6 +159,12 @@ router.put("/:id", async (req, res) => {
       categoryId,
       assigneeId,
     } = req.body;
+
+    // Validate statusId and priorityId if provided
+    const validation = await validateStatusAndPriority(statusId, priorityId);
+    if (!validation.valid) {
+      return res.status(400).json({ error: validation.error });
+    }
 
     const task = await prisma.task.update({
       where: { id: req.params.id },
@@ -162,6 +203,15 @@ router.put("/:id", async (req, res) => {
 // DELETE /api/tasks/:id - Delete task
 router.delete("/:id", async (req, res) => {
   try {
+    // Check if task exists
+    const existingTask = await prisma.task.findUnique({
+      where: { id: req.params.id },
+    });
+
+    if (!existingTask) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+
     await prisma.task.delete({
       where: { id: req.params.id },
     });

@@ -14,6 +14,12 @@ vi.mock('../lib/prisma.js', () => ({
       delete: vi.fn(),
       count: vi.fn(),
     },
+    taskStatus: {
+      findUnique: vi.fn(),
+    },
+    taskPriority: {
+      findUnique: vi.fn(),
+    },
   },
 }))
 
@@ -246,6 +252,8 @@ describe('Tasks Routes', () => {
         assignee: null,
       }
 
+      vi.mocked(prisma.taskStatus.findUnique).mockResolvedValue({ id: '1', name: 'Todo' } as any)
+      vi.mocked(prisma.taskPriority.findUnique).mockResolvedValue({ id: '1', name: 'High' } as any)
       vi.mocked(prisma.task.create).mockResolvedValue(createdTask as any)
 
       const response = await request(app).post('/api/tasks').send(newTask)
@@ -279,6 +287,8 @@ describe('Tasks Routes', () => {
       }
       const createdTask = { id: '3', ...newTask }
 
+      vi.mocked(prisma.taskStatus.findUnique).mockResolvedValue({ id: '1', name: 'Todo' } as any)
+      vi.mocked(prisma.taskPriority.findUnique).mockResolvedValue({ id: '1', name: 'High' } as any)
       vi.mocked(prisma.task.create).mockResolvedValue(createdTask as any)
 
       const response = await request(app).post('/api/tasks').send(newTask)
@@ -349,6 +359,8 @@ describe('Tasks Routes', () => {
     })
 
     it('returns 500 on database error', async () => {
+      vi.mocked(prisma.taskStatus.findUnique).mockResolvedValue({ id: '1', name: 'Todo' } as any)
+      vi.mocked(prisma.taskPriority.findUnique).mockResolvedValue({ id: '1', name: 'High' } as any)
       vi.mocked(prisma.task.create).mockRejectedValue(new Error('DB Error'))
 
       const response = await request(app).post('/api/tasks').send({
@@ -361,9 +373,38 @@ describe('Tasks Routes', () => {
       expect(response.status).toBe(500)
       expect(response.body).toEqual({ error: 'Failed to create task' })
     })
+
+    it('returns 400 for invalid statusId', async () => {
+      vi.mocked(prisma.taskStatus.findUnique).mockResolvedValue(null)
+
+      const response = await request(app).post('/api/tasks').send({
+        title: 'New Task',
+        statusId: 'invalid-status',
+        priorityId: '1',
+        ownerId: '1',
+      })
+
+      expect(response.status).toBe(400)
+      expect(response.body).toEqual({ error: 'Invalid statusId: invalid-status' })
+    })
+
+    it('returns 400 for invalid priorityId', async () => {
+      vi.mocked(prisma.taskStatus.findUnique).mockResolvedValue({ id: '1', name: 'Todo' } as any)
+      vi.mocked(prisma.taskPriority.findUnique).mockResolvedValue(null)
+
+      const response = await request(app).post('/api/tasks').send({
+        title: 'New Task',
+        statusId: '1',
+        priorityId: 'invalid-priority',
+        ownerId: '1',
+      })
+
+      expect(response.status).toBe(400)
+      expect(response.body).toEqual({ error: 'Invalid priorityId: invalid-priority' })
+    })
   })
 
-  describe('PUT /api/tasks/:id', () => {
+  describe('PATCH /api/tasks/:id', () => {
     it('updates task fields', async () => {
       const updates = { title: 'Updated Title' }
       const updatedTask = {
@@ -376,9 +417,10 @@ describe('Tasks Routes', () => {
         assignee: null,
       }
 
+      vi.mocked(prisma.task.findUnique).mockResolvedValue({ id: '1' } as any)
       vi.mocked(prisma.task.update).mockResolvedValue(updatedTask as any)
 
-      const response = await request(app).put('/api/tasks/1').send(updates)
+      const response = await request(app).patch('/api/tasks/1').send(updates)
 
       expect(response.status).toBe(200)
       expect(response.body).toEqual(updatedTask)
@@ -398,9 +440,11 @@ describe('Tasks Routes', () => {
       }
       const updatedTask = { id: '1', ...updates }
 
+      vi.mocked(prisma.task.findUnique).mockResolvedValue({ id: '1' } as any)
+      vi.mocked(prisma.taskStatus.findUnique).mockResolvedValue({ id: '2', name: 'Done' } as any)
       vi.mocked(prisma.task.update).mockResolvedValue(updatedTask as any)
 
-      const response = await request(app).put('/api/tasks/1').send(updates)
+      const response = await request(app).patch('/api/tasks/1').send(updates)
 
       expect(response.status).toBe(200)
       expect(prisma.task.update).toHaveBeenCalledWith({
@@ -422,9 +466,10 @@ describe('Tasks Routes', () => {
       }
       const updatedTask = { id: '1', ...updates }
 
+      vi.mocked(prisma.task.findUnique).mockResolvedValue({ id: '1' } as any)
       vi.mocked(prisma.task.update).mockResolvedValue(updatedTask as any)
 
-      const response = await request(app).put('/api/tasks/1').send(updates)
+      const response = await request(app).patch('/api/tasks/1').send(updates)
 
       expect(response.status).toBe(200)
       expect(prisma.task.update).toHaveBeenCalledWith({
@@ -441,9 +486,10 @@ describe('Tasks Routes', () => {
       const updates = { dueDate: null, completedAt: null }
       const updatedTask = { id: '1', dueDate: null, completedAt: null }
 
+      vi.mocked(prisma.task.findUnique).mockResolvedValue({ id: '1' } as any)
       vi.mocked(prisma.task.update).mockResolvedValue(updatedTask as any)
 
-      const response = await request(app).put('/api/tasks/1').send(updates)
+      const response = await request(app).patch('/api/tasks/1').send(updates)
 
       expect(response.status).toBe(200)
       expect(prisma.task.update).toHaveBeenCalledWith({
@@ -457,19 +503,56 @@ describe('Tasks Routes', () => {
     })
 
     it('returns 500 on database error', async () => {
+      vi.mocked(prisma.task.findUnique).mockResolvedValue({ id: '1' } as any)
       vi.mocked(prisma.task.update).mockRejectedValue(new Error('DB Error'))
 
       const response = await request(app)
-        .put('/api/tasks/1')
+        .patch('/api/tasks/1')
         .send({ title: 'Updated' })
 
       expect(response.status).toBe(500)
       expect(response.body).toEqual({ error: 'Failed to update task' })
     })
+
+    it('returns 404 when task not found', async () => {
+      vi.mocked(prisma.task.findUnique).mockResolvedValue(null)
+
+      const response = await request(app)
+        .patch('/api/tasks/nonexistent')
+        .send({ title: 'Updated' })
+
+      expect(response.status).toBe(404)
+      expect(response.body).toEqual({ error: 'Task not found' })
+    })
+
+    it('returns 400 for invalid statusId', async () => {
+      vi.mocked(prisma.task.findUnique).mockResolvedValue({ id: '1' } as any)
+      vi.mocked(prisma.taskStatus.findUnique).mockResolvedValue(null)
+
+      const response = await request(app)
+        .patch('/api/tasks/1')
+        .send({ statusId: 'invalid-status' })
+
+      expect(response.status).toBe(400)
+      expect(response.body).toEqual({ error: 'Invalid statusId: invalid-status' })
+    })
+
+    it('returns 400 for invalid priorityId', async () => {
+      vi.mocked(prisma.task.findUnique).mockResolvedValue({ id: '1' } as any)
+      vi.mocked(prisma.taskPriority.findUnique).mockResolvedValue(null)
+
+      const response = await request(app)
+        .patch('/api/tasks/1')
+        .send({ priorityId: 'invalid-priority' })
+
+      expect(response.status).toBe(400)
+      expect(response.body).toEqual({ error: 'Invalid priorityId: invalid-priority' })
+    })
   })
 
   describe('DELETE /api/tasks/:id', () => {
     it('deletes task and returns 204', async () => {
+      vi.mocked(prisma.task.findUnique).mockResolvedValue({ id: '1' } as any)
       vi.mocked(prisma.task.delete).mockResolvedValue({} as any)
 
       const response = await request(app).delete('/api/tasks/1')
@@ -480,7 +563,17 @@ describe('Tasks Routes', () => {
       })
     })
 
+    it('returns 404 when task not found', async () => {
+      vi.mocked(prisma.task.findUnique).mockResolvedValue(null)
+
+      const response = await request(app).delete('/api/tasks/nonexistent')
+
+      expect(response.status).toBe(404)
+      expect(response.body).toEqual({ error: 'Task not found' })
+    })
+
     it('returns 500 on database error', async () => {
+      vi.mocked(prisma.task.findUnique).mockResolvedValue({ id: '1' } as any)
       vi.mocked(prisma.task.delete).mockRejectedValue(new Error('DB Error'))
 
       const response = await request(app).delete('/api/tasks/1')
@@ -539,6 +632,274 @@ describe('Tasks Routes', () => {
 
       expect(response.status).toBe(500)
       expect(response.body).toEqual({ error: 'Failed to fetch task statistics' })
+    })
+
+    it('calculates percentages correctly with 1 task', async () => {
+      vi.mocked(prisma.task.count)
+        .mockResolvedValueOnce(1) // total
+        .mockResolvedValueOnce(1) // completed
+        .mockResolvedValueOnce(0) // inProgress
+        .mockResolvedValueOnce(0) // notStarted
+        .mockResolvedValueOnce(0) // vital
+
+      const response = await request(app).get('/api/tasks/stats/summary')
+
+      expect(response.status).toBe(200)
+      expect(response.body.completedPercentage).toBe(100)
+      expect(response.body.inProgressPercentage).toBe(0)
+      expect(response.body.notStartedPercentage).toBe(0)
+    })
+  })
+
+  describe('Edge Cases & Validation', () => {
+    describe('Empty query parameters', () => {
+      it('returns all tasks when no filters applied', async () => {
+        vi.mocked(prisma.task.findMany).mockResolvedValue([])
+
+        const response = await request(app).get('/api/tasks')
+
+        expect(response.status).toBe(200)
+        expect(prisma.task.findMany).toHaveBeenCalledWith(
+          expect.objectContaining({
+            where: {},
+          })
+        )
+      })
+    })
+
+    describe('Boolean parameter handling', () => {
+      it('correctly parses isVital=false as string', async () => {
+        vi.mocked(prisma.task.findMany).mockResolvedValue([])
+
+        await request(app).get('/api/tasks?isVital=false')
+
+        // When isVital is "false" string, it's truthy, so it shouldn't filter
+        // This tests the current implementation behavior
+        expect(prisma.task.findMany).toHaveBeenCalledWith(
+          expect.objectContaining({
+            where: expect.objectContaining({
+              isVital: false,
+            }),
+          })
+        )
+      })
+    })
+
+    describe('Invalid ID format handling', () => {
+      it('handles invalid UUID format gracefully in GET', async () => {
+        vi.mocked(prisma.task.findUnique).mockResolvedValue(null)
+
+        const response = await request(app).get('/api/tasks/not-a-valid-uuid')
+
+        expect(response.status).toBe(404)
+        expect(response.body).toEqual({ error: 'Task not found' })
+      })
+
+      it('handles invalid UUID format gracefully in PATCH', async () => {
+        vi.mocked(prisma.task.findUnique).mockResolvedValue(null)
+
+        const response = await request(app)
+          .patch('/api/tasks/invalid-uuid')
+          .send({ title: 'Updated' })
+
+        expect(response.status).toBe(404)
+        expect(response.body).toEqual({ error: 'Task not found' })
+      })
+
+      it('handles invalid UUID format gracefully in DELETE', async () => {
+        vi.mocked(prisma.task.findUnique).mockResolvedValue(null)
+
+        const response = await request(app).delete('/api/tasks/invalid-uuid')
+
+        expect(response.status).toBe(404)
+        expect(response.body).toEqual({ error: 'Task not found' })
+      })
+    })
+
+    describe('Concurrent validation edge cases', () => {
+      it('validates both statusId and priorityId when both provided', async () => {
+        vi.mocked(prisma.taskStatus.findUnique).mockResolvedValue({ id: '1', name: 'Todo' } as any)
+        vi.mocked(prisma.taskPriority.findUnique).mockResolvedValue({ id: '1', name: 'High' } as any)
+        vi.mocked(prisma.task.create).mockResolvedValue({
+          id: '1',
+          title: 'Test',
+        } as any)
+
+        await request(app).post('/api/tasks').send({
+          title: 'Test Task',
+          statusId: 'valid-status',
+          priorityId: 'valid-priority',
+          ownerId: 'user-1',
+        })
+
+        expect(prisma.taskStatus.findUnique).toHaveBeenCalledWith({ where: { id: 'valid-status' } })
+        expect(prisma.taskPriority.findUnique).toHaveBeenCalledWith({ where: { id: 'valid-priority' } })
+      })
+
+      it('validates only statusId in PATCH when only status provided', async () => {
+        vi.mocked(prisma.task.findUnique).mockResolvedValue({ id: '1' } as any)
+        vi.mocked(prisma.taskStatus.findUnique).mockResolvedValue({ id: '1', name: 'Todo' } as any)
+        vi.mocked(prisma.task.update).mockResolvedValue({ id: '1' } as any)
+
+        await request(app)
+          .patch('/api/tasks/1')
+          .send({ statusId: 'new-status' })
+
+        expect(prisma.taskStatus.findUnique).toHaveBeenCalledWith({ where: { id: 'new-status' } })
+        expect(prisma.taskPriority.findUnique).not.toHaveBeenCalled()
+      })
+
+      it('validates only priorityId in PATCH when only priority provided', async () => {
+        vi.mocked(prisma.task.findUnique).mockResolvedValue({ id: '1' } as any)
+        vi.mocked(prisma.taskPriority.findUnique).mockResolvedValue({ id: '1', name: 'High' } as any)
+        vi.mocked(prisma.task.update).mockResolvedValue({ id: '1' } as any)
+
+        await request(app)
+          .patch('/api/tasks/1')
+          .send({ priorityId: 'new-priority' })
+
+        expect(prisma.taskPriority.findUnique).toHaveBeenCalledWith({ where: { id: 'new-priority' } })
+        expect(prisma.taskStatus.findUnique).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('Required fields validation', () => {
+      it('returns 400 when all required fields missing', async () => {
+        const response = await request(app).post('/api/tasks').send({})
+
+        expect(response.status).toBe(400)
+        expect(response.body.error).toContain('Missing required fields')
+      })
+
+      it('returns 400 when title is empty string', async () => {
+        const response = await request(app).post('/api/tasks').send({
+          title: '',
+          statusId: '1',
+          priorityId: '1',
+          ownerId: '1',
+        })
+
+        expect(response.status).toBe(400)
+        expect(response.body.error).toContain('Missing required fields')
+      })
+    })
+
+    describe('Optional field handling', () => {
+      it('accepts null for optional categoryId', async () => {
+        vi.mocked(prisma.taskStatus.findUnique).mockResolvedValue({ id: '1', name: 'Todo' } as any)
+        vi.mocked(prisma.taskPriority.findUnique).mockResolvedValue({ id: '1', name: 'High' } as any)
+        vi.mocked(prisma.task.create).mockResolvedValue({
+          id: '1',
+          categoryId: null,
+        } as any)
+
+        const response = await request(app).post('/api/tasks').send({
+          title: 'Task without category',
+          statusId: '1',
+          priorityId: '1',
+          ownerId: '1',
+          categoryId: null,
+        })
+
+        expect(response.status).toBe(201)
+        expect(prisma.task.create).toHaveBeenCalledWith(
+          expect.objectContaining({
+            data: expect.objectContaining({
+              categoryId: null,
+            }),
+          })
+        )
+      })
+
+      it('accepts null for optional assigneeId', async () => {
+        vi.mocked(prisma.taskStatus.findUnique).mockResolvedValue({ id: '1', name: 'Todo' } as any)
+        vi.mocked(prisma.taskPriority.findUnique).mockResolvedValue({ id: '1', name: 'High' } as any)
+        vi.mocked(prisma.task.create).mockResolvedValue({
+          id: '1',
+          assigneeId: null,
+        } as any)
+
+        const response = await request(app).post('/api/tasks').send({
+          title: 'Unassigned task',
+          statusId: '1',
+          priorityId: '1',
+          ownerId: '1',
+          assigneeId: null,
+        })
+
+        expect(response.status).toBe(201)
+        expect(prisma.task.create).toHaveBeenCalledWith(
+          expect.objectContaining({
+            data: expect.objectContaining({
+              assigneeId: null,
+            }),
+          })
+        )
+      })
+    })
+
+    describe('PATCH partial updates', () => {
+      it('allows updating only isVital field', async () => {
+        vi.mocked(prisma.task.findUnique).mockResolvedValue({ id: '1', isVital: false } as any)
+        vi.mocked(prisma.task.update).mockResolvedValue({ id: '1', isVital: true } as any)
+
+        const response = await request(app)
+          .patch('/api/tasks/1')
+          .send({ isVital: true })
+
+        expect(response.status).toBe(200)
+        expect(prisma.task.update).toHaveBeenCalledWith(
+          expect.objectContaining({
+            data: { isVital: true },
+          })
+        )
+      })
+
+      it('allows updating only description field', async () => {
+        vi.mocked(prisma.task.findUnique).mockResolvedValue({ id: '1' } as any)
+        vi.mocked(prisma.task.update).mockResolvedValue({ id: '1' } as any)
+
+        const response = await request(app)
+          .patch('/api/tasks/1')
+          .send({ description: 'New description' })
+
+        expect(response.status).toBe(200)
+        expect(prisma.task.update).toHaveBeenCalledWith(
+          expect.objectContaining({
+            data: { description: 'New description' },
+          })
+        )
+      })
+
+      it('allows clearing description by setting to null', async () => {
+        vi.mocked(prisma.task.findUnique).mockResolvedValue({ id: '1' } as any)
+        vi.mocked(prisma.task.update).mockResolvedValue({ id: '1' } as any)
+
+        const response = await request(app)
+          .patch('/api/tasks/1')
+          .send({ description: null })
+
+        expect(response.status).toBe(200)
+        expect(prisma.task.update).toHaveBeenCalledWith(
+          expect.objectContaining({
+            data: { description: null },
+          })
+        )
+      })
+    })
+
+    describe('Ordering and sorting', () => {
+      it('orders tasks by createdAt descending', async () => {
+        vi.mocked(prisma.task.findMany).mockResolvedValue([])
+
+        await request(app).get('/api/tasks')
+
+        expect(prisma.task.findMany).toHaveBeenCalledWith(
+          expect.objectContaining({
+            orderBy: [{ createdAt: 'desc' }],
+          })
+        )
+      })
     })
   })
 })

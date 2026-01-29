@@ -1,89 +1,94 @@
-# 🚀 GitHub Copilot Onboarding Showcase
+# 🎓 🤖 AI-Assisted Development Showcase
 
-> **Vue 3 Todo Dashboard** – A sample project designed to demonstrate GitHub Copilot features during developer onboarding sessions.
+> **Vue 3 Todo Dashboard** – A **reference implementation** demonstrating multi-agent AI development with GitHub Copilot.
+>
+> This project showcases **how professional teams use AI to boost productivity while maintaining quality, safety, and developer control**.
 
 ![Vue.js](https://img.shields.io/badge/Vue.js-3.5-4FC08D?logo=vue.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-7.3-646CFF?logo=vite&logoColor=white)
 ![Pinia](https://img.shields.io/badge/Pinia-3.0-yellow?logo=vue.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-5.x-000000?logo=express&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-7.x-2D3748?logo=prisma&logoColor=white)
 
 ---
 
-## 📋 Table of Contents
 
-- [About This Project](#-about-this-project)
-- [Tech Stack](#-tech-stack)
-- [Getting Started](#-getting-started)
-- [Backend](./backend/README.md)
-- [Showcase: A Day in the Life of a Developer](#-showcase-a-day-in-the-life-of-a-developer)
-  - [🌅 Morning: Understand & Explore Code](#-morning-understand--explore-code-10-min)
-  - [☀️ Late Morning: Write & Refactor Code](#%EF%B8%8F-late-morning-write--refactor-code-10-min)
-  - [🍽️ Midday: Test & Fix](#%EF%B8%8F-midday-test--fix-5-min)
-  - [🌆 Afternoon: Workflow Automation](#-afternoon-workflow-automation-5-min)
-  - [⚙️ Custom Instructions](#%EF%B8%8F-custom-instructions-10-min)
-- [Model Usage Strategy](#-model-usage-strategy)
-- [Understanding Context in Copilot](#-understanding-context-in-copilot)
-- [Best Practices](#-best-practices)
-- [Important Links](#-important-links)
+## 🚨 Developer Responsibilities
 
----
+> **AI is a co-pilot, not an autopilot.** You are responsible for code quality, security, and compliance.
 
-## 📖 About This Project
+### Your Accountability
 
-This **Vue 3 Todo Dashboard** is a purpose-built sample application for demonstrating GitHub Copilot capabilities during developer onboarding sessions. The project provides realistic scenarios for showcasing:
+| | Responsibility | Action |
+|---|---|---|
+| 👁️ | **Review** | Read and understand all AI-generated code before committing |
+| ✅ | **Validate** | Check against requirements and project standards |
+| 🧪 | **Test** | Run full test suite before merging |
+| 🔒 | **Security** | Verify auth, credentials, and data handling |
+| 💡 | **Understand** | Know what changed and why it changed |
 
-- **Code exploration** with `@workspace` and `#codebase`
-- **Inline completions** and Tab-to-accept workflows
-- **Inline Chat** for quick refactoring
-- **Test generation** and bug fixing
-- **Commit message generation** and CLI assistance
+📖 **[Read the full guide →][responsibilities]** – detailed checklists, incident response, and MCP security
 
-### Project Structure
+
+## 📖 Let's start
+
+**New to this project?** Begin with the **[AI Development Guide][ai-guide]** for a complete overview of agents, instructions, MCP, and how everything works together.
+
+**In This README:**
+- [Developer Responsibilities](#-developer-responsibilities) – Your accountability when working AI-Assisted
+- [Getting Started](#-getting-started) – Run locally in 3 steps
+- [System Architecture](#-system-architecture) – Visual overview
+- [Tech Stack](#-tech-stack) – Technologies used
+- [Documentation](#-documentation) – All learning resources
+
+
 
 ```
-src/
-├── App.vue                    # Root component
-├── main.ts                    # Application entry
-├── assets/styles/             # CSS variables & base styles
-├── components/
-│   ├── layout/
-│   │   ├── MainLayout.vue     # Page layout wrapper
-│   │   ├── TheHeader.vue      # Top navigation
-│   │   └── TheSidebar.vue     # Side navigation
-│   └── icons/                 # Icon components
-├── router/index.ts            # Vue Router configuration
-├── stores/counter.ts          # Pinia store example
-└── views/
-    ├── DashboardView.vue      # Main dashboard
-    ├── VitalTasksView.vue     # Priority tasks
-    ├── MyTasksView.vue        # Personal tasks
-    ├── CategoriesView.vue     # Task categories
-    ├── SettingsView.vue       # User settings
-    └── HelpView.vue           # Help section
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                        GitHub Copilot Agent Mode                             │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  Agents (4)           │  Instructions (10)    │  Skills (11)                 │ 
+│  ├── Implement        │  ├── Global           │  ├── Architectural Docs      │
+│  ├── Specify          │  ├── Backend Routes   │  ├── Backend Routes          │
+│  ├── Test Unit        │  ├── Pinia Stores     │  ├── Code Documentation      │
+│  └── Test E2E         │  ├── Prisma Database  │  ├── E2E Testing             │
+│                       │  ├── Styling          │  ├── Pinia Stores            │
+│                       │  ├── Testing Backend  │  ├── Prisma Database         │
+│                       │  ├── Testing E2E      │  ├── Security Review         │
+│                       │  ├── Testing Frontend │  ├── Styling                 │
+│                       │  ├── Vue Components   │  ├── Unit Testing            │
+│                       │  └── Vue Composables  │  ├── Vue Components          │
+│                       │                       │  └── Vue Composables         │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  Prompts (7)                                                                 │
+│  ├── Generate API Endpoint     ├── Generate Pinia Store                      │
+│  ├── Generate Component        ├── Generate Unit Test                        │
+│  ├── Generate E2E Test         ├── Review Security                           │
+│  └── Specify                                                                 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  MCP Integrations (4)                                                        │
+│  ├── Atlassian (Jira/Confluence)     ├── Chrome DevTools                     │
+│  ├── Figma Desktop                   └── Playwright                          │
+└──────────────────────────────────────────────────────────────────────────────┘
 ```
-
----
 
 ## 🛠 Tech Stack
 
-| Technology | Purpose |
-|------------|---------|
-| **Vue 3** | Composition API with `<script setup>` |
-| **TypeScript** | Type-safe development |
-| **Vite** | Lightning-fast dev server & bundler |
-| **Pinia** | State management |
-| **Vue Router** | Client-side routing |
-| **ESLint + Prettier** | Code quality & formatting |
-
----
+| Layer | Technologies |
+|-------|--------------|
+| **Frontend** | Vue 3, TypeScript, Vite, Pinia, Vue Router |
+| **Backend** | Express, Prisma ORM, PostgreSQL |
+| **Testing** | Vitest, Vue Test Utils, Supertest, Playwright |
+| **AI** | GitHub Copilot, Custom Agents, MCP |
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
 - Node.js `^20.19.0` or `>=22.12.0`
-- VS Code with [GitHub Copilot Extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)
-- [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) extension
+- VS Code with [GitHub Copilot Extension][copilot-extension]
+- [Vue (Official)][vue-extension] extension
 
 ### Installation
 
@@ -114,278 +119,82 @@ npm run dev
 
 ```bash
 cd backend
-npm run dev           # Start API server
-npm run test:run      # Run backend tests
 ```
 
----
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start API server → http://localhost:3000 |
+| `npm run db:migrate` | Run database migrations |
+| `npm run db:seed` | Seed sample data |
+| `npm run db:studio ` | Prisma Studio GUI |
+| `npm run test:run` | Run backend tests |
 
-## 🎬 Showcase: A Day in the Life of a Developer
+## 🔗 Official Resources
 
-This showcase is designed for a **60-minute onboarding session** and follows a developer's typical daily workflow. It can be adapted for both **VS Code** and **JetBrains IDEs**.
+### GitHub Copilot Documentation
 
-> **⚠️ Important Reminder:** You are the **Pilot, not the Autopilot**. Always review generated code and ensure compliance with your project's guidelines.
+| Resource | Purpose |
+|----------|---------|
+| [What is GitHub Copilot?][copilot-what-is] | Overview and capabilities |
+| [Response Customization][copilot-response-customization] | Examples and best practices |
+| [Trust Center][copilot-trust-center] | Security, privacy, and compliance |
 
----
+### Model Context Protocol
 
-### 🌅 Morning: Understand & Explore Code (10 min)
+| Resource | Purpose |
+|----------|---------|
+| [MCP Official Site][mcp-site] | Introduction and core concepts |
+| [MCP Architecture][mcp-architecture] | How MCP works under the hood |
+| [Building MCP Servers][mcp-build-servers] | Create custom MCP integrations |
 
-**Goal:** Quickly onboard to an unfamiliar codebase.
 
-#### Feature: Chat View with `@workspace` / `#codebase`
+### Learning & Inspiration
 
-| IDE | How to Use |
-|-----|------------|
-| **VS Code** | Open Chat (`Cmd+Shift+I`) → Type `@workspace` queries |
-| **JetBrains** | Select code → Right-click → "Copilot: Explain this" |
+| Resource | Purpose |
+|----------|---------|
+| [Awesome Copilot][awesome-copilot] | Community examples and best practices |
 
-#### Try These Prompts
+## 📄 About This Project
 
-```
-@workspace What is the purpose of the MainLayout component?
+🎓 **Reference Implementation** – This is a showcase project demonstrating professional practices for AI-assisted software development. It's designed for learning and as a template for your own AI-powered development workflows.
 
-@workspace Where is the Vue Router configured and what routes exist?
-
-@workspace How does the Pinia store work in this project?
-
-#codebase Explain the relationship between App.vue and the layout components
-```
-
-#### What to Showcase
-
-1. Open the project and ask: *"@workspace Give me an overview of this project structure"*
-2. Navigate to `MainLayout.vue` and ask: *"What components does this import and why?"*
-3. Highlight the router configuration and use **Explain this** feature
-
-> 💡 **Tip:** Use the Chat to understand code *before* you change a single line.
-
----
-
-### ☀️ Late Morning: Write & Refactor Code (10 min)
-
-**Goal:** Reduce boilerplate, improve code quality.
-
-#### Feature: Inline Completions (Tab) & Inline Chat (`Cmd+I` / `Ctrl+I`)
-
-| Action | Shortcut |
-|--------|----------|
-| Accept suggestion | `Tab` |
-| Reject suggestion | `Esc` |
-| Inline Chat | `Cmd+I` (Mac) / `Ctrl+I` (Windows) |
-
-#### Live Coding Examples
-
-**1. Start typing a function:**
-```typescript
-// Function that validates an email address using regex
-function validateEmail(
-```
-→ Press `Tab` to accept Copilot's completion
-
-**2. Add a new method to the store:**
-```typescript
-// In stores/counter.ts, start typing:
-function reset() {
-```
-→ Let Copilot complete it
-
-**3. Refactor with Inline Chat:**
-- Select a function → `Cmd+I` → *"Add JSDoc documentation"*
-- Select code → `Cmd+I` → *"Refactor to use async/await"*
-- Select component → `Cmd+I` → *"Add TypeScript types for props"*
-
-#### What to Showcase
-
-1. Create a new `validateEmail` utility function with just a comment
-2. Add a `reset()` method to the counter store
-3. Select `DashboardView.vue` script and ask to add proper TypeScript interfaces
-
-> 💡 **Tip:** This is your "Pair Programmer" – you set the direction, Copilot writes the code.
-
----
-
-### 🍽️ Midday: Test & Fix (5 min)
-
-**Goal:** Increase test coverage, find and fix bugs.
-
-#### Feature: `/tests` and `/fix` Commands
-
-#### Try These Commands
-
-```
-/tests Create unit tests for the counter store using Vitest
-
-/tests Generate component tests for TheHeader.vue
-
-/fix This function has a bug where it doesn't handle empty arrays
-```
-
-#### What to Showcase
-
-1. Open `stores/counter.ts`
-2. Ask: *"/tests Create comprehensive unit tests with Vitest"*
-3. Introduce a deliberate bug and use `/fix` to correct it
-
-> 💡 **Tip:** Let Copilot write the tedious unit tests and use it as a "second pair of eyes" for bugs.
-
----
-
-### 🌆 Afternoon: Workflow Automation (5 min)
-
-**Goal:** Use Copilot beyond code generation.
-
-#### Feature: Commit Messages & CLI Assistance
-
-**Git Integration (All IDEs):**
-- Click the ✨ sparkle icon in the Git commit input
-- Or use *"Generate Commit Message"* button
-
-**Terminal / CLI (VS Code or Global):**
-```bash
-# Explain complex commands
-gh copilot explain "git rebase -i HEAD~3"
-
-# Get command suggestions
-gh copilot suggest "find all .ts files containing TODO"
-```
-
-#### What to Showcase
-
-1. Make a small change in the project
-2. Stage the changes and click "Generate Commit Message"
-3. Open terminal and demonstrate `gh copilot explain` with a complex git command
-
-> 💡 **Tip:** Copilot optimizes your entire workflow – from terminal to commit.
-
----
-
-### ⚙️ Custom Instructions (10 min)
-
-**Goal:** Teach Copilot project-specific conventions.
-
-#### Feature: Repository Custom Instructions
-
-Create a `.github/copilot-instructions.md` file:
-
-```markdown
-# Project Coding Guidelines
-
-## Vue Components
-- Always use `<script setup lang="ts">` syntax
-- Use Composition API, not Options API
-- Component names must be PascalCase
-
-## TypeScript
-- Prefer `interface` over `type` for object shapes
-- Always define explicit return types for functions
-- Use strict null checks
-
-## Styling
-- Use CSS custom properties from variables.css
-- Follow BEM naming: `.block__element--modifier`
-- Scoped styles only in components
-
-## State Management
-- Use Pinia stores for shared state
-- Use Composition API setup stores
-```
-
-#### What to Showcase
-
-1. Create the `.github/copilot-instructions.md` file
-2. Ask Copilot to generate a new component
-3. Show how it follows the defined conventions
-
-> 💡 **Tip:** Custom instructions make `@workspace` responses follow your project's rules.
-
----
-
-## 🤖 Model Usage Strategy
-
-GitHub Copilot offers different model tiers:
-
-| Tier | Models | Usage |
-|------|--------|-------|
-| **Standard** | GPT-4.1, GPT-4o | ✅ Included in license – use for daily tasks |
-| **Premium** | Claude Sonnet/Opus, Gemini 2.5 Pro | ⚠️ Limited quota – use for complex challenges |
-
-**Recommendation:**
-- Use **Standard models** for everyday coding
-- Reserve **Premium models** for complex debugging, architecture decisions, or Agent Mode
-
----
-
-## 🔍 Understanding Context in Copilot
-
-### Local Index
-
-VS Code builds a local index of your workspace for better context:
-
-| Project Size | Behavior |
-|--------------|----------|
-| < 750 files | ✅ Automatic advanced index |
-| 750-2500 files | Run `Build local workspace index` command once |
-| > 2500 files | Uses basic index |
-
-### `@workspace` vs. `#codebase`
-
-| Feature | `@workspace` | `#codebase` |
-|---------|--------------|-------------|
-| Type | Chat Participant | Chat Tool |
-| Behavior | Hands off entire prompt | Can be invoked multiple times |
-| Flexibility | Single participant per prompt | Multiple tools per prompt |
-| **Recommendation** | Good for focused questions | **Preferred** – more flexible |
-
-### Agent Mode vs. Ask/Edit Mode
-
-| Mode | Context Behavior |
-|------|------------------|
-| **Agent Mode** | Automatic agentic search with follow-up queries |
-| **Ask/Edit Mode** | Single codebase search, no follow-ups |
-
-> 💡 **Tip:** Use `#codebase` in your prompts for maximum flexibility.
-
----
-
-## ✅ Best Practices
-
-1. **Good Context = Good Suggestions**
-   - Write a comment first, then let Copilot complete
-   - Open related files for better context
-
-2. **Review Everything**
-   - You're responsible for the code
-   - Check for security issues, edge cases, and logic errors
-
-3. **Workspace-Only Activation (VS Code)**
-   - Enable Copilot per workspace for sensitive projects
-
-4. **Use the Right Tool**
-   - Inline completions for flow
-   - Chat for exploration
-   - Agent mode for complex tasks
-
----
-
-## 🔗 Important Links
-
-| Resource | Link |
-|----------|------|
-| **Feature Overview** | [GitHub Copilot Features](https://docs.github.com/en/copilot/get-started/github-copilot-features) |
-| **Quickstart Guide** | [Get Started with Copilot](https://docs.github.com/en/copilot/get-started/quickstart?tool=jetbrains) |
-| **VS Code Cheat Sheet** | [Copilot Cheat Sheet](https://docs.github.com/en/copilot/reference/cheat-sheet?tool=vscode) |
-| **Workspace Context** | [VS Code Workspace Context](https://code.visualstudio.com/docs/copilot/reference/workspace-context) |
-| **Local Index Docs** | [Local Index Reference](https://code.visualstudio.com/docs/copilot/reference/workspace-context#_local-index) |
-| **Prompting Guide** | [Prompting Best Practices](https://confluence.slashwhy.de/spaces/GENAI/pages/203537355/Prompting) |
-
----
-
-## 📄 License
-
-This is an internal sample project for GitHub Copilot onboarding demonstrations.
+**Not for Production Use** – This is a demonstration project. For production use, customize the agents, instructions, and security policies to match your organization's standards.
 
 ---
 
 <p align="center">
-  <strong>Remember: You're the Pilot 🧑‍✈️ – Copilot is your co-pilot!</strong>
+  <strong>🧑‍✈️ Remember: You are the Pilot – AI is your co-pilot!</strong><br>
+  <strong>You remain responsible for your output, code quality, security, and compliance.</strong>
 </p>
+
+<!-- Project Documentation -->
+[ai-guide]: docs/AI_DEVELOPMENT_GUIDE.md
+[custom-agents]: docs/CUSTOM_AGENTS.md
+[custom-instructions]: docs/CUSTOM_INSTRUCTIONS.md
+[custom-prompts]: docs/CUSTOM_PROMPTS.md
+[mcp]: docs/MCP.md
+[responsibilities]: docs/RESPONSIBILITIES_AND_SECURITY.md
+[context-optimization]: docs/CONTEXT_OPTIMIZATION.md
+[git-worktrees]: docs/GIT_WORKTREES.md
+[backend-readme]: backend/README.md
+
+<!-- Features and Sections -->
+[instruction-hierarchy]: docs/CUSTOM_INSTRUCTIONS.md#instruction-hierarchy
+[skills-reference]: docs/CUSTOM_AGENTS.md#skills-reference
+
+<!-- Extensions -->
+[copilot-extension]: https://marketplace.visualstudio.com/items?itemName=GitHub.copilot
+[vue-extension]: https://marketplace.visualstudio.com/items?itemName=Vue.volar
+
+<!-- GitHub Copilot Documentation -->
+[copilot-what-is]: https://docs.github.com/en/copilot/get-started/what-is-github-copilot
+[copilot-response-customization]: https://docs.github.com/en/copilot/concepts/prompting/response-customization
+[copilot-trust-center]: https://copilot.github.trust.page/
+
+<!-- Model Context Protocol -->
+[mcp-site]: https://modelcontextprotocol.io/
+[mcp-architecture]: https://modelcontextprotocol.io/docs/learn/architecture
+[mcp-build-servers]: https://modelcontextprotocol.io/docs/develop/build-server
+
+<!-- Community & Resources -->
+[awesome-copilot]: https://github.com/github/awesome-copilot
