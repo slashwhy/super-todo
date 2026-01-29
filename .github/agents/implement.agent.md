@@ -1,8 +1,9 @@
 ---
 name: 'Implement'
 description: 'Full-stack implementation agent that builds features from implementation plans using Vue 3, Express, Prisma, and project conventions.'
-tools: ['execute', 'read', 'edit', 'search', 'web', 'atlassian/atlassian-mcp-server/search', 'figma-desktop/get_code_connect_map', 'figma-desktop/get_design_context', 'figma-desktop/get_metadata', 'figma-desktop/get_screenshot', 'figma-desktop/get_variable_defs', 'agent', 'todo']
+tools: ['vscode', 'execute', 'read', 'agent', 'edit', 'search', 'web', 'figma-desktop/get_code_connect_map', 'figma-desktop/get_design_context', 'figma-desktop/get_metadata', 'figma-desktop/get_screenshot', 'figma-desktop/get_variable_defs', 'atlassian/atlassian-mcp-server/search', 'todo']
 model: Claude Opus 4.5 (copilot)
+infer: false
 handoffs:
   - label: "Add Unit Tests"
     agent: Test Unit

@@ -6,12 +6,14 @@
 
 ## 📋 Quick Reference
 
-| Agent | Role | Writes Code? | Typical Use |
-|-------|------|--------------|-------------|
-| [**@Specify & Validate**][agent-specify] | Planning & validation | ❌ Read-only | Plan features , validate implementations, design reviews |
-| [**@Implement**][agent-implement] | Feature implementation | ✅ Yes | Build from scratch, from design, quick fixes |
-| [**@Test Unit**][agent-test-unit] | Unit & integration tests | ✅ Yes | After implementation, regression tests, component props/emits validation |
-| [**@Test E2E**][agent-test-e2e] | End-to-end tests | ✅ Yes | User interaction flows, complete workflows, cross-feature scenarios |
+| Agent | Role | Writes Code? | Auto-Infer | Typical Use |
+|-------|------|--------------|------------|-------------|
+| [**@Specify & Validate**][agent-specify] | Planning & validation | ❌ Read-only | ✅ Yes | Plan features, validate implementations, design reviews |
+| [**@Implement**][agent-implement] | Feature implementation | ✅ Yes | ❌ No | Build from scratch, from design, quick fixes |
+| [**@Test Unit**][agent-test-unit] | Unit & integration tests | ✅ Yes | ✅ Yes | After implementation, regression tests, component props/emits validation |
+| [**@Test E2E**][agent-test-e2e] | End-to-end tests | ✅ Yes | ❌ No | User interaction flows, complete workflows, cross-feature scenarios |
+
+> **Auto-Infer:** When `✅ Yes`, Copilot can auto-select this agent based on task context. When `❌ No`, you must explicitly select the agent.
 
 > 📖 **Official Docs:** [VS Code Custom Agents][vscode-agents] · [GitHub Custom Agents][github-agents]
 
@@ -135,6 +137,7 @@ name: 'Review'
 description: 'Code review agent that analyzes PRs for quality, conventions, and potential issues.'
 tools: ['read', 'search']  # Read-only: no edit, no execute
 model: Claude Sonnet 4.5
+infer: true  # Allow auto-selection for review tasks
 handoffs:
   - label: "Request Changes"
     agent: Implement
@@ -184,6 +187,7 @@ You are a **code reviewer**:
 | `description` | ✅ | One-line role summary |
 | `tools` | ✅ | Array of allowed tools (keep minimal!) |
 | `model` | ❌ | Suggested model (user can override) |
+| `infer` | ❌ | Allow Copilot to auto-select this agent (default: true). Set `false` for specialized agents that require explicit invocation |
 | `handoffs` | ❌ | Agents this can hand off to |
 | `handoffs[].send` | ❌ | Auto-submit handoff (default: false) |
 

@@ -1,8 +1,9 @@
 ---
 name: 'Test E2E'
 description: 'End-to-end testing specialist using Playwright and Chrome DevTools for user flow testing and visual validation.'
-tools: ['execute', 'read', 'edit', 'search', 'io.github.chromedevtools/chrome-devtools-mcp/*', 'agent', 'playwright/*', 'todo']
+tools: ['vscode', 'execute', 'read', 'agent', 'edit', 'search', 'io.github.chromedevtools/chrome-devtools-mcp/*', 'playwright/*', 'atlassian/atlassian-mcp-server/search', 'todo']
 model: Claude Sonnet 4.5
+infer: false
 handoffs:
   - label: "Fix Implementation"
     agent: Implement
