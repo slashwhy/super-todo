@@ -4,6 +4,7 @@
     "github.copilot-chat",
     "github.vscode-pull-request-github",
     "vue.volar",
-    "ms-playwright.playwright"
+    "ms-playwright.playwright",
+    "ms-vscode.vscode-speech"
   ]
 }
