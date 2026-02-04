@@ -271,7 +271,8 @@ This means you can install many skills without consuming context—only relevant
 [custom-prompts]: ./CUSTOM_PROMPTS.md
 [custom-instructions]: ./CUSTOM_INSTRUCTIONS.md
 [mcp]: ./MCP.md
-[responsibilities]: ./RESPONSIBILITIES_AND_SECURITY.md
+[responsibilities]: ./RESPONSIBILITIES.md
+[security]: ./SECURITY.md
 
 <!-- GitHub Copilot Documentation -->
 [vscode-agents]: https://code.visualstudio.com/docs/copilot/customization/custom-agents

@@ -168,7 +168,8 @@ npm run dev                    # App → http://localhost:5173
 [custom-instructions]: docs/CUSTOM_INSTRUCTIONS.md
 [custom-prompts]: docs/CUSTOM_PROMPTS.md
 [mcp]: docs/MCP.md
-[responsibilities]: docs/RESPONSIBILITIES_AND_SECURITY.md
+[responsibilities]: docs/RESPONSIBILITIES.md
+[security]: docs/SECURITY.md
 [context-optimization]: docs/CONTEXT_OPTIMIZATION.md
 [git-worktrees]: docs/GIT_WORKTREES.md
 [frontend-readme]: frontend/README.md

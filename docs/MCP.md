@@ -199,58 +199,29 @@ Font: Inter 14px    →    --font-body
 ```
 
 
-## 🔒 Security Risks & Mitigations
+## 🔒 Security Considerations
 
-### 1. Confused Deputy Problem
+MCP servers extend agent capabilities but introduce security risks. Key concerns:
 
-Agent combines permissions unintentionally.
+| Risk | Overview | Learn More |
+|------|----------|------------|
+| 🔓 **Confused Deputy** | Agent combines permissions unintentionally | [SECURITY.md§Confused Deputy][security] |
+| 🔑 **Credential Exposure** | API keys leaked in logs/outputs | [SECURITY.md§Credential Exposure][security] |
+| 🔄 **Context Leakage** | Sensitive data crosses project boundaries | [SECURITY.md§Context Leakage][security] |
+| 🎫 **Token Passthrough** | Servers accept unauthorized tokens | [SECURITY.md§Token Passthrough][security] |
 
-| Risk | Mitigation |
-|------|------------|
-| Agent reads code, writes to Jira | ✅ Separate read-only and write servers |
-| Secrets leaked to external service | ✅ Minimal permissions per server |
+**📖 Complete security guide:** [SECURITY.md][security] – Comprehensive MCP security practices, incident response, and checklists
 
-### 2. Credential Exposure
+### Security Best Practices
 
-```typescript
-// ⚠️ Avoid
-console.log(`Token: ${jiraToken}`)
+| Practice | Implementation |
+|----------|----------------|
+| **Minimal permissions** | Grant only required MCP tools per agent |
+| **Document data flows** | Map what data goes where for each server |
+| **Workspace isolation** | Separate MCP configs per project |
+| **Token validation** | Validate all credentials before use |
 
-// ✅ Do This
-console.log(`Token: ${jiraToken.slice(0, 4)}...`)
-```
-
-### 3. Context Leakage
-
-Sensitive data from one project appears in another.
-
-| Mitigation |
-|------------|
-| ✅ Workspace-specific MCP configs |
-| ✅ Clear context between projects |
-| ✅ Separate credentials per project |
-
-### 4. Token Passthrough Anti-Pattern
-
-An MCP server should **never** accept tokens not explicitly issued for it.
-
-```typescript
-// ❌ DANGEROUS: Passing through external tokens
-server.use(req.headers.externalApiToken)
-
-// ✅ CORRECT: Validate token audience
-const token = validateAudience(req.token, 'mcp-server-id')
-if (!token.valid) throw new AuthError('Invalid audience')
-```
-
-| Risk | Why It Matters |
-|------|----------------|
-| Bypasses server authorization | Client impersonates user |
-| Breaks audit trail | Server can't log who did what |
-| Enables privilege escalation | Downstream APIs trust the token |
-
-**Rule:** MCP servers must validate all tokens were issued specifically for them.
-
+---
 
 ## ✅ Patterns
 
@@ -297,7 +268,8 @@ Connecting MCP servers without understanding what data flows through them.
 
 <!-- Project Documentation -->
 [custom-agents]: ./CUSTOM_AGENTS.md
-[responsibilities]: ./RESPONSIBILITIES_AND_SECURITY.md
+[responsibilities]: ./RESPONSIBILITIES.md
+[security]: ./SECURITY.md
 [context-optimization]: ./CONTEXT_OPTIMIZATION.md
 
 <!-- Agent Files -->

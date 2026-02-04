@@ -125,6 +125,5 @@ await prisma.task.create({ data: { title: req.body.title } })
 
 ## Reference Documentation
 
-For secure implementation patterns, see:
-- [Backend Routes Instructions](../../instructions/backend-routes.instructions.md)
-- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
+For secure implementation patterns and comprehensive security guidelines, see:
+- [Backend Routes Instructions](../../instructions/backend-routes.instructions.md) – Secure Express/Prisma patterns

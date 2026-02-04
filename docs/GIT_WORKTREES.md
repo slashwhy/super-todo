@@ -203,12 +203,12 @@ git branch -d feature/big-feature
 
 - [Custom Agents][custom-agents] – Agent definitions ([@Implement][agent-implement], [@Test Unit][agent-test-unit], [@Test E2E][agent-test-e2e])
 - [Custom Prompts][custom-prompts] – Ready-to-use task templates
-- [Responsibilities & Security][responsibilities] – Review process for agent work
+- [Developer Responsibilities][responsibilities] – Review process for agent work
 
 <!-- Project Documentation -->
 [custom-agents]: ./CUSTOM_AGENTS.md
 [custom-prompts]: ./CUSTOM_PROMPTS.md
-[responsibilities]: ./RESPONSIBILITIES_AND_SECURITY.md
+[responsibilities]: ./RESPONSIBILITIES.md
 
 <!-- Agent Files -->
 [agent-implement]: ../.github/agents/implement.agent.md
