@@ -1,10 +1,22 @@
 {
   "recommendations": [
-    "prettier.prettier-vscode",
+    // Core development
+    "esbenp.prettier-vscode",
+    "vue.volar",
+
+    // GitHub integration
     "github.copilot-chat",
     "github.vscode-pull-request-github",
-    "vue.volar",
+    "github.vscode-github-actions",
+
+    // Testing
     "ms-playwright.playwright",
-    "ms-vscode.vscode-speech"
+
+    // Accessibility
+    "ms-vscode.vscode-speech",
+
+    // SECURITY: Dev Containers for isolated development
+    // See: docs/SECURITY.md for why this matters
+    "ms-vscode-remote.remote-containers"
   ]
 }

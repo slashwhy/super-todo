@@ -1,8 +1,22 @@
 {
+	// =============================================================================
+	// MCP Server Configuration
+	// Model Context Protocol servers for AI agent tool access
+	// 
+	// SECURITY NOTES:
+	// - All tool calls require user approval (chat.mcp.autoApprove.enabled: false)
+	// - Never hardcode credentials here - use ${env:VAR_NAME} syntax
+	// - Prefer "stdio" transport over "http" for local servers (no network exposure)
+	// - Review each server's capabilities before adding to this file
+	// 
+	// See: docs/SECURITY.md for MCP security guidelines
+	// =============================================================================
 	"servers": {
 		// ==================
 		// Design Tools
 		// ==================
+		// SECURITY: Local only (127.0.0.1), no external network access
+		// Risk: Low - Read-only design data, runs locally with Figma Desktop
 		"figma-desktop": {
 			"type": "http",
 			"url": "http://127.0.0.1:3845/mcp"
@@ -11,16 +25,19 @@
 		// ==================
 		// Project Management
 		// ==================
+		// SECURITY: External service - data flows to Atlassian cloud
+		// Risk: Medium - Can read/write Jira/Confluence data
+		// Auth: Uses Atlassian OAuth, no local credentials needed
 		"atlassian/atlassian-mcp-server": {
 			"type": "http",
-			"url": "https://mcp.atlassian.com/v1/sse",
-			"gallery": "https://api.mcp.github.com",
-			"version": "1.0.0"
+			"url": "https://mcp.atlassian.com/v1/sse"
 		},
 
 		// ==================
 		// Browser & DevTools
 		// ==================
+		// SECURITY: stdio transport (no network port exposed)
+		// Risk: Low - Interacts with local Chrome instance only
 		"io.github.ChromeDevTools/chrome-devtools-mcp": {
 			"command": "npx",
 			"args": [
@@ -34,6 +51,8 @@
 		// ==================
 		// Testing Tools
 		// ==================
+		// SECURITY: stdio transport (implicit), runs Playwright locally
+		// Risk: Low - Browser automation for testing
 		"playwright": {
 			"command": "npx",
 			"args": [
@@ -44,6 +63,8 @@
 		// ==================
 		// Utilities
 		// ==================
+		// SECURITY: Runs in isolated Docker container
+		// Risk: Low - Container provides additional isolation layer
 		"awesome-copilot": {
 			"type": "stdio",
 			"command": "docker",
@@ -55,5 +76,21 @@
 			]
 		}
 	},
+	
+	// =============================================================================
+	// Credential Template (for servers requiring API keys)
+	// =============================================================================
+	// Example of secure credential handling (DO NOT hardcode tokens):
+	// 
+	// "example-server": {
+	//   "command": "npx",
+	//   "args": ["-y", "@example/mcp-server"],
+	//   "env": {
+	//     "API_TOKEN": "${env:EXAMPLE_API_TOKEN}"  // ✅ Uses environment variable
+	//   }
+	// }
+	// 
+	// =============================================================================
+	
 	"inputs": []
 }

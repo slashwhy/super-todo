@@ -92,7 +92,18 @@
 - Docker (for PostgreSQL)
 - VS Code with [GitHub Copilot Extension][copilot-extension]
 
-### Quick Start
+### Quick Start (Dev Container – Recommended)
+
+For a **secure, isolated development environment**, use Dev Containers:
+
+1. Install the [Dev Containers extension][devcontainers-extension]
+2. Open Command Palette (`Cmd+Shift+P`) → **"Dev Containers: Reopen in Container"**
+3. Wait for container to build (first time takes ~2 minutes)
+4. Run `whoami` in terminal to verify non-root user (should show `node`)
+
+The container automatically installs dependencies, starts PostgreSQL, and runs migrations.
+
+### Quick Start (Local)
 
 ```bash
 # Clone and install all dependencies
@@ -181,6 +192,7 @@ npm run dev                    # App → http://localhost:5173
 
 <!-- Extensions -->
 [copilot-extension]: https://marketplace.visualstudio.com/items?itemName=GitHub.copilot
+[devcontainers-extension]: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
 [vue-extension]: https://marketplace.visualstudio.com/items?itemName=Vue.volar
 
 <!-- GitHub Copilot Documentation -->

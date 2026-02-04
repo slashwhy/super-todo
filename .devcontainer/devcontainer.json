@@ -1,0 +1,82 @@
+{
+  // =============================================================================
+  // Dev Container Configuration
+  // Security-hardened development environment for AI-assisted development
+  // See: https://containers.dev/implementors/json_reference/
+  // =============================================================================
+  "name": "Todo App (Secure)",
+
+  // Use Node.js 20 with common utilities pre-installed
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+
+  // =============================================================================
+  // SECURITY: Run as non-root user
+  // Prevents container breakout vulnerabilities from gaining host root access
+  // =============================================================================
+  "remoteUser": "node",
+  "containerUser": "node",
+
+  // =============================================================================
+  // SECURITY: Run with limited privileges
+  // --init ensures proper signal handling and zombie process cleanup
+  // =============================================================================
+  "runArgs": ["--init"],
+
+  // =============================================================================
+  // Features: Additional tools installed in the container
+  // =============================================================================
+  "features": {
+    // Docker-in-Docker for running containers (e.g., Playwright, test DBs)
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": true,
+      "installDockerBuildx": true
+    },
+    // GitHub CLI for PR workflows
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+
+  // =============================================================================
+  // VS Code Customizations
+  // =============================================================================
+  "customizations": {
+    "vscode": {
+      // Extensions: Loaded from .vscode/extensions.json (no duplication needed)
+      // Settings: Loaded from .vscode/settings.json (no duplication needed)
+      // Both files are tracked in git and applied automatically
+    }
+  },
+
+  // =============================================================================
+  // Lifecycle Scripts
+  // =============================================================================
+
+  // Run after container is created (first time only)
+  "postCreateCommand": "npm install && cd backend && npm install && cd ../frontend && npm install",
+
+  // Run after container starts (every time)
+  // Starts PostgreSQL via docker-compose and runs migrations
+  "postStartCommand": "cd backend && docker compose up -d && npm run db:migrate",
+
+  // =============================================================================
+  // Port Forwarding
+  // =============================================================================
+  "forwardPorts": [
+    3000, // Backend API
+    5173, // Frontend Vite dev server
+    5432 // PostgreSQL
+  ],
+
+  // =============================================================================
+  // Environment Variables
+  // SECURITY: Use env vars, never hardcode secrets
+  // =============================================================================
+  "containerEnv": {
+    "NODE_ENV": "development"
+  },
+
+  // =============================================================================
+  // SECURITY: Mount options
+  // Only mount necessary directories
+  // =============================================================================
+  "mounts": []
+}
