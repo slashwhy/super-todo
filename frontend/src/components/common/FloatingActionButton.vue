@@ -87,7 +87,7 @@ const emit = defineEmits<{
 }
 
 .fab__icon {
-  font-size: 28px;
+  font-size: var(--font-size-2xl);
   font-weight: 300;
   line-height: 1;
   display: flex;

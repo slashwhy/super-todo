@@ -15,6 +15,8 @@ import { useToast } from '@/composables/useToast'
 const props = defineProps<{
   /** Controls modal visibility (v-model) */
   modelValue: boolean
+  /** Owner ID for created tasks */
+  ownerId?: string
 }>()
 
 const emit = defineEmits<{
@@ -30,15 +32,8 @@ const { showSuccess, showError } = useToast()
 // Form state
 const title = ref('')
 const description = ref('')
-const selectedPriorityName = ref('Moderate') // Backend name, display as "Medium"
+const selectedPriorityName = ref('Moderate')
 const loading = ref(false)
-
-// Priority display mapping: Backend name → Display name
-const priorityDisplayMap: Record<string, string> = {
-  'Extreme': 'Extreme',
-  'Moderate': 'Medium',
-  'Low': 'Low'
-}
 
 // Computed
 const isOpen = computed({
@@ -80,18 +75,22 @@ async function handleSubmit() {
       return
     }
 
-    // Get demo user (first user in the system for now)
-    const usersResponse = await fetch('/api/users')
-    if (!usersResponse.ok) {
-      throw new Error('Failed to fetch users')
-    }
-    const users = await usersResponse.json()
-    const owner = users[0]
+    // Use provided ownerId or fetch demo user as fallback
+    let owner = props.ownerId
 
     if (!owner) {
-      showError('No users available. Please create a user first.')
-      loading.value = false
-      return
+      const usersResponse = await fetch('/api/users')
+      if (!usersResponse.ok) {
+        throw new Error('Failed to fetch users')
+      }
+      const users = await usersResponse.json()
+      owner = users[0]?.id
+
+      if (!owner) {
+        showError('No users available. Please create a user first.')
+        loading.value = false
+        return
+      }
     }
 
     // Create task
@@ -105,7 +104,7 @@ async function handleSubmit() {
         description: description.value.trim() || null,
         priorityId: priority.id,
         statusId: status.id,
-        ownerId: owner.id,
+        ownerId: owner,
         isVital: false
       })
     })
@@ -207,6 +206,7 @@ onUnmounted(() => {
                 class="form-group__input"
                 placeholder="Enter task title..."
                 required
+                autofocus
                 data-testid="task-title-input"
               />
             </div>
@@ -233,7 +233,7 @@ onUnmounted(() => {
                     :style="{ backgroundColor: priority.color }"
                   ></span>
                   <span class="priority-option__label">
-                    {{ priorityDisplayMap[priority.name] || priority.name }}
+                    {{ priority.name }}
                   </span>
                 </label>
               </div>
@@ -300,7 +300,7 @@ onUnmounted(() => {
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-lg);
   width: 100%;
-  max-width: 560px;
+  max-width: 600px;
   max-height: 90vh;
   overflow-y: auto;
 }
@@ -319,22 +319,27 @@ onUnmounted(() => {
   font-weight: 600;
   color: var(--color-text-primary);
   margin: 0;
-  text-decoration: underline;
-  text-underline-offset: 4px;
 }
 
 .modal__close {
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: var(--font-size-2xl);
   color: var(--color-text-secondary);
   cursor: pointer;
   padding: var(--spacing-xs);
   line-height: 1;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease, outline-color 0.2s ease;
 }
 
 .modal__close:hover {
+  color: var(--color-text-primary);
+}
+
+.modal__close:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  background-color: var(--color-surface);
   color: var(--color-text-primary);
 }
 
@@ -367,7 +372,7 @@ onUnmounted(() => {
 .form-group__textarea {
   padding: var(--spacing-sm) var(--spacing-md);
   border: 1px solid var(--color-border);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: var(--font-size-base);
   font-family: inherit;
   color: var(--color-text-primary);
@@ -404,7 +409,7 @@ onUnmounted(() => {
   gap: var(--spacing-sm);
   cursor: pointer;
   padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: 4px;
+  border-radius: var(--spacing-xs);
   transition: background-color 0.2s ease;
 }
 
@@ -423,8 +428,8 @@ onUnmounted(() => {
 }
 
 .priority-option__dot {
-  width: 8px;
-  height: 8px;
+  width: var(--spacing-sm);
+  height: var(--spacing-sm);
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -447,7 +452,7 @@ onUnmounted(() => {
 
 .modal__btn {
   padding: var(--spacing-sm) var(--spacing-lg);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: var(--font-size-base);
   font-weight: 500;
   cursor: pointer;
