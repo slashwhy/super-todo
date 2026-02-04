@@ -475,11 +475,9 @@ describe('TaskCreateModal', () => {
     })
 
     it('inputs have associated labels', () => {
-      const titleInput = wrapper.find('#task-title')
       const titleLabel = wrapper.find('label[for="task-title"]')
       expect(titleLabel.exists()).toBe(true)
 
-      const descInput = wrapper.find('#task-description')
       const descLabel = wrapper.find('label[for="task-description"]')
       expect(descLabel.exists()).toBe(true)
     })
