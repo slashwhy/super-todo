@@ -10,7 +10,12 @@
 
   // SECURITY: Prevent ad-hoc MCP server discovery
   // Only use MCP servers explicitly configured in .vscode/mcp.json
-  "chat.mcp.discovery.enabled": false,
+  "chat.mcp.discovery.enabled": {
+    "claude-desktop": false,
+    "windsurf": false,
+    "cursor-global": false,
+    "cursor-workspace": false
+  },
 
   // SECURITY: Require approval for MCP tool calls
   // Human-in-the-loop prevents agent tool overreach

@@ -15,42 +15,39 @@
 
 ---
 
-
 ## 🚨 Developer Responsibilities
 
 > **AI is a co-pilot, not an autopilot.** You are responsible for code quality, security, and compliance.
 
 ### Your Accountability
 
-| | Responsibility | Action |
-|---|---|---|
-| 👁️ | **Review** | Read and understand all AI-generated code before committing |
-| ✅ | **Validate** | Check against requirements and project standards |
-| 🧪 | **Test** | Run full test suite before merging |
-| 🔒 | **Security** | Verify auth, credentials, and data handling |
-| 💡 | **Understand** | Know what changed and why it changed |
+|     | Responsibility | Action                                                      |
+| --- | -------------- | ----------------------------------------------------------- |
+| 👁️  | **Review**     | Read and understand all AI-generated code before committing |
+| ✅  | **Validate**   | Check against requirements and project standards            |
+| 🧪  | **Test**       | Run full test suite before merging                          |
+| 🔒  | **Security**   | Verify auth, credentials, and data handling                 |
+| 💡  | **Understand** | Know what changed and why it changed                        |
 
 📖 **[Read the full guide →][responsibilities]** – detailed checklists, incident response, and MCP security
-
 
 ## 📖 Let's start
 
 **New to this project?** Begin with the **[AI Development Guide][ai-guide]** for a complete overview of agents, instructions, MCP, and how everything works together.
 
 **In This README:**
+
 - [Developer Responsibilities](#-developer-responsibilities) – Your accountability when working AI-Assisted
 - [Getting Started](#-getting-started) – Run locally in 3 steps
 - [System Architecture](#-system-architecture) – Visual overview
 - [Tech Stack](#-tech-stack) – Technologies used
 - [Documentation](#-documentation) – All learning resources
 
-
-
 ```
 ┌──────────────────────────────────────────────────────────────────────────────┐
 │                        GitHub Copilot Agent Mode                             │
 ├──────────────────────────────────────────────────────────────────────────────┤
-│  Agents (4)           │  Instructions (10)    │  Skills (11)                 │ 
+│  Agents (4)           │  Instructions (10)    │  Skills (11)                 │
 │  ├── Implement        │  ├── Global           │  ├── Architectural Docs      │
 │  ├── Specify          │  ├── Backend Routes   │  ├── Backend Routes          │
 │  ├── Test Unit        │  ├── Pinia Stores     │  ├── Code Documentation      │
@@ -77,18 +74,18 @@
 
 ## 🛠 Tech Stack
 
-| Layer | Stack | Details |
-|-------|-------|---------|
-| **Frontend** | Vue 3 + TypeScript + Vite | [frontend/README.md][frontend-readme] |
-| **Backend** | Express + Prisma + PostgreSQL | [backend/README.md][backend-readme] |
-| **Testing** | Vitest, Playwright | Unit & E2E |
-| **AI** | GitHub Copilot, Custom Agents, MCP | See [docs/][ai-guide] |
+| Layer        | Stack                              | Details                               |
+| ------------ | ---------------------------------- | ------------------------------------- |
+| **Frontend** | Vue 3 + TypeScript + Vite          | [frontend/README.md][frontend-readme] |
+| **Backend**  | Express + Prisma + PostgreSQL      | [backend/README.md][backend-readme]   |
+| **Testing**  | Vitest, Playwright                 | Unit & E2E                            |
+| **AI**       | GitHub Copilot, Custom Agents, MCP | See [docs/][ai-guide]                 |
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js `^20.19.0` or `>=22.12.0`
+- Node.js `>=22.12.0`
 - Docker (for PostgreSQL)
 - VS Code with [GitHub Copilot Extension][copilot-extension]
 
@@ -124,12 +121,12 @@ npm run dev                    # App → http://localhost:5173
 
 ### Workspace Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start frontend & backend concurrently |
-| `npm run install:all` | Install all dependencies |
-| `npm run test` | Run all tests |
-| `npm run test:e2e` | Run Playwright E2E tests |
+| Command               | Description                           |
+| --------------------- | ------------------------------------- |
+| `npm run dev`         | Start frontend & backend concurrently |
+| `npm run install:all` | Install all dependencies              |
+| `npm run test`        | Run all tests                         |
+| `npm run test:e2e`    | Run Playwright E2E tests              |
 
 📖 See [frontend/README.md][frontend-readme] and [backend/README.md][backend-readme] for full command reference.
 
@@ -137,25 +134,24 @@ npm run dev                    # App → http://localhost:5173
 
 ### GitHub Copilot Documentation
 
-| Resource | Purpose |
-|----------|---------|
-| [What is GitHub Copilot?][copilot-what-is] | Overview and capabilities |
-| [Response Customization][copilot-response-customization] | Examples and best practices |
-| [Trust Center][copilot-trust-center] | Security, privacy, and compliance |
+| Resource                                                 | Purpose                           |
+| -------------------------------------------------------- | --------------------------------- |
+| [What is GitHub Copilot?][copilot-what-is]               | Overview and capabilities         |
+| [Response Customization][copilot-response-customization] | Examples and best practices       |
+| [Trust Center][copilot-trust-center]                     | Security, privacy, and compliance |
 
 ### Model Context Protocol
 
-| Resource | Purpose |
-|----------|---------|
-| [MCP Official Site][mcp-site] | Introduction and core concepts |
-| [MCP Architecture][mcp-architecture] | How MCP works under the hood |
+| Resource                                  | Purpose                        |
+| ----------------------------------------- | ------------------------------ |
+| [MCP Official Site][mcp-site]             | Introduction and core concepts |
+| [MCP Architecture][mcp-architecture]      | How MCP works under the hood   |
 | [Building MCP Servers][mcp-build-servers] | Create custom MCP integrations |
-
 
 ### Learning & Inspiration
 
-| Resource | Purpose |
-|----------|---------|
+| Resource                           | Purpose                               |
+| ---------------------------------- | ------------------------------------- |
 | [Awesome Copilot][awesome-copilot] | Community examples and best practices |
 
 ## 📄 About This Project
@@ -174,6 +170,7 @@ npm run dev                    # App → http://localhost:5173
 </p>
 
 <!-- Project Documentation -->
+
 [ai-guide]: docs/AI_DEVELOPMENT_GUIDE.md
 [custom-agents]: docs/CUSTOM_AGENTS.md
 [custom-instructions]: docs/CUSTOM_INSTRUCTIONS.md
@@ -187,23 +184,28 @@ npm run dev                    # App → http://localhost:5173
 [backend-readme]: backend/README.md
 
 <!-- Features and Sections -->
+
 [instruction-hierarchy]: docs/CUSTOM_INSTRUCTIONS.md#instruction-hierarchy
 [skills-reference]: docs/CUSTOM_AGENTS.md#skills-reference
 
 <!-- Extensions -->
+
 [copilot-extension]: https://marketplace.visualstudio.com/items?itemName=GitHub.copilot
 [devcontainers-extension]: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
 [vue-extension]: https://marketplace.visualstudio.com/items?itemName=Vue.volar
 
 <!-- GitHub Copilot Documentation -->
+
 [copilot-what-is]: https://docs.github.com/en/copilot/get-started/what-is-github-copilot
 [copilot-response-customization]: https://docs.github.com/en/copilot/concepts/prompting/response-customization
 [copilot-trust-center]: https://copilot.github.trust.page/
 
 <!-- Model Context Protocol -->
+
 [mcp-site]: https://modelcontextprotocol.io/
 [mcp-architecture]: https://modelcontextprotocol.io/docs/learn/architecture
 [mcp-build-servers]: https://modelcontextprotocol.io/docs/develop/build-server
 
 <!-- Community & Resources -->
+
 [awesome-copilot]: https://github.com/github/awesome-copilot

@@ -6,8 +6,8 @@
   // =============================================================================
   "name": "Todo App (Secure)",
 
-  // Use Node.js 20 with common utilities pre-installed
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  // Use Node.js 22 LTS with common utilities pre-installed
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
 
   // =============================================================================
   // SECURITY: Run as non-root user
@@ -28,7 +28,7 @@
   "features": {
     // Docker-in-Docker for running containers (e.g., Playwright, test DBs)
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
-      "moby": true,
+      "moby": false,
       "installDockerBuildx": true
     },
     // GitHub CLI for PR workflows
