@@ -409,7 +409,7 @@ onUnmounted(() => {
   gap: var(--spacing-sm);
   cursor: pointer;
   padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--spacing-xs);
+  border-radius: var(--radius-sm);
   transition: background-color 0.2s ease;
 }
 
