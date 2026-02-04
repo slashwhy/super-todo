@@ -213,12 +213,22 @@ $$R_{total} = \sum_{tool=1}^{n} (A_{tool} \times S_{tool} \times D_{tool})$$
 | 0.51 - 0.75 | 🔶 Requires explicit user confirmation per action |
 | 0.76 - 1.0 | 🔴 Deny by policy; requires security team exception |
 
+**Capability-based overrides:**
+
+Even if a server's numeric score falls into the 0.0–0.25 "Auto-approve eligible" band, require **at least per-session approval** when:
+
+- It can perform any non-read-only action (create/update/delete/execute/generate), or
+- It can access internal, customer, or otherwise non-public data, or
+- It is vendor-hosted and has broad access to your project or workspace.
+
+These capability-based overrides ensure that powerful or data-sensitive integrations are never fully auto-approved, even with a low numeric risk score.
+
 ### Example: Project MCP Servers
 
 | Server | Agency | Source | Data | Risk Score | Recommendation |
 |--------|--------|--------|------|------------|----------------|
 | figma-desktop | 0 (read) | 0.5 (vendor) | 0 (public) | **0.0** | ✅ Auto-approve eligible |
-| atlassian | 0.5 (create) | 0.5 (vendor) | 0.5 (internal) | **0.125** | ✅ Session approval |
-| playwright | 0.5 (execute) | 0.5 (vendor) | 0 (test data) | **0.0** | ✅ Session approval |
-| chrome-devtools | 0 (read) | 0.5 (vendor) | 0.5 (may see app data) | **0.0** | ✅ Session approval |
-| awesome-copilot | 0.5 (generate) | 0.5 (vendor) | 0 (public) | **0.0** | ✅ Session approval |
+| atlassian | 0.5 (create) | 0.5 (vendor) | 0.5 (internal) | **0.125** | ⚠️ Session approval (write + internal data → capability override) |
+| playwright | 0.5 (execute) | 0.5 (vendor) | 0 (test data) | **0.0** | ⚠️ Session approval (execute capabilities → capability override) |
+| chrome-devtools | 0 (read) | 0.5 (vendor) | 0.5 (may see app data) | **0.0** | ⚠️ Session approval (may access app data → capability override) |
+| awesome-copilot | 0.5 (generate) | 0.5 (vendor) | 0 (public) | **0.0** | ⚠️ Session approval (generate code/actions → capability override) |

@@ -261,7 +261,7 @@ Connecting MCP servers without understanding what data flows through them.
 ## 🔗 Related
 
 - [Custom Agents][custom-agents] – Which agents use which MCP tools
-- [Responsibilities & Security][responsibilities] – MCP security details
+- [Security Guide][security] – MCP security details
 - [MCP Official Site][mcp-site] – Introduction and core concepts
 - [MCP Architecture][mcp-architecture] – How MCP works under the hood
 - [Building MCP Servers][mcp-build-servers] – Create custom MCP integrations

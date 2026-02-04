@@ -246,7 +246,8 @@ This means you can install many skills without consuming context—only relevant
 - [Custom Prompts][custom-prompts] – Reusable task templates
 - [Custom Instructions][custom-instructions] – Instruction hierarchy
 - [MCP Integrations][mcp] – External tool connections
-- [Responsibilities & Security][responsibilities] – Agent security constraints
+- [Developer Responsibilities][responsibilities] – Agent accountability and workflows
+- [Security Guide][security] – Agent security constraints and MCP risks
 
 <!-- Agent Files -->
 [agent-specify]: ../.github/agents/specify.agent.md
