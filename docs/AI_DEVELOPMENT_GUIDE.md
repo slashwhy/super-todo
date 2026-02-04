@@ -115,7 +115,7 @@ Pick a topic below to get started. Each guide includes real examples from this p
 | [📋 **Custom Instructions**][custom-instructions] | Learning the instruction hierarchy and best practices for encoding project conventions, coding standards, and patterns |
 | [🎯 **Custom Prompts**][custom-prompts] | Creating reusable prompt templates for recurring tasks, automating workflows, and triggering specific agent behaviors |
 | [🔌 **MCP Integrations**][mcp] | Connecting external services, APIs, databases, and specialized tools to extend agent capabilities |
-| [� **Developer Responsibilities**][responsibilities] | Understanding your accountability, code review practices, AI-assisted workflows, and decision-making frameworks |
+| [👤 **Developer Responsibilities**][responsibilities] | Understanding your accountability, code review practices, AI-assisted workflows, and decision-making frameworks |
 | [🔒 **Security Guide**][security] | MCP security risks, data privacy, incident response procedures, pre-deployment checklists, and vulnerability prevention |
 | [⚡ **Context Optimization**][context-optimization] | Maximizing efficiency with large codebases, optimizing token usage, and advanced patterns for scaling |
 

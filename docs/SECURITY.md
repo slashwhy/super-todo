@@ -239,7 +239,7 @@ The project configures these security settings in `.vscode/settings.json`:
 | Setting | Value | Purpose |
 |---------|-------|---------|
 | `security.workspace.trust.enabled` | `true` | Prompts before trusting unknown folders |
-| `chat.mcp.discovery.enabled` | `false` | Only allows explicitly configured MCP servers |
+| `chat.mcp.discovery.enabled` | `per-client object` | Controls MCP discovery per client; all clients set to `false` to only allow explicitly configured MCP servers |
 | `chat.mcp.autoApprove.enabled` | `false` | Requires human approval for all tool calls |
 
 ---

@@ -73,7 +73,7 @@
   "onCreateCommand": "sudo chown -R node:node node_modules backend/node_modules frontend/node_modules 2>/dev/null || true",
 
   // Run during prebuild (Codespaces) or after create - installs dependencies
-  "updateContentCommand": "npm install && cd backend && npm install && cd ../frontend && npm install",
+  "updateContentCommand": "npm run install:all",
 
   // Run after container is created (first time only) - one-time setup
   "postCreateCommand": "echo 'Dev container ready!'",
