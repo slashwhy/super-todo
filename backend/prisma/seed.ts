@@ -55,7 +55,7 @@ async function main() {
   });
 
   console.log("👤 Creating users...");
-  const sundar = await prisma.user.create({
+  const demoUser = await prisma.user.create({
     data: {
       name: "Demo User",
       email: "demo@example.com",
@@ -100,7 +100,7 @@ async function main() {
       statusId: statusNotStarted.id,
       priorityId: priorityModerate.id,
       categoryId: categoryPersonal.id,
-      ownerId: sundar.id,
+      ownerId: demoUser.id,
       createdAt: new Date("2023-06-20"),
     },
   });
@@ -116,7 +116,7 @@ async function main() {
       statusId: statusInProgress.id,
       priorityId: priorityModerate.id,
       categoryId: categoryWork.id,
-      ownerId: sundar.id,
+      ownerId: demoUser.id,
       assigneeId: teamMember1.id,
       createdAt: new Date("2023-06-20"),
     },
@@ -133,7 +133,7 @@ async function main() {
       statusId: statusInProgress.id,
       priorityId: priorityModerate.id,
       categoryId: categoryWork.id,
-      ownerId: sundar.id,
+      ownerId: demoUser.id,
       createdAt: new Date("2023-06-19"),
     },
   });
@@ -157,7 +157,7 @@ Take Luffy and Jiro for a leisurely stroll around the neighborhood. Enjoy the fr
       statusId: statusNotStarted.id,
       priorityId: priorityExtreme.id,
       categoryId: categoryPersonal.id,
-      ownerId: sundar.id,
+      ownerId: demoUser.id,
       createdAt: new Date("2023-06-20"),
     },
   });
@@ -172,7 +172,7 @@ Take Luffy and Jiro for a leisurely stroll around the neighborhood. Enjoy the fr
       statusId: statusInProgress.id,
       priorityId: priorityModerate.id,
       categoryId: categoryFamily.id,
-      ownerId: sundar.id,
+      ownerId: demoUser.id,
       createdAt: new Date("2023-06-20"),
     },
   });
@@ -187,7 +187,7 @@ Take Luffy and Jiro for a leisurely stroll around the neighborhood. Enjoy the fr
       statusId: statusCompleted.id,
       priorityId: priorityModerate.id,
       categoryId: categoryWork.id,
-      ownerId: sundar.id,
+      ownerId: demoUser.id,
       completedAt: new Date("2023-06-18"),
       createdAt: new Date("2023-06-15"),
     },
@@ -202,7 +202,7 @@ Take Luffy and Jiro for a leisurely stroll around the neighborhood. Enjoy the fr
       statusId: statusCompleted.id,
       priorityId: priorityLow.id,
       categoryId: categoryHealth.id,
-      ownerId: sundar.id,
+      ownerId: demoUser.id,
       completedAt: new Date("2023-06-20"),
       createdAt: new Date("2023-06-20"),
     },
@@ -217,7 +217,7 @@ Take Luffy and Jiro for a leisurely stroll around the neighborhood. Enjoy the fr
       statusId: statusNotStarted.id,
       priorityId: priorityModerate.id,
       categoryId: categoryWork.id,
-      ownerId: sundar.id,
+      ownerId: demoUser.id,
       assigneeId: teamMember2.id,
       dueDate: new Date("2023-06-25"),
       createdAt: new Date("2023-06-20"),
