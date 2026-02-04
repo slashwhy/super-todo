@@ -1,5 +1,7 @@
 # 🎓 🤖 AI-Assisted Development Showcase
 
+> 🔄 **Living Project** – Continuously updated with the latest AI-assisted development practices, patterns, and learnings.
+
 > **Vue 3 Todo Dashboard** – A **reference implementation** demonstrating multi-agent AI development with GitHub Copilot.
 >
 > This project showcases **how professional teams use AI to boost productivity while maintaining quality, safety, and developer control**.
@@ -150,6 +152,8 @@ npm run dev                    # App → http://localhost:5173
 🎓 **Reference Implementation** – This is a showcase project demonstrating professional practices for AI-assisted software development. It's designed for learning and as a template for your own AI-powered development workflows.
 
 **Not for Production Use** – This is a demonstration project. For production use, customize the agents, instructions, and security policies to match your organization's standards.
+
+**Code Quality Notice** – While we strive to maintain the code quality standards expected at [slashwhy](https://github.com/slashwhy), the experimental and educational nature of this project means quality cannot be guaranteed. Code in this repository does not necessarily reflect the production code quality expectations of slashwhy.
 
 ---
 

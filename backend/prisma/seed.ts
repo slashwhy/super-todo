@@ -57,8 +57,8 @@ async function main() {
   console.log("👤 Creating users...");
   const sundar = await prisma.user.create({
     data: {
-      name: "Sundar Gurung",
-      email: "sundargurung360@gmail.com",
+      name: "Demo User",
+      email: "demo@example.com",
       avatar: "https://randomuser.me/api/portraits/men/32.jpg",
     },
   });

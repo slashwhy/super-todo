@@ -13,8 +13,8 @@ interface NavItem {
 const route = useRoute()
 
 const user = {
-  name: 'Sundar Gurung',
-  email: 'sundargurung360@gmail.com',
+  name: 'Demo User',
+  email: 'demo@example.com',
   avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face'
 }
 

@@ -39,8 +39,8 @@ describe('TheSidebar', () => {
   })
 
   it('displays user profile information', () => {
-    expect(wrapper.find('.sidebar__user-name').text()).toBe('Sundar Gurung')
-    expect(wrapper.find('.sidebar__user-email').text()).toBe('sundargurung360@gmail.com')
+    expect(wrapper.find('.sidebar__user-name').text()).toBe('Demo User')
+    expect(wrapper.find('.sidebar__user-email').text()).toBe('demo@example.com')
   })
 
   it('renders all navigation items', () => {
@@ -85,6 +85,6 @@ describe('TheSidebar', () => {
   it('renders user avatar with correct attributes', () => {
     const avatar = wrapper.find('.sidebar__avatar')
     expect(avatar.exists()).toBe(true)
-    expect(avatar.attributes('alt')).toBe('Sundar Gurung')
+    expect(avatar.attributes('alt')).toBe('Demo User')
   })
 })
