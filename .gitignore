@@ -40,3 +40,6 @@ test-results/
 
 # Vitest
 __screenshots__/
+
+# Dev Container secrets (local development only)
+.devcontainer/secrets.env

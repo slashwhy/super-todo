@@ -16,6 +16,9 @@
   "remoteUser": "node",
   "containerUser": "node",
 
+  // LINUX COMPATIBILITY: Map container UID to host UID for file permissions
+  "updateRemoteUserUID": true,
+
   // =============================================================================
   // SECURITY: Run with limited privileges
   // --init ensures proper signal handling and zombie process cleanup
@@ -24,25 +27,40 @@
 
   // =============================================================================
   // Features: Additional tools installed in the container
+  // Pin exact versions for reproducible builds
   // =============================================================================
   "features": {
     // Docker-in-Docker for running containers (e.g., Playwright, test DBs)
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2.12.1": {
       "moby": false,
       "installDockerBuildx": true
     },
     // GitHub CLI for PR workflows
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "ghcr.io/devcontainers/features/github-cli:1.0.13": {}
   },
 
   // =============================================================================
   // VS Code Customizations
+  // Extensions duplicated here for GitHub Codespaces / other IDE compatibility
   // =============================================================================
   "customizations": {
     "vscode": {
-      // Extensions: Loaded from .vscode/extensions.json (no duplication needed)
-      // Settings: Loaded from .vscode/settings.json (no duplication needed)
-      // Both files are tracked in git and applied automatically
+      "extensions": [
+        // Core development
+        "esbenp.prettier-vscode",
+        "vue.volar",
+
+        // GitHub integration
+        "github.copilot-chat",
+        "github.vscode-pull-request-github",
+        "github.vscode-github-actions",
+
+        // Testing
+        "ms-playwright.playwright",
+
+        // Accessibility
+        "ms-vscode.vscode-speech"
+      ]
     }
   },
 
@@ -50,8 +68,11 @@
   // Lifecycle Scripts
   // =============================================================================
 
-  // Run after container is created (first time only)
-  "postCreateCommand": "npm install && cd backend && npm install && cd ../frontend && npm install",
+  // Run during prebuild (Codespaces) or after create - installs dependencies
+  "updateContentCommand": "npm install && cd backend && npm install && cd ../frontend && npm install",
+
+  // Run after container is created (first time only) - one-time setup
+  "postCreateCommand": "echo 'Dev container ready!'",
 
   // Run after container starts (every time)
   // Starts PostgreSQL via docker-compose and runs migrations
@@ -60,23 +81,48 @@
   // =============================================================================
   // Port Forwarding
   // =============================================================================
-  "forwardPorts": [
-    3000, // Backend API
-    5173, // Frontend Vite dev server
-    5432 // PostgreSQL
-  ],
+  "forwardPorts": [3000, 5173, 5432],
+
+  "portsAttributes": {
+    "3000": {
+      "label": "Backend API",
+      "onAutoForward": "notify"
+    },
+    "5173": {
+      "label": "Frontend Dev Server",
+      "onAutoForward": "openBrowser"
+    },
+    "5432": {
+      "label": "PostgreSQL",
+      "onAutoForward": "silent"
+    }
+  },
+
+  // =============================================================================
+  // Host Requirements (for Codespaces machine selection)
+  // =============================================================================
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "4gb",
+    "storage": "16gb"
+  },
 
   // =============================================================================
   // Environment Variables
   // SECURITY: Use env vars, never hardcode secrets
+  // For local secrets, create .devcontainer/secrets.env (git-ignored)
   // =============================================================================
   "containerEnv": {
     "NODE_ENV": "development"
   },
 
   // =============================================================================
-  // SECURITY: Mount options
-  // Only mount necessary directories
+  // Performance: Volume caching for node_modules
+  // Persists dependencies between container rebuilds for faster startup
   // =============================================================================
-  "mounts": []
+  "mounts": [
+    "source=todo-app-node-modules,target=${containerWorkspaceFolder}/node_modules,type=volume",
+    "source=todo-app-backend-node-modules,target=${containerWorkspaceFolder}/backend/node_modules,type=volume",
+    "source=todo-app-frontend-node-modules,target=${containerWorkspaceFolder}/frontend/node_modules,type=volume"
+  ]
 }
