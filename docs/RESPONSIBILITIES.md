@@ -1,13 +1,12 @@
-# 🛡️ Responsibilities & Security
+# 👤 Developer Responsibilities
 
-> Your accountability as a developer using AI assistance – security safeguards and best practices.
+> Your accountability as a developer using AI assistance – maintaining code quality and making informed decisions.
 
 **Audience:** All developers using AI assistance | **Prerequisites:** None
 
-
+---
 
 ## AI-Slop
-
 
 > 🚨 **Golden Rule:** AI is a co-pilot, not an autopilot. You are responsible for code quality, security, and compliance.
 
@@ -76,10 +75,9 @@ AI-generated code often exhibits predictable weaknesses. These **code smells** i
 
 The productivity gain is real—**but only if you do the work right.**
 
-
+---
 
 ## What & Why
-
 
 AI boosts productivity—but only with discipline. Every AI suggestion passes through **human checkpoints**, especially for security, complexity, and architecture. This project demonstrates a workflow where **you make the calls** and AI handles the grunt work.
 
@@ -101,58 +99,7 @@ Key: AI generates ideas. You decide what ships.
 
 This isn't "let AI do the work." It's "let AI do the repetitive work while you focus on quality, security, and decision-making."
 
-
-
-## Data Privacy
-
-### Use Enterprise Tiers
-
-| Service | Data Used for Training? | Recommendation |
-|---------|-------------------------|----------------|
-| GitHub Copilot (Business) | No | ✅ Recommended |
-| Anthropic (Enterprise) | No | ✅ Best for sensitive code |
-| Claude.ai (Free) | May be | ⚠️ Avoid for proprietary code |
-| Free tier services | Unclear | ⚠️ Avoid for proprietary code |
-
-### Data Flow Awareness
-
-```
-Your Code → MCP Server → External Service → AI Model
-```
-
-Always:
-- Use `.env` for secrets, never commit
-- Use `.gitignore` to exclude sensitive files
-- Use local MCP servers when possible
-
-## MCP Security Risks
-
-**New to MCP?** The [Model Context Protocol][mcp-docs] allows AI agents to access external tools and data. Learn how [this project uses MCP][mcp-integrations] and understand the security implications when you grant agents permissions. 
-
-### 1. 🔓 Confused Deputy Problem
-
-| Aspect | Details |
-|--------|---------|
-| **Risk** | Agent combines permissions in unintended ways |
-| **Example** | Agent has read code + write to Jira → reads secrets, posts to public Jira |
-| **Prevention** | Minimal permissions per custom agent and server, separate read-only & write access |
-
-### 2. 🔑 Credential Exposure
-
-| Aspect | Details |
-|--------|---------|
-| **Risk** | API keys logged or exposed in output/errors |
-| **❌ Bad** | `console.log(\`Token: ${apiToken}\`)` |
-| **✅ Good** | `console.log(\`Token: ${apiToken.slice(0, 4)}...\`)` |
-
-### 3. 🎯 Agent Tool Overreach
-
-| Agent | Can Access | Cannot Access |
-|-------|------------|---------------|
-| @Specify | Read code, Jira/Figma (read-only) | Write files, execute code |
-| @Implement | Create/edit files, dev execution | Prod database, delete without confirm |
-| @Test | Edit test files, run tests | Prod code, infrastructure |
-
+---
 
 ## AI-Assisted Version Control
 
@@ -209,12 +156,13 @@ Reality: Branch B has the critical fix
 - Security-related code
 - Complex refactors
 
+---
 
 ## When to Use AI vs. Manual
 
 | Task Category | ✅ AI Excels | ⚠️ You Handle |
 |---|---|---|
-| **Boilerplate** | Following conventions | ❌ Never skip |
+| **Boilerplate** | Following conventions | ❌ Never skip review |
 | **Testing** | Scaffolding, setup | Security-critical tests |
 | **Refactoring** | Within patterns | Novel architecture |
 | **Docs** | Initial drafts, formatting | Security docs |
@@ -222,39 +170,12 @@ Reality: Branch B has the critical fix
 
 **Golden Rule:** If it involves security, novel decisions, or your domain's core logic—you write it.
 
-## Incident Response
-
-### 🚨 Agent Misbehavior
-
-| Step | Action | Details |
-|------|--------|---------|
-| 1️⃣ | 🛑 **Disable** | Remove tool access immediately |
-| 2️⃣ | 👀 **Review** | Examine what happened & root cause |
-| 3️⃣ | 🔧 **Fix** | Update agent constraints/permissions |
-| 4️⃣ | ✅ **Test** | Verify constraints work before re-enabling |
-
-
-## 🔒 Pre-Deployment Security Checklist
-
-Before shipping AI-assisted code:
-
-| Category | Checklist Item | Why? |
-|----------|---|---|
-| 🔐 **Secrets** | No hardcoded credentials, all in `.env` | Prevents credential leaks |
-| 👥 **Agents** | Minimal permissions, combinations reviewed | Limits attack surface |
-| 📡 **MCP** | Isolated environments, data flow understood | Prevents confused deputy |
-| 📝 **Code** | Manually reviewed, tests passing | Catches AI slop & bugs |
-| 📊 **Data** | No sensitive data in logs, compliance met | GDPR/privacy requirements |
-
+---
 
 ## Related
 
-- [Custom Agents][custom-agents] – Agent tool restrictions
-- [MCP Integrations][mcp-integrations] – Server security details
-- [GitHub Copilot Trust][copilot-trust]
-
-<!-- Reference Links -->
-[custom-agents]: ./CUSTOM_AGENTS.md
-[mcp-integrations]: ./MCP.md
-[mcp-docs]: https://modelcontextprotocol.io/
-[copilot-trust]: https://copilot.github.trust.page/
+- [Security Guide](./SECURITY.md) – Data privacy, MCP security, incident response
+- [Custom Agents](./CUSTOM_AGENTS.md) – Agent configurations and workflows
+- [Custom Instructions](./CUSTOM_INSTRUCTIONS.md) – Project-specific AI guidance
+- [AI Development Guide](./AI_DEVELOPMENT_GUIDE.md) – Complete workflow overview
+- [GitHub Copilot Trust Center](https://copilot.github.trust.page/)

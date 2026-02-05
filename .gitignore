@@ -21,6 +21,7 @@ test-results/
 .vscode/*
 !.vscode/extensions.json
 !.vscode/mcp.json
+!.vscode/settings.json
 .idea
 *.suo
 *.ntvs*
@@ -39,3 +40,6 @@ test-results/
 
 # Vitest
 __screenshots__/
+
+# Dev Container secrets (local development only)
+.devcontainer/secrets.env

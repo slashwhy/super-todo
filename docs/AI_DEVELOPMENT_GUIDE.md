@@ -102,7 +102,7 @@ VS Code supports different agent environments. Your custom agents (`.agent.md` f
 - Handoffs require human approval
 - Critical changes need explicit consent
 
-See [RESPONSIBILITIES_AND_SECURITY.md][responsibilities] for detailed developer responsibilities.
+See [Developer Responsibilities][responsibilities] for detailed accountability and code review practices.
 
 ## Documentation by Topic
 
@@ -115,7 +115,8 @@ Pick a topic below to get started. Each guide includes real examples from this p
 | [📋 **Custom Instructions**][custom-instructions] | Learning the instruction hierarchy and best practices for encoding project conventions, coding standards, and patterns |
 | [🎯 **Custom Prompts**][custom-prompts] | Creating reusable prompt templates for recurring tasks, automating workflows, and triggering specific agent behaviors |
 | [🔌 **MCP Integrations**][mcp] | Connecting external services, APIs, databases, and specialized tools to extend agent capabilities |
-| [🔒 **Responsibilities & Security**][responsibilities] | Understanding your accountability, security risks, compliance requirements, and incident response procedures |
+| [👤 **Developer Responsibilities**][responsibilities] | Understanding your accountability, code review practices, AI-assisted workflows, and decision-making frameworks |
+| [🔒 **Security Guide**][security] | MCP security risks, data privacy, incident response procedures, pre-deployment checklists, and vulnerability prevention |
 | [⚡ **Context Optimization**][context-optimization] | Maximizing efficiency with large codebases, optimizing token usage, and advanced patterns for scaling |
 
 ## When to Use What?
@@ -146,7 +147,8 @@ docs/
 ├── CUSTOM_INSTRUCTIONS.md               # 📋 Instruction hierarchy & best practices
 ├── CUSTOM_PROMPTS.md                    # 🎯 Reusable prompt templates
 ├── MCP.md                               # 🔌 Model Context Protocol guide
-├── RESPONSIBILITIES_AND_SECURITY.md     # 🔒 Security & responsibilities
+├── RESPONSIBILITIES.md                  # 👤 Developer accountability & AI workflows
+├── SECURITY.md                          # 🔒 Security safeguards & best practices
 ├── CONTEXT_OPTIMIZATION.md              # ⚡ Advanced: context optimization
 └── GIT_WORKTREES.md                     # 🌳 Advanced: parallel development
 ```
@@ -204,7 +206,8 @@ Optimize across four dimensions:
 [custom-instructions]: ./CUSTOM_INSTRUCTIONS.md
 [custom-prompts]: ./CUSTOM_PROMPTS.md
 [mcp]: ./MCP.md
-[responsibilities]: ./RESPONSIBILITIES_AND_SECURITY.md
+[responsibilities]: ./RESPONSIBILITIES.md
+[security]: ./SECURITY.md
 [context-optimization]: ./CONTEXT_OPTIMIZATION.md
 [git-worktrees]: ./GIT_WORKTREES.md
 

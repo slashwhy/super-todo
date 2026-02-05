@@ -29,7 +29,7 @@ onMounted(async () => {
   <div class="dashboard">
     <div class="dashboard__header">
       <div class="dashboard__welcome">
-        <h1 class="dashboard__title">Welcome back, Sundar 👋</h1>
+        <h1 class="dashboard__title">Welcome back, Demo User 👋</h1>
       </div>
       
       <div class="dashboard__team">

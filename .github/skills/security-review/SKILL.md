@@ -14,8 +14,30 @@ Comprehensive security checklist for full-stack applications.
 - Validating authentication and authorization patterns
 - Checking data handling and storage security
 - Pre-merge security review
+- **Reviewing AI-generated code for common pitfalls**
+- **Evaluating MCP server configurations for security risks**
 
 ## Security Checklists
+
+### AI-Assisted Development Risks
+
+| Check | Risk | What to Look For |
+|-------|------|------------------|
+| **Hallucinated Packages** | High | AI-suggested packages that don't exist or have few downloads |
+| **Automation Bias** | Medium | Complex logic accepted without thorough review |
+| **Context Poisoning** | Medium | Suspicious comments that could manipulate AI suggestions |
+| **Prompt Injection Vectors** | High | User input rendered in contexts AI might process (logs, error messages) |
+| **Outdated Patterns** | Medium | Deprecated APIs or security anti-patterns from AI training data |
+
+### MCP Server Security
+
+| Check | Risk | What to Look For |
+|-------|------|------------------|
+| **Hardcoded Credentials** | Critical | API keys or tokens in `mcp.json` instead of `${env:VAR}` |
+| **HTTP Transport Exposure** | High | HTTP servers on non-localhost without auth |
+| **Excessive Permissions** | High | MCP tools with write/delete access when read-only would suffice |
+| **Missing Tool Approval** | Medium | `chat.mcp.autoApprove.enabled: true` in settings |
+| **Unvetted Servers** | Medium | Third-party MCP servers without source review |
 
 ### API Endpoints (Express/Prisma)
 
@@ -123,8 +145,90 @@ if (!title || typeof title !== 'string' || title.length > 200) {
 await prisma.task.create({ data: { title: req.body.title } })
 ```
 
+### AI-Generated Code Review
+
+```typescript
+// ⚠️ AI suggested this package - VERIFY before installing:
+// 1. Check npm: https://www.npmjs.com/package/fast-csv-parser
+// 2. Verify downloads (>10k weekly), maintainer, last update
+// 3. Check for known vulnerabilities: npm audit
+import { parse } from 'fast-csv-parser'
+
+// ⚠️ AI generated complex logic - REVIEW carefully:
+// - Does this match requirements?
+// - Are edge cases handled?
+// - Is error handling complete?
+```
+
+### MCP Configuration Security
+
+```jsonc
+// ✅ Correct: Use environment variable expansion
+{
+  "env": {
+    "API_TOKEN": "${env:GITHUB_TOKEN}"
+  }
+}
+
+// ❌ Wrong: Hardcoded credentials
+{
+  "env": {
+    "API_TOKEN": "ghp_xxxxxxxxxxxx"
+  }
+}
+```
+
 ## Reference Documentation
 
-For secure implementation patterns, see:
-- [Backend Routes Instructions](../../instructions/backend-routes.instructions.md)
-- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
+For secure implementation patterns and comprehensive security guidelines, see:
+- [Backend Routes Instructions](../../instructions/backend-routes.instructions.md) – Secure Express/Prisma patterns
+- [Security Guide](../../../docs/SECURITY.md) – AI attack surface and operational checklist
+
+## MCP Risk Scoring Framework
+
+Use this quantitative model to evaluate MCP server and tool risks:
+
+$$R_{total} = \sum_{tool=1}^{n} (A_{tool} \times S_{tool} \times D_{tool})$$
+
+### Scoring Factors
+
+| Factor | Score | Description |
+|--------|-------|-------------|
+| **A (Agency)** | 0 | Read-only (e.g., `read_file`, `list_tasks`) |
+| | 0.5 | Creative/Generative (e.g., `write_draft`, `create_issue`) |
+| | 1.0 | Destructive/Executive (e.g., `delete_file`, `execute_terminal`, `drop_table`) |
+| **S (Source Trust)** | 0 | Internal/Vetted (company-maintained, code reviewed) |
+| | 0.5 | Trusted vendor (Microsoft, GitHub, official integrations) |
+| | 1.0 | Public/Unverified (third-party, no source review) |
+| **D (Data Sensitivity)** | 0 | Public data only |
+| | 0.5 | Internal data (non-sensitive business data) |
+| | 1.0 | PII/Secrets/Core IP |
+
+### Risk Thresholds
+
+| Score | Action |
+|-------|--------|
+| 0.0 - 0.25 | ✅ Auto-approve eligible (read-only, trusted, public data) |
+| 0.26 - 0.5 | ⚠️ Requires per-session approval |
+| 0.51 - 0.75 | 🔶 Requires explicit user confirmation per action |
+| 0.76 - 1.0 | 🔴 Deny by policy; requires security team exception |
+
+**Capability-based overrides:**
+
+Even if a server's numeric score falls into the 0.0–0.25 "Auto-approve eligible" band, require **at least per-session approval** when:
+
+- It can perform any non-read-only action (create/update/delete/execute/generate), or
+- It can access internal, customer, or otherwise non-public data, or
+- It is vendor-hosted and has broad access to your project or workspace.
+
+These capability-based overrides ensure that powerful or data-sensitive integrations are never fully auto-approved, even with a low numeric risk score.
+
+### Example: Project MCP Servers
+
+| Server | Agency | Source | Data | Risk Score | Recommendation |
+|--------|--------|--------|------|------------|----------------|
+| figma-desktop | 0 (read) | 0.5 (vendor) | 0 (public) | **0.0** | ✅ Auto-approve eligible |
+| atlassian | 0.5 (create) | 0.5 (vendor) | 0.5 (internal) | **0.125** | ⚠️ Session approval (write + internal data → capability override) |
+| playwright | 0.5 (execute) | 0.5 (vendor) | 0 (test data) | **0.0** | ⚠️ Session approval (execute capabilities → capability override) |
+| chrome-devtools | 0 (read) | 0.5 (vendor) | 0.5 (may see app data) | **0.0** | ⚠️ Session approval (may access app data → capability override) |
+| awesome-copilot | 0.5 (generate) | 0.5 (vendor) | 0 (public) | **0.0** | ⚠️ Session approval (generate code/actions → capability override) |

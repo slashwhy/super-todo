@@ -1,0 +1,132 @@
+{
+  // =============================================================================
+  // Dev Container Configuration
+  // Security-hardened development environment for AI-assisted development
+  // See: https://containers.dev/implementors/json_reference/
+  // =============================================================================
+  "name": "Todo App (Secure)",
+
+  // Use Node.js 22 LTS with common utilities pre-installed
+  // Pin to bookworm (Debian 12) - trixie isn't yet supported by docker-in-docker feature
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22-bookworm",
+
+  // =============================================================================
+  // SECURITY: Run as non-root user
+  // Prevents container breakout vulnerabilities from gaining host root access
+  // =============================================================================
+  "remoteUser": "node",
+  "containerUser": "node",
+
+  // LINUX COMPATIBILITY: Map container UID to host UID for file permissions
+  "updateRemoteUserUID": true,
+
+  // =============================================================================
+  // SECURITY: Run with limited privileges
+  // --init ensures proper signal handling and zombie process cleanup
+  // =============================================================================
+  "runArgs": ["--init"],
+
+  // =============================================================================
+  // Features: Additional tools installed in the container
+  // Pin exact versions for reproducible builds
+  // =============================================================================
+  "features": {
+    // Docker-in-Docker for running containers (e.g., Playwright, test DBs)
+    "ghcr.io/devcontainers/features/docker-in-docker:2.12.1": {
+      "moby": false,
+      "installDockerBuildx": true
+    },
+    // GitHub CLI for PR workflows
+    "ghcr.io/devcontainers/features/github-cli:1.0.13": {}
+  },
+
+  // =============================================================================
+  // VS Code Customizations
+  // Extensions duplicated here for GitHub Codespaces / other IDE compatibility
+  // =============================================================================
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Core development
+        "esbenp.prettier-vscode",
+        "vue.volar",
+
+        // GitHub integration
+        "github.copilot-chat",
+        "github.vscode-pull-request-github",
+        "github.vscode-github-actions",
+
+        // Testing
+        "ms-playwright.playwright",
+
+        // Accessibility
+        "ms-vscode.vscode-speech"
+      ]
+    }
+  },
+
+  // =============================================================================
+  // Lifecycle Scripts
+  // =============================================================================
+
+  // Fix volume permissions (volumes are created as root, container runs as node)
+  "onCreateCommand": "sudo chown -R node:node node_modules backend/node_modules frontend/node_modules 2>/dev/null || true",
+
+  // Run during prebuild (Codespaces) or after create - installs dependencies
+  "updateContentCommand": "npm run install:all",
+
+  // Run after container is created (first time only) - one-time setup
+  "postCreateCommand": "echo 'Dev container ready!'",
+
+  // Run after container starts (every time)
+  // Starts PostgreSQL via docker-compose and runs migrations
+  "postStartCommand": "cd backend && docker compose up -d && npm run db:migrate",
+
+  // =============================================================================
+  // Port Forwarding
+  // =============================================================================
+  "forwardPorts": [3000, 5173, 5432],
+
+  "portsAttributes": {
+    "3000": {
+      "label": "Backend API",
+      "onAutoForward": "notify"
+    },
+    "5173": {
+      "label": "Frontend Dev Server",
+      "onAutoForward": "openBrowser"
+    },
+    "5432": {
+      "label": "PostgreSQL",
+      "onAutoForward": "silent"
+    }
+  },
+
+  // =============================================================================
+  // Host Requirements (for Codespaces machine selection)
+  // =============================================================================
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "4gb",
+    "storage": "16gb"
+  },
+
+  // =============================================================================
+  // Environment Variables
+  // SECURITY: Use env vars, never hardcode secrets
+  // For local secrets, create .devcontainer/secrets.env (git-ignored)
+  // =============================================================================
+  "containerEnv": {
+    "NODE_ENV": "development"
+  },
+
+  // =============================================================================
+  // Performance: Volume caching for node_modules
+  // Persists dependencies between container rebuilds for faster startup
+  // =============================================================================
+  "mounts": [
+    "source=todo-app-node-modules,target=${containerWorkspaceFolder}/node_modules,type=volume",
+    "source=todo-app-backend-node-modules,target=${containerWorkspaceFolder}/backend/node_modules,type=volume",
+    "source=todo-app-frontend-node-modules,target=${containerWorkspaceFolder}/frontend/node_modules,type=volume"
+  ]
+}
