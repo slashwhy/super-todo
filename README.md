@@ -29,7 +29,7 @@
 | 🔒  | **Security**   | Verify auth, credentials, and data handling                 |
 | 💡  | **Understand** | Know what changed and why it changed                        |
 
-📖 **[Read the full guide →][responsibilities]** – detailed checklists, incident response, and MCP security
+📖 **[Read the full guide →][responsibilities]** – detailed checklists on developer accountability and AI-assisted workflows (see SECURITY.md for security and incident response)
 
 ## 📖 Let's start
 
