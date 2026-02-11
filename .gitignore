@@ -41,5 +41,8 @@ test-results/
 # Vitest
 __screenshots__/
 
+# AI working artifacts (plans, implementation docs)
+.ai/
+
 # Dev Container secrets (local development only)
 .devcontainer/secrets.env

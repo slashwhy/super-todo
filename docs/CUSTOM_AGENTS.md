@@ -70,9 +70,9 @@ Use the **Continue In** control in Chat view, or type `@cli` or `@cloud` in your
 ## 🔄 Our local agents workflow
 
 ```
-@Specify (Plan)         →  "Start Implementation"
-       ↓
-@Implement (Build)      →  "Add Unit Tests"
+@Specify (Plan)         →  Save plan to .ai/plans/{issue-name}/plan.md
+       ↓ (new chat)
+@Implement (Build)      →  Read plan file → implement → Completion Protocol
        ↓
 @Test Unit              →  "Add E2E Tests"
        ↓
@@ -82,6 +82,32 @@ Use the **Continue In** control in Chat view, or type `@cli` or `@cloud` in your
 ```
 
 Each arrow is a **handoff**—you review before the next agent begins.
+
+### Plan-Based Handoff
+
+Plans are persisted to `.ai/plans/{issue-name}/plan.md` (gitignored) so @Implement can start in a **new chat session** with a clean context window. This prevents context overflow from the planning phase consuming tokens needed for implementation.
+
+**Workflow:**
+1. `@specify plan TASK-123` → researches, plans, saves to `.ai/plans/TASK-123-title/plan.md`
+2. Open **new chat** → `@implement Read #file:.ai/plans/TASK-123-title/plan.md and implement step by step`
+3. @Implement updates plan checkboxes as it works
+4. **Completion Protocol** runs: documentation impact check, cleanup
+
+> 📖 **Details:** [Context Optimization – Plan-Based Handoff][context-optimization]
+
+### Documentation Impact Assessment
+
+Every plan includes a "Documentation Impact Assessment" section. @Implement checks this after completing all implementation steps and updates:
+
+| Target | What to Check |
+|--------|---------------|
+| `.github/instructions/` | Are coding patterns still accurate? |
+| `.github/skills/` | Do skills reflect new capabilities? |
+| `.github/agents/` | Do agent definitions need updating? |
+| `docs/` | Architecture docs, guides, READMEs current? |
+| API / README | Endpoints, data models, commands correct? |
+
+This ensures that features, bug fixes, library updates, and refactors don't silently invalidate project documentation.
 
 ## ⚙️ Model Selection
 
@@ -245,6 +271,7 @@ This means you can install many skills without consuming context—only relevant
 - [Agents Overview][vscode-agents-overview] – VS Code agent types and environments
 - [Custom Prompts][custom-prompts] – Reusable task templates
 - [Custom Instructions][custom-instructions] – Instruction hierarchy
+- [Context Optimization][context-optimization] – Plan-based handoff and Structured Autonomy
 - [MCP Integrations][mcp] – External tool connections
 - [Developer Responsibilities][responsibilities] – Agent accountability and workflows
 - [Security Guide][security] – Agent security constraints and MCP risks
@@ -271,6 +298,7 @@ This means you can install many skills without consuming context—only relevant
 <!-- Project Documentation -->
 [custom-prompts]: ./CUSTOM_PROMPTS.md
 [custom-instructions]: ./CUSTOM_INSTRUCTIONS.md
+[context-optimization]: ./CONTEXT_OPTIMIZATION.md
 [mcp]: ./MCP.md
 [responsibilities]: ./RESPONSIBILITIES.md
 [security]: ./SECURITY.md
