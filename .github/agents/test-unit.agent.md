@@ -5,16 +5,16 @@ tools:
   [
     "vscode",
     "vscode/askQuestions",
+    "vscode/memory",
     "execute",
     "read",
     "agent",
     "edit",
     "search",
     "web",
-    "memory",
     "todo",
   ]
-model: Claude Sonnet 4.5
+model: Claude Sonnet 4.6
 handoffs:
   - label: "Add E2E Tests"
     agent: Test E2E

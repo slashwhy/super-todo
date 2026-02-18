@@ -5,6 +5,7 @@ tools:
   [
     "vscode",
     "vscode/askQuestions",
+    "vscode/memory",
     "execute",
     "read",
     "agent",
@@ -27,8 +28,8 @@ tools:
     "playwright/*",
     "todo",
   ]
-model: Claude Sonnet 4.5
-user-invokable: true
+model: Claude Sonnet 4.6
+user-invocable: true
 disable-model-invocation: true
 handoffs:
   - label: "Fix Implementation"

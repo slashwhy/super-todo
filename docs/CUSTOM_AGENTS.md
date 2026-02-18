@@ -12,6 +12,10 @@
 | [**@Implement**][agent-implement] | Feature implementation | ✅ Yes | ❌ No | Build from scratch, from design, quick fixes |
 | [**@Test Unit**][agent-test-unit] | Unit & integration tests | ✅ Yes | ✅ Yes | After implementation, regression tests, component props/emits validation |
 | [**@Test E2E**][agent-test-e2e] | End-to-end tests | ✅ Yes | ❌ No | User interaction flows, complete workflows, cross-feature scenarios |
+| [**@Socratic-Mentor**][agent-socratic-mentor] | Pedagogical concept builder | ❌ Read-only | ❌ No | Junior concept gaps, understanding checks, stack trace analysis |
+| [**@Spec-First**][agent-spec-first] | Specification gate enforcer | ✅ Saves spec file | ❌ No | Formalise plans before implementing, EARS AC review |
+| [**@Code-Review-Trainer**][agent-code-review-trainer] | AutoMCQ comprehension gate | ❌ Read-only | ❌ No | Post-implementation comprehension check (3 questions) |
+| [**@Bebugging**][agent-bebugging] | Review muscle trainer (saboteur) | ✅ Sandbox only | ❌ No | Inject subtle bugs for junior review practice |
 
 > **Auto-Infer:** When `✅ Yes`, Copilot can auto-select this agent based on task context. When `❌ No`, you must explicitly select the agent.
 
@@ -82,6 +86,35 @@ Use the **Continue In** control in Chat view, or type `@cli` or `@cloud` in your
 ```
 
 Each arrow is a **handoff**—you review before the next agent begins.
+
+### Junior Developer Workflow
+
+For junior developers, an extended workflow enforces comprehension at every step.
+See [AI-Native Training][ai-native-training] for the full 12-week rollout guide.
+
+```
+[Concept Gap]                    [Feature Request]
+      │                                 │
+      ▼                                 ▼
+@Socratic-Mentor            @Spec-First
+(Build mental model)        (Write spec → save to .ai/plans/)
+      │                                 │
+      │                                 ▼
+      │                          @Implement
+      │                    (Read spec → build → mark steps)
+      │                                 │
+      │                                 ▼
+      └──────────────────►  @Code-Review-Trainer
+                            (AutoMCQ: 3 comprehension questions)
+                                         │
+                          ┌──────────────┴──────────────┐
+                          ▼                             ▼
+                      [PASS]                        [FAIL]
+                   @Test-Unit                  @Socratic-Mentor
+                  @Test-E2E                  (close the gap)
+```
+
+**Periodic training:** Use `@Bebugging` to maintain review-muscle skills.
 
 ### Plan-Based Handoff
 
@@ -281,6 +314,10 @@ This means you can install many skills without consuming context—only relevant
 [agent-implement]: ../.github/agents/implement.agent.md
 [agent-test-unit]: ../.github/agents/test-unit.agent.md
 [agent-test-e2e]: ../.github/agents/test-e2e.agent.md
+[agent-socratic-mentor]: ../.github/agents/socratic-mentor.agent.md
+[agent-spec-first]: ../.github/agents/spec-first.agent.md
+[agent-code-review-trainer]: ../.github/agents/code-review-trainer.agent.md
+[agent-bebugging]: ../.github/agents/bebugging.agent.md
 [agent-files]: ../.github/agents/
 
 <!-- Skill Files -->
@@ -302,6 +339,7 @@ This means you can install many skills without consuming context—only relevant
 [mcp]: ./MCP.md
 [responsibilities]: ./RESPONSIBILITIES.md
 [security]: ./SECURITY.md
+[ai-native-training]: ./AI_NATIVE_TRAINING.md
 
 <!-- GitHub Copilot Documentation -->
 [vscode-agents]: https://code.visualstudio.com/docs/copilot/customization/custom-agents

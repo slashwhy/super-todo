@@ -3,45 +3,45 @@ name: "Specify & Validate"
 description: "Planning and validation agent that creates persistent implementation plans from Jira/Figma, saves them to .ai/plans/, and validates implementations against acceptance criteria."
 tools:
   [
-    "vscode/getProjectSetupInfo",
-    "vscode/askQuestions",
-    "execute/testFailure",
-    "read",
-    "search",
-    "edit",
-    "agent",
-    "web",
-    "atlassian/atlassian-mcp-server/atlassianUserInfo",
-    "atlassian/atlassian-mcp-server/fetch",
-    "atlassian/atlassian-mcp-server/getAccessibleAtlassianResources",
-    "atlassian/atlassian-mcp-server/getConfluencePage",
-    "atlassian/atlassian-mcp-server/getConfluencePageDescendants",
-    "atlassian/atlassian-mcp-server/getConfluencePageFooterComments",
-    "atlassian/atlassian-mcp-server/getConfluencePageInlineComments",
-    "atlassian/atlassian-mcp-server/getConfluenceSpaces",
-    "atlassian/atlassian-mcp-server/getJiraIssue",
-    "atlassian/atlassian-mcp-server/getJiraIssueRemoteIssueLinks",
-    "atlassian/atlassian-mcp-server/getJiraIssueTypeMetaWithFields",
-    "atlassian/atlassian-mcp-server/getJiraProjectIssueTypesMetadata",
-    "atlassian/atlassian-mcp-server/getPagesInConfluenceSpace",
-    "atlassian/atlassian-mcp-server/getTransitionsForJiraIssue",
-    "atlassian/atlassian-mcp-server/getVisibleJiraProjects",
-    "atlassian/atlassian-mcp-server/lookupJiraAccountId",
-    "atlassian/atlassian-mcp-server/search",
-    "atlassian/atlassian-mcp-server/searchConfluenceUsingCql",
-    "atlassian/atlassian-mcp-server/searchJiraIssuesUsingJql",
-    "figma-desktop/get_code_connect_map",
-    "figma-desktop/get_code_connect_suggestions",
-    "figma-desktop/get_design_context",
-    "figma-desktop/get_figjam",
-    "figma-desktop/get_metadata",
-    "figma-desktop/get_screenshot",
-    "figma-desktop/get_variable_defs",
-    "vscode.mermaid-chat-features/renderMermaidDiagram",
-    "memory",
-    "todo",
+    vscode/getProjectSetupInfo,
+    vscode/memory,
+    vscode/askQuestions,
+    execute/testFailure,
+    read,
+    agent,
+    edit,
+    search,
+    web,
+    atlassian/atlassian-mcp-server/atlassianUserInfo,
+    atlassian/atlassian-mcp-server/fetch,
+    atlassian/atlassian-mcp-server/getAccessibleAtlassianResources,
+    atlassian/atlassian-mcp-server/getConfluencePage,
+    atlassian/atlassian-mcp-server/getConfluencePageDescendants,
+    atlassian/atlassian-mcp-server/getConfluencePageFooterComments,
+    atlassian/atlassian-mcp-server/getConfluencePageInlineComments,
+    atlassian/atlassian-mcp-server/getConfluenceSpaces,
+    atlassian/atlassian-mcp-server/getJiraIssue,
+    atlassian/atlassian-mcp-server/getJiraIssueRemoteIssueLinks,
+    atlassian/atlassian-mcp-server/getJiraIssueTypeMetaWithFields,
+    atlassian/atlassian-mcp-server/getJiraProjectIssueTypesMetadata,
+    atlassian/atlassian-mcp-server/getPagesInConfluenceSpace,
+    atlassian/atlassian-mcp-server/getTransitionsForJiraIssue,
+    atlassian/atlassian-mcp-server/getVisibleJiraProjects,
+    atlassian/atlassian-mcp-server/lookupJiraAccountId,
+    atlassian/atlassian-mcp-server/search,
+    atlassian/atlassian-mcp-server/searchConfluenceUsingCql,
+    atlassian/atlassian-mcp-server/searchJiraIssuesUsingJql,
+    figma-desktop/get_code_connect_map,
+    figma-desktop/get_code_connect_suggestions,
+    figma-desktop/get_design_context,
+    figma-desktop/get_figjam,
+    figma-desktop/get_metadata,
+    figma-desktop/get_screenshot,
+    figma-desktop/get_variable_defs,
+    vscode.mermaid-chat-features/renderMermaidDiagram,
+    todo,
   ]
-model: Claude Sonnet 4.5
+model: Claude Opus 4.6 (copilot)
 handoffs:
   - label: "Start Implementation"
     agent: Implement
@@ -85,7 +85,7 @@ You create implementation plans from Jira/Figma and validate implementations aga
    - Read affected files and dependencies
    - Identify conventions and similar implementations
    - Return a structured summary of findings  
-   → Present research summary → confirm
+     → Present research summary → confirm
 4. **Steps:** Generate high-level implementation steps → confirm
 5. **Questions:** Use `vscode/askQuestions` tool to present ALL clarifications as interactive choices (batch up to 4 questions per call)
 6. **Save Plan:** Write the plan to `.ai/plans/{issue-name}/plan.md`
@@ -94,6 +94,7 @@ You create implementation plans from Jira/Figma and validate implementations aga
 ### Why Subagents for Research?
 
 Codebase research can consume 30-50K tokens reading files, tracing dependencies, and analyzing patterns. By running research in a subagent:
+
 - Only the **summary** returns to the main context (~1-2K tokens)
 - The main planning context stays clean for decision-making
 - Multiple research tasks can run in parallel
@@ -101,6 +102,7 @@ Codebase research can consume 30-50K tokens reading files, tracing dependencies,
 ### Issue Name Convention
 
 Derive `{issue-name}` from the Jira ID or description:
+
 - Jira ticket: `TASK-123-user-profile` (ID + kebab-case summary)
 - Description: `fix-login-redirect`, `chore-update-vue`, `feat-task-filters`
 
@@ -126,12 +128,13 @@ As a [user] I want [capability] So that [outcome]
 
 ## Acceptance Criteria
 
-| # | Criterion | Testable? | Complexity |
-|---|-----------|-----------|------------|
+| #   | Criterion | Testable? | Complexity |
+| --- | --------- | --------- | ---------- |
 
 ## Implementation Steps
 
 ### Step 1: [Step Name]
+
 - **What:** [description]
 - **Why:** [value]
 - **Layer:** [Frontend / Backend / Database / Config]
@@ -141,6 +144,7 @@ As a [user] I want [capability] So that [outcome]
 - [ ] Sub-task 2
 
 ### Step 2: [Step Name]
+
 ...
 
 ## Data & State Requirements
