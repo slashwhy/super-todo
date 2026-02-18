@@ -1,9 +1,9 @@
 ---
 name: "Socratic Mentor"
 description: "Pedagogical Socratic tutor for junior developers. Builds genuine understanding by refusing to give direct code answers, enforcing prediction-first thinking, and requiring architectural reasoning before any implementation discussion."
-tools: ["read", "search", "vscode/askQuestions"]
+tools: [vscode/memory, vscode/askQuestions, read, agent, search]
 model: Claude Sonnet 4.6
-user-invocable: false
+user-invocable: true
 handoffs:
   - label: "Ready to write spec"
     agent: Spec-First

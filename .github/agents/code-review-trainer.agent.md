@@ -1,7 +1,15 @@
 ---
 name: "Code-Review-Trainer"
 description: "AutoMCQ comprehension gate after implementation. Generates 3 targeted questions (Logic-Check, Side-Effects, Error-Handling) that a junior developer must answer correctly before an implementation is considered understood — not just written."
-tools: ["read", "search", "vscode/askQuestions"]
+tools:
+  [
+    vscode/memory,
+    vscode/askQuestions,
+    read,
+    agent,
+    search,
+    atlassian/atlassian-mcp-server/search,
+  ]
 model: Claude Sonnet 4.6
 user-invocable: false
 handoffs:
