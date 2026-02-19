@@ -31,15 +31,16 @@ This is a **showcase project** demonstrating best practices for using GitHub Cop
 
 Quick lookup for all Copilot customization features:
 
-| Feature                 | Purpose                                  | File Type          | Documentation                                 |
-| ----------------------- | ---------------------------------------- | ------------------ | --------------------------------------------- |
-| **Smart Actions**       | Built-in IDE commands (no setup needed)  | N/A                | [VS Code Copilot][copilot-smart-actions]      |
-| **Agent Environments**  | Local, background, and cloud agent types | N/A                | [Agents Overview][vscode-agents-overview]     |
-| **Custom Prompts**      | Reusable task templates                  | `.prompt.md`       | [CUSTOM_PROMPTS.md][custom-prompts]           |
-| **Custom Instructions** | Coding standards & conventions           | `.instructions.md` | [CUSTOM_INSTRUCTIONS.md][custom-instructions] |
-| **Custom Agents**       | Specialized AI personas with roles       | `.agent.md`        | [CUSTOM_AGENTS.md][custom-agents]             |
-| **Skills**              | On-demand knowledge modules              | `SKILL.md`         | [CUSTOM_AGENTS.md][skills-reference]          |
-| **MCP**                 | External tool connections                | `mcp-servers.json` | [MCP.md][mcp]                                 |
+| Feature                 | Purpose                                   | File Type                | Documentation                                 |
+| ----------------------- | ----------------------------------------- | ------------------------ | --------------------------------------------- |
+| **Smart Actions**       | Built-in IDE commands (no setup needed)   | N/A                      | [VS Code Copilot][copilot-smart-actions]      |
+| **Agent Environments**  | Local, background, and cloud agent types  | N/A                      | [Agents Overview][vscode-agents-overview]     |
+| **Custom Prompts**      | Reusable task templates                   | `.prompt.md`             | [CUSTOM_PROMPTS.md][custom-prompts]           |
+| **Custom Instructions** | Coding standards & conventions            | `.instructions.md`       | [CUSTOM_INSTRUCTIONS.md][custom-instructions] |
+| **Custom Agents**       | Specialized AI personas with roles        | `.agent.md`              | [CUSTOM_AGENTS.md][custom-agents]             |
+| **Skills**              | On-demand knowledge modules               | `SKILL.md`               | [CUSTOM_AGENTS.md][skills-reference]          |
+| **MCP**                 | External tool connections                 | `mcp-servers.json`       | [MCP.md][mcp]                                 |
+| **Agentic Workflows**   | Automated repo tasks (triage, review, CI) | `.github/workflows/*.md` | [AGENTIC_WORKFLOWS.md][agentic-workflows]     |
 
 **Learning path:** Smart Actions → Prompts → Instructions → Agents → MCP
 
@@ -206,6 +207,7 @@ Optimize across four dimensions:
 [security]: ./SECURITY.md
 [context-optimization]: ./CONTEXT_OPTIMIZATION.md
 [git-worktrees]: ./GIT_WORKTREES.md
+[agentic-workflows]: ./AGENTIC_WORKFLOWS.md
 
 <!-- Anchor Links -->
 

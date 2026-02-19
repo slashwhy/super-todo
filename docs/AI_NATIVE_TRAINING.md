@@ -6,7 +6,7 @@
 
 ## The Problem: Illusion of Competence
 
-Large Language Models have created a dangerous decoupling in software engineering: **code production is now independent of code understanding**. A junior developer can ship five features a week while building no mental models of how they interact. This is the *Illusion of Competence*.
+Large Language Models have created a dangerous decoupling in software engineering: **code production is now independent of code understanding**. A junior developer can ship five features a week while building no mental models of how they interact. This is the _Illusion of Competence_.
 
 The evidence arrives at the worst moment: a production incident at 3am. The developer who delivered the feature cannot debug it, because they never truly understood it. They selected from AI suggestions — they did not design.
 
@@ -31,11 +31,11 @@ This project implements CFFs through the agent workflow. Every agent handoff is 
       │                                 │
       ▼                                 ▼
 @Socratic-Mentor            @Spec-First
-(Build mental model)        (Write spec → save to .ai/plans/)
+(Build mental model)        (Write spec → save to session memory)
       │                                 │
       │                                 ▼
       │                          @Implement
-      │                    (Read spec → build → mark steps)
+      │                    (Read plan from memory → build)
       │                                 │
       │                                 ▼
       └──────────────────►  @Code-Review-Trainer
@@ -59,6 +59,7 @@ Each arrow is a **human checkpoint**. The junior reviews before the next agent b
 **Role:** Pedagogical tutor that refuses to provide direct code answers.
 
 **Key Behaviors:**
+
 - **No-Code Default:** Every question "How do I do X?" is answered with a concept question, not code
 - **Warum-Pflicht:** Every explanation must contrast against ≥1 alternative
 - **Error Analysis Protocol:** "Which line in the stack trace points to the root cause?" before any hint
@@ -75,13 +76,14 @@ Each arrow is a **human checkpoint**. The junior reviews before the next agent b
 **Role:** Enforces architectural thinking before implementation. Blocks `@Implement` until a complete, quality spec exists.
 
 **Required Spec Sections:**
+
 1. User Story with clear business value
 2. Acceptance Criteria in [EARS notation](#ears-notation-reference) (min. 3)
 3. Pseudocode Plan in plain English (no syntax)
 4. Edge Cases and failure hypotheses (min. 2)
 5. Documentation Impact Assessment
 
-**On approval:** Spec saved to `.ai/plans/{issue-name}/spec.md` (gitignored). Junior then opens a new chat and invokes `@Implement` with the spec file path.
+**On approval:** Spec saved to `/memories/session/plan.md` via `vscode/memory`. Junior then uses the handoff button to invoke `@Implement`, which reads the plan from session memory.
 
 **When to invoke:** When a junior has understood the concept and is ready to build.
 
@@ -95,11 +97,11 @@ Each arrow is a **human checkpoint**. The junior reviews before the next agent b
 
 **Three Question Types (always in this order):**
 
-| # | Type | Tests |
-|---|------|-------|
-| Q1 | Logic-Check | Understanding of intentional design decisions |
-| Q2 | Side-Effects | Impact beyond the immediate function/component |
-| Q3 | Error-Handling | Failure mode propagation to user-visible outcomes |
+| #   | Type           | Tests                                             |
+| --- | -------------- | ------------------------------------------------- |
+| Q1  | Logic-Check    | Understanding of intentional design decisions     |
+| Q2  | Side-Effects   | Impact beyond the immediate function/component    |
+| Q3  | Error-Handling | Failure mode propagation to user-visible outcomes |
 
 **Pass:** Hand off to `@Test-Unit`.  
 **Fail:** Route to `@Socratic-Mentor` with the specific gap identified.
@@ -115,6 +117,7 @@ Each arrow is a **human checkpoint**. The junior reviews before the next agent b
 **Role:** Injects 2–3 subtle, realistic bugs into a sandboxed copy of a file. Junior finds them via careful review — no running the code.
 
 **Safety Constraints:**
+
 - Never modifies production files
 - Creates copies in `src/__bebugging__/` only, with explicit user confirmation
 - Deletes the sandbox after the debrief
@@ -137,6 +140,7 @@ Every implementation task must follow this 3-phase cycle. No phase may be skippe
 ### PLAN — Architecture Before Syntax
 
 Before AI generates any code:
+
 - Junior writes pseudocode in plain English
 - Edge cases documented as hypotheses
 - `@Spec-First` approves and saves the formal spec
@@ -146,6 +150,7 @@ Before AI generates any code:
 ### ACT — Observe, Don't Auto-Pilot
 
 While `@Implement` generates:
+
 - Junior reads every line as it appears
 - Generation stops if something looks wrong
 - Junior must be able to explain any block before requesting more
@@ -155,6 +160,7 @@ While `@Implement` generates:
 ### VERIFY — Hypothesis Before Fix
 
 When something fails:
+
 - Junior forms a hypothesis: "I think the problem is X because Y"
 - Hypothesis stated in chat before any AI assistance
 - "Auto-Fix" button is off-limits — explain the intended change
@@ -167,7 +173,7 @@ When something fails:
 
 **Inline autocomplete (Ghost Text) should be disabled for junior developers during active implementation.**
 
-Concurrent suggestion presentation prevents mental model formation. When code appears before the thought completes, the junior learns to *select* rather than to *architect*.
+Concurrent suggestion presentation prevents mental model formation. When code appears before the thought completes, the junior learns to _select_ rather than to _architect_.
 
 **Disable in VS Code:** `Settings → Editor: Inline Suggest Enabled → false`
 
@@ -179,11 +185,11 @@ Concurrent suggestion presentation prevents mental model formation. When code ap
 
 Junior developer progression is measured by their Spec-Driven Development maturity:
 
-| Level | Description | Evidence | Agent Support |
-|-------|-------------|----------|---------------|
-| **Spec-Aware** | Consumes existing specs | Can implement against detailed AC | `@Socratic-Mentor` builds foundations |
-| **Spec-Led** | Writes specs before coding | Drafts EARS AC independently | `@Spec-First` validates quality |
-| **Spec-as-Source** | Spec is ground truth; code is derived | Regenerates code on spec change | `@Implement` is purely mechanical |
+| Level              | Description                           | Evidence                          | Agent Support                         |
+| ------------------ | ------------------------------------- | --------------------------------- | ------------------------------------- |
+| **Spec-Aware**     | Consumes existing specs               | Can implement against detailed AC | `@Socratic-Mentor` builds foundations |
+| **Spec-Led**       | Writes specs before coding            | Drafts EARS AC independently      | `@Spec-First` validates quality       |
+| **Spec-as-Source** | Spec is ground truth; code is derived | Regenerates code on spec change   | `@Implement` is purely mechanical     |
 
 The goal for all juniors is to reach **Spec-Led** within 8 weeks, and to demonstrate **Spec-as-Source** thinking on larger features within 3 months.
 
@@ -193,12 +199,12 @@ The goal for all juniors is to reach **Spec-Led** within 8 weeks, and to demonst
 
 Traditional metrics are insufficient in the AI era. Supplement with:
 
-| Traditional Metric | AI-Native Equivalent | What It Reveals |
-|-------------------|---------------------|-----------------|
-| Velocity / LOC | Spec Quality Score | Can the junior architect in natural language? |
-| Bug count | AutoMCQ Pass Rate | Does the junior understand what they shipped? |
-| Debugging time | Hypothesis Formation Speed | Does the junior think before they search? |
-| Acceptance rate | Refactor Ratio (edit distance) | Is the junior reviewing or rubber-stamping? |
+| Traditional Metric | AI-Native Equivalent           | What It Reveals                               |
+| ------------------ | ------------------------------ | --------------------------------------------- |
+| Velocity / LOC     | Spec Quality Score             | Can the junior architect in natural language? |
+| Bug count          | AutoMCQ Pass Rate              | Does the junior understand what they shipped? |
+| Debugging time     | Hypothesis Formation Speed     | Does the junior think before they search?     |
+| Acceptance rate    | Refactor Ratio (edit distance) | Is the junior reviewing or rubber-stamping?   |
 
 > **Warning signal:** 100% Copilot suggestion acceptance rate from a junior is not a productivity indicator — it is a comprehension risk indicator.
 
@@ -215,7 +221,7 @@ Traditional metrics are insufficient in the AI era. Supplement with:
 
 ### Phase 2: Spec Discipline (Weeks 5–8)
 
-- [ ] All junior features require an approved `.ai/plans/` spec before implementation
+- [ ] All junior features require an approved spec in session memory before implementation
 - [ ] Seniors conduct "Spec Quality Reviews" — review the spec, not the code
 - [ ] Introduce `@Code-Review-Trainer` AutoMCQ as a weekly ritual
 - [ ] Measure: track AutoMCQ pass rates and topic breakdown of failures
@@ -258,15 +264,16 @@ The junior drives development. The AI (via `@Socratic-Mentor`) is silent unless 
 
 EARS (Easy Approach to Requirements Syntax) is the required format for all Acceptance Criteria in this project. It makes criteria unambiguous and independently testable.
 
-| Pattern | Format | Use When |
-|---------|--------|----------|
-| Event-driven | `WHEN [event] THE SYSTEM SHALL [response]` | User actions, API calls |
-| State-driven | `WHILE [state] THE SYSTEM SHALL [behavior]` | Background processes |
-| Conditional | `IF [condition] THEN THE SYSTEM SHALL [action]` | Error paths, guards |
-| Unwanted behavior | `IF [failure] THEN THE SYSTEM SHALL [recovery]` | Error handling |
-| Ubiquitous | `THE SYSTEM SHALL [behavior]` | Non-conditional requirements |
+| Pattern           | Format                                          | Use When                     |
+| ----------------- | ----------------------------------------------- | ---------------------------- |
+| Event-driven      | `WHEN [event] THE SYSTEM SHALL [response]`      | User actions, API calls      |
+| State-driven      | `WHILE [state] THE SYSTEM SHALL [behavior]`     | Background processes         |
+| Conditional       | `IF [condition] THEN THE SYSTEM SHALL [action]` | Error paths, guards          |
+| Unwanted behavior | `IF [failure] THEN THE SYSTEM SHALL [recovery]` | Error handling               |
+| Ubiquitous        | `THE SYSTEM SHALL [behavior]`                   | Non-conditional requirements |
 
 **Example (Task Priority Filter):**
+
 ```
 WHEN the user selects a priority from the filter dropdown,
 THE SYSTEM SHALL update the task list to show only tasks matching that priority.
@@ -280,15 +287,33 @@ THEN THE SYSTEM SHALL display an error toast and retain the previous task list.
 
 ---
 
-## 🔗 Related
+## � Agentic Workflows Integration
+
+The repository's [Agentic Workflows][agentic-workflows] are designed to augment the junior training pipeline, not bypass it:
+
+| Workflow               | Training-Aware Design                                                                                                                       |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Issue Triage**       | Labels `good first issue` for well-scoped work. Combined with `[test-gap]` issues, provides a steady pipeline of learning tasks.            |
+| **PR Code Review**     | Comment-triggered (`/copilot review`), not automatic. Juniors complete AutoMCQ + human review first. AI review is a second-pass safety net. |
+| **Test Coverage Gaps** | Creates issues with guidance, not auto-generated test code. Juniors pick up gap issues and write tests via `@Test-Unit`.                    |
+| **CI Doctor**          | Full diagnosis for operational speed. If a junior relies on these instead of forming hypotheses, redirect to `@Socratic-Mentor`.            |
+
+See [Agentic Workflows → Training Integration][agentic-workflows] for the full flow diagram.
+
+---
+
+## �🔗 Related
 
 - [Custom Agents][custom-agents] – Full agent reference including new junior training agents
 - [Custom Instructions][custom-instructions] – Instruction hierarchy and `junior-ai-workflow` instructions
 - [Context Optimization][context-optimization] – Plan-based handoff and structured autonomy
 - [Security Guide][security] – Security patterns enforced during bebugging and code review
+- [Agentic Workflows][agentic-workflows] – Automated repo tasks with training-aware design
 
 <!-- Project Documentation -->
+
 [custom-agents]: ./CUSTOM_AGENTS.md
 [custom-instructions]: ./CUSTOM_INSTRUCTIONS.md
 [context-optimization]: ./CONTEXT_OPTIMIZATION.md
 [security]: ./SECURITY.md
+[agentic-workflows]: ./AGENTIC_WORKFLOWS.md

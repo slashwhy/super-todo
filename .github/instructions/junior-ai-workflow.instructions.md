@@ -51,7 +51,7 @@ Before any AI generates code:
 1. Write the pseudocode plan in plain English (no syntax)
 2. Identify edge cases: "What could go wrong at each step?"
 3. Route to `@Spec-First` to formalize the plan
-4. The approved spec is saved to `.ai/plans/{issue}/spec.md`
+4. The approved spec is saved to session memory via `vscode/memory`
 
 **Cognitive Forcing Function:** The junior must explicitly approve the plan in writing before implementation begins. "I'll figure it out as I go" is not planning.
 

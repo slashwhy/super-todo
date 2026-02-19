@@ -1,8 +1,8 @@
 ---
-description: Implement a feature from a plan.md file created by @Specify.
+description: Implement a feature from a plan stored in session memory by @Specify.
 agent: Implement
 ---
 
 # Implement
 
-Implement a plan from a .ai/plans/{issue-name}/plan.md file created by @Specify.
+Read the implementation plan from `/memories/session/plan.md` and implement it step by step.

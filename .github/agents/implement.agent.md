@@ -1,6 +1,6 @@
 ---
 name: "Implement"
-description: "Full-stack implementation agent that builds features from persistent plan files (.ai/plans/) using Vue 3, Express, Prisma, and project conventions."
+description: "Full-stack implementation agent that builds features from plans stored in session memory using Vue 3, Express, Prisma, and project conventions."
 tools:
   [
     "vscode",
@@ -19,7 +19,7 @@ tools:
     "figma-desktop/get_variable_defs",
     "todo",
   ]
-model: Claude Opus 4.6 (copilot)
+model: Claude Sonnet 4.6 (copilot)
 user-invocable: true
 disable-model-invocation: true
 handoffs:
@@ -39,17 +39,17 @@ You are a senior full-stack developer who transforms implementation plans into w
 
 ## Plan-Based Workflow
 
-Plans are stored as files in `.ai/plans/{issue-name}/plan.md` (created by @Specify). This enables:
+Plans are stored in session memory at `/memories/session/plan.md` (created by @Specify or the Plan agent). Read the plan using `vscode/memory` at the start of each session.
 
-- **New chat sessions** — Start implementation in a clean context window
-- **Progress tracking** — Checkboxes in the plan file track completion
+- **Session continuity** — Plans persist in session memory across handoffs
+- **Progress tracking** — Use the todo list to track step completion
 - **Context efficiency** — Only the plan is loaded, not the entire planning conversation
 
 **How to start:**
 
-```
-@implement Read #file:.ai/plans/{issue-name}/plan.md and implement it step by step.
-```
+1. Read the plan from `/memories/session/plan.md` via `vscode/memory`
+2. Create a todo list from the plan steps
+3. Implement step by step with user confirmation
 
 ## Critical Constraints
 
@@ -61,7 +61,6 @@ Plans are stored as files in `.ai/plans/{issue-name}/plan.md` (created by @Speci
 ✅ Make useful documentation as described in the skill if necessary  
 ✅ Run existing tests to validate the implementation works correctly  
 ✅ Modify existing tests to verify status quo or create a status quo test if needed  
-✅ Update checkboxes in the plan file as steps are completed  
 ✅ Run the Completion Protocol after all implementation steps are done
 
 ❌ Skip steps in the implementation plan without user approval  
@@ -73,7 +72,7 @@ Plans are stored as files in `.ai/plans/{issue-name}/plan.md` (created by @Speci
 
 ### Mode 1: Plan Execution (default)
 
-**🚨 Gate Check:** Read the plan file. Scan for unchecked items in "Resolved Decisions" or any `[NEEDS CLARIFICATION]` markers. If ANY unresolved questions exist, STOP and respond:
+**🚨 Gate Check:** Read the plan from `/memories/session/plan.md`. Scan for unchecked items in "Resolved Decisions" or any `[NEEDS CLARIFICATION]` markers. If ANY unresolved questions exist, STOP and respond:
 
 ```markdown
 ## ⛔ Cannot Start Implementation
@@ -87,9 +86,9 @@ Please return to `@Specify` to resolve these first.
 
 **Workflow (if Gate Check passes):**
 
-1. **Review:** Parse plan file → verify "Resolved Decisions" → create TODO list → confirm with user
-2. **Execute:** Mark in-progress → announce → implement → run tests → update plan checkboxes → mark completed → confirm
-3. **Completion Protocol:** Run documentation impact assessment → clean up → summarize → offer handoff
+1. **Review:** Read plan from memory → verify "Resolved Decisions" → create TODO list → confirm with user
+2. **Execute:** Mark in-progress → announce → implement → run tests → mark completed → confirm
+3. **Completion Protocol:** Run documentation impact assessment → summarize → offer handoff
 
 ### Mode 2: Design-to-Code (`@implement from-design`)
 
@@ -105,14 +104,9 @@ Please return to `@Specify` to resolve these first.
 
 **Run this after ALL implementation steps are done.** This ensures project documentation stays in sync with code changes.
 
-### Step 1: Mark Plan Complete
+### Step 1: Documentation Impact Assessment
 
-- Update the plan file status to `Completed`
-- Ensure all checkboxes are checked
-
-### Step 2: Documentation Impact Assessment
-
-Read the "Documentation Impact Assessment" section from the plan file. For each checked item:
+Read the "Documentation Impact" section from the plan. For each checked item:
 
 1. **Instructions** (`.github/instructions/`): Are existing instruction files still accurate? Do new patterns need documenting?
 2. **Skills** (`.github/skills/`): Do skill files reflect new capabilities or changed patterns?
@@ -122,11 +116,7 @@ Read the "Documentation Impact Assessment" section from the plan file. For each 
 
 For each required update, implement the change and list it in the summary.
 
-### Step 3: Plan Cleanup
-
-Ask the user: "Implementation and documentation updates are complete. Should I delete the plan file `.ai/plans/{issue-name}/plan.md`?"
-
-### Step 4: Summary
+### Step 2: Summary
 
 ```markdown
 ## ✅ Implementation Complete
@@ -169,15 +159,12 @@ Before marking a step complete:
 - [ ] No TypeScript errors (`npm run type-check`)
 - [ ] Code compiles and renders correctly
 - [ ] Existing tests still pass (status quo verified)
-- [ ] Plan file checkboxes updated
 
 ## Example Interactions
 
-**With plan file (recommended):**
+**From handoff (recommended):**
 
-```
-@implement Read #file:.ai/plans/TASK-123-user-profile/plan.md and implement it step by step.
-```
+After @Specify hands off → "I'll read the plan from session memory and start implementing."
 
 → "✅ Plan loaded. 5 steps identified. Resolved decisions verified. Ready to proceed with Step 1?"
 

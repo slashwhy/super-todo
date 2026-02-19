@@ -79,7 +79,7 @@ Use subagents to isolate research from decision-making:
 
 > 📖 **Official Docs:** [VS Code Subagents][vscode-subagents]
 
-## Plan-Based Handoff
+## Memory-Based Handoff
 
 ### The Problem
 
@@ -87,53 +87,40 @@ When @Specify plans a feature, the planning conversation can consume 50-100K tok
 
 ### The Solution
 
-Plans are persisted as files in `.ai/plans/{issue-name}/plan.md`:
+Plans are persisted to `/memories/session/plan.md` via `vscode/memory`:
 
 ```
-@Specify (Session 1)              @Implement (Session 2)
+@Specify (Planning)               @Implement (Handoff)
 ┌────────────────────┐            ┌────────────────────┐
-│ Jira fetch    15K  │            │ Plan file      5K  │
-│ Figma analyze 20K  │    💾      │ Instructions  10K  │
-│ Research      30K  │ ──────▶    │ Code context  50K  │
-│ Q&A rounds    10K  │  plan.md   │ Available!    63K  │
-│ Plan output    5K  │            │                    │
+│ Jira fetch    15K  │            │ Plan from      5K  │
+│ Figma analyze 20K  │    💾      │   session mem       │
+│ Research      30K  │ ──────▶    │ Instructions  10K  │
+│ Q&A rounds    10K  │  memory   │ Code context  50K  │
+│ Plan output    5K  │            │ Available!    63K  │
 ├────────────────────┤            └────────────────────┘
-│ Used: ~80K         │            Used: ~15K initially
-│ Remaining: ~48K ❌ │            Remaining: ~113K ✅
+│ Used: ~80K         │            Handoff carries plan
+│ Remaining: ~48K ❌ │            context forward
 └────────────────────┘
 ```
 
 ### Workflow
 
-1. **@Specify** creates `.ai/plans/{issue-name}/plan.md` with all decisions resolved
-2. User opens a **new chat session** with @Implement
-3. **@Implement** reads the plan file via `#file:` reference
-4. Implementation starts with a clean context window (~113K available)
-5. @Implement updates plan checkboxes as steps complete
-6. After completion, the Completion Protocol ensures documentation stays in sync
+1. **@Specify** saves the plan to `/memories/session/plan.md` via `vscode/memory`
+2. User uses the **"Start Implementation"** handoff button
+3. **@Implement** reads the plan from session memory
+4. Implementation starts with the plan context carried forward via the handoff
+5. After completion, the Completion Protocol ensures documentation stays in sync
 
-### File Structure
+### Storage Mechanism
+
+Plans use `vscode/memory` with session scope:
 
 ```
-.ai/                          ← Gitignored
-  plans/
-    TASK-123-user-profile/    ← Named after issue
-      plan.md                 ← Implementation plan
-    fix-login-redirect/
-      plan.md
-    chore-update-vue/
-      plan.md
+/memories/session/
+  plan.md                 ← Implementation plan (persists across handoffs)
 ```
 
-### Issue Name Convention
-
-| Type        | Example                 |
-| ----------- | ----------------------- |
-| Jira ticket | `TASK-123-user-profile` |
-| Feature     | `feat-task-filters`     |
-| Bug fix     | `fix-login-redirect`    |
-| Chore       | `chore-update-vue`      |
-| Docs        | `docs-api-reference`    |
+Session memory is scoped to the current conversation and survives agent handoffs. No workspace files or gitignore entries needed.
 
 ## Structured Autonomy
 
@@ -146,11 +133,11 @@ Our agent workflow is inspired by the [Structured Autonomy][structured-autonomy]
 ```
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
 │   @Specify      │ ──▶ │   (Optional)    │ ──▶ │   @Implement    │
-│  (1 session)    │     │   sa-generate   │     │  (new session)  │
+│  (1 session)    │     │   sa-generate   │     │  (handoff)      │
 │  Premium Model  │     │  Premium Model  │     │  Balanced Model │
 └─────────────────┘     └─────────────────┘     └─────────────────┘
        Plan                 Detailed code            Execute
-    .ai/plans/             instructions             step by step
+    session memory         instructions             step by step
 ```
 
 | Phase                      | Model Cost               | Token Usage               | Output                               |
@@ -170,7 +157,7 @@ Our agent workflow is inspired by the [Structured Autonomy][structured-autonomy]
 
 | Aspect           | awesome-copilot SA                          | Our Workflow                               |
 | ---------------- | ------------------------------------------- | ------------------------------------------ |
-| Plan storage     | `plans/` in workspace root                  | `.ai/plans/` (gitignored)                  |
+| Plan storage     | `plans/` in workspace root                  | Session memory (`/memories/session/plan.md`) |
 | Generate phase   | Required (separate prompt)                  | Optional (plan is detailed enough)         |
 | Implementation   | Cheap model, follows instructions           | Balanced model, follows plan + conventions |
 | Workflow trigger | `/sa-plan`, `/sa-generate`, `/sa-implement` | `@specify plan`, `@implement`              |

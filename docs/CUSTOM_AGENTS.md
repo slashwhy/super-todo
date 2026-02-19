@@ -13,7 +13,7 @@
 | [**@Test Unit**][agent-test-unit] | Unit & integration tests | ✅ Yes | ✅ Yes | After implementation, regression tests, component props/emits validation |
 | [**@Test E2E**][agent-test-e2e] | End-to-end tests | ✅ Yes | ❌ No | User interaction flows, complete workflows, cross-feature scenarios |
 | [**@Socratic-Mentor**][agent-socratic-mentor] | Pedagogical concept builder | ❌ Read-only | ❌ No | Junior concept gaps, understanding checks, stack trace analysis |
-| [**@Spec-First**][agent-spec-first] | Specification gate enforcer | ✅ Saves spec file | ❌ No | Formalise plans before implementing, EARS AC review |
+| [**@Spec-First**][agent-spec-first] | Specification gate enforcer | ❌ Read-only | ❌ No | Formalise plans before implementing, EARS AC review |
 | [**@Code-Review-Trainer**][agent-code-review-trainer] | AutoMCQ comprehension gate | ❌ Read-only | ❌ No | Post-implementation comprehension check (3 questions) |
 | [**@Bebugging**][agent-bebugging] | Review muscle trainer (saboteur) | ✅ Sandbox only | ❌ No | Inject subtle bugs for junior review practice |
 
@@ -74,9 +74,9 @@ Use the **Continue In** control in Chat view, or type `@cli` or `@cloud` in your
 ## 🔄 Our local agents workflow
 
 ```
-@Specify (Plan)         →  Save plan to .ai/plans/{issue-name}/plan.md
-       ↓ (new chat)
-@Implement (Build)      →  Read plan file → implement → Completion Protocol
+@Specify (Plan)         →  Save plan to /memories/session/plan.md
+       ↓ (handoff)
+@Implement (Build)      →  Read plan from session memory → implement → Completion Protocol
        ↓
 @Test Unit              →  "Add E2E Tests"
        ↓
@@ -97,11 +97,11 @@ See [AI-Native Training][ai-native-training] for the full 12-week rollout guide.
       │                                 │
       ▼                                 ▼
 @Socratic-Mentor            @Spec-First
-(Build mental model)        (Write spec → save to .ai/plans/)
+(Build mental model)        (Write spec → save to session memory)
       │                                 │
       │                                 ▼
       │                          @Implement
-      │                    (Read spec → build → mark steps)
+      │                    (Read plan from memory → build)
       │                                 │
       │                                 ▼
       └──────────────────►  @Code-Review-Trainer
@@ -116,17 +116,17 @@ See [AI-Native Training][ai-native-training] for the full 12-week rollout guide.
 
 **Periodic training:** Use `@Bebugging` to maintain review-muscle skills.
 
-### Plan-Based Handoff
+### Memory-Based Handoff
 
-Plans are persisted to `.ai/plans/{issue-name}/plan.md` (gitignored) so @Implement can start in a **new chat session** with a clean context window. This prevents context overflow from the planning phase consuming tokens needed for implementation.
+Plans are persisted to `/memories/session/plan.md` via `vscode/memory` so the conversation context carries forward through handoffs. This replaces the previous file-based approach (`.ai/plans/`) with a cleaner, workspace-free mechanism.
 
 **Workflow:**
-1. `@specify plan TASK-123` → researches, plans, saves to `.ai/plans/TASK-123-title/plan.md`
-2. Open **new chat** → `@implement Read #file:.ai/plans/TASK-123-title/plan.md and implement step by step`
-3. @Implement updates plan checkboxes as it works
-4. **Completion Protocol** runs: documentation impact check, cleanup
+1. `@specify plan TASK-123` → researches, plans, saves to `/memories/session/plan.md`
+2. Use the **"Start Implementation"** handoff button to pass context to @Implement
+3. @Implement reads the plan from session memory and executes step by step
+4. **Completion Protocol** runs: documentation impact check, summary
 
-> 📖 **Details:** [Context Optimization – Plan-Based Handoff][context-optimization]
+> 📖 **Details:** [Context Optimization – Memory-Based Handoff][context-optimization]
 
 ### Documentation Impact Assessment
 
