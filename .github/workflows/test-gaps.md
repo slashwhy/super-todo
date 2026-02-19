@@ -1,56 +1,44 @@
+---
+on:
+  schedule: weekly on monday
+  workflow_dispatch: {}
+permissions:
+  contents: read
+  actions: read
+  issues: read
+  pull-requests: read
+engine:
+  id: copilot
+  agent: test-unit
+network:
+  allowed:
+    - defaults
+    - node
+tools:
+  github:
+    toolsets: [default]
+  edit:
+  bash:
+    - cat
+    - grep
+    - find
+    - ls
+    - wc
+    - head
+    - tail
+safe-outputs:
+  create-issue:
+    title-prefix: "[test-gap] "
+    labels:
+      - tests
+      - good first issue
+    close-older-issues: true
+    max: 3
+---
+
 # Test Coverage Gap Report
 
 Weekly analysis of test coverage gaps. Creates issues describing what needs testing — does **not** auto-generate test code. Juniors pick up these issues and write tests themselves using `@Test-Unit`, building genuine understanding of both the code and testing patterns.
-
-## Configuration
-
-```yaml
-on:
-  schedule:
-    - cron: '0 10 * * 1'  # Every Monday at 10:00 UTC (after docs-maintenance)
-  workflow_dispatch: {}    # Allow manual trigger
-
-permissions:
-  contents: read
-  issues: read
-
-engine: copilot
-
-network:
-  - defaults
-  - node
-
-tools:
-  - github:
-      - repos
-      - issues
-  - edit
-  - bash:
-      - cat
-      - grep
-      - find
-      - ls
-      - wc
-      - head
-      - tail
-
-safe-outputs:
-  - create-issue:
-      title-prefix: "[test-gap] "
-      labels:
-        - tests
-        - good first issue
-      close-older-issues: true
-      max: 3
-
-runtime: node 22
-```
-
-## Imports
-
-- `.github/agents/test-unit.agent.md` — testing conventions (Vitest, Vue Test Utils, Prisma mocking, AAA pattern)
-
-## Instructions
 
 You are a test coverage analyst for a monorepo task management app. Your job is to identify source files that lack test coverage and create issues describing what should be tested. You do NOT write test code — that is the developer's job.
 

@@ -1,51 +1,46 @@
-# Issue Triage & Labeling
-
-Automatically classify new issues by type and layer, apply labels, and post a triage summary comment.
-
-## Configuration
-
-```yaml
+---
 on:
   issues:
     types: [opened]
-
 permissions:
   contents: read
-  issues: read
-
+  actions: read
 engine: copilot
-
 network:
-  - defaults
-  - node
-
+  allowed:
+    - defaults
+    - node
 safe-outputs:
-  - add-labels:
-      allowed:
-        - bug
-        - enhancement
-        - documentation
-        - frontend
-        - backend
-        - database
-        - question
-        - good first issue
-      max: 3
-  - add-comment:
-      max: 1
-```
+  add-labels:
+    allowed:
+      [
+        bug,
+        enhancement,
+        documentation,
+        frontend,
+        backend,
+        database,
+        question,
+        good first issue,
+      ]
+    max: 3
+  add-comment:
+    max: 1
+---
 
-## Instructions
+# Issue Triage & Labeling
+
+Classify new issues by type and layer, apply labels, and post a triage summary comment.
 
 You are a repository assistant for a monorepo task management app with a Vue 3 frontend and Express/Prisma backend.
 
 ### Project Structure
 
-| Layer | Path | Technologies |
-|-------|------|--------------|
-| Frontend | `frontend/` | Vue 3, TypeScript, Vite, Pinia, Vue Router |
-| Backend | `backend/` | Express, Prisma ORM, PostgreSQL |
-| Database | `backend/prisma/` | Prisma schema, migrations, seed |
+| Layer    | Path              | Technologies                               |
+| -------- | ----------------- | ------------------------------------------ |
+| Frontend | `frontend/`       | Vue 3, TypeScript, Vite, Pinia, Vue Router |
+| Backend  | `backend/`        | Express, Prisma ORM, PostgreSQL            |
+| Database | `backend/prisma/` | Prisma schema, migrations, seed            |
 
 ### Classification Rules
 

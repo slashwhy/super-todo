@@ -1,51 +1,42 @@
+---
+on:
+  schedule: weekly on monday
+  workflow_dispatch: {}
+permissions:
+  contents: read
+  actions: read
+  issues: read
+  pull-requests: read
+engine: copilot
+network:
+  allowed:
+    - defaults
+    - node
+tools:
+  github:
+    toolsets: [default]
+  edit:
+  bash:
+    - cat
+    - grep
+    - find
+    - head
+    - wc
+    - tail
+    - ls
+safe-outputs:
+  create-issue:
+    title-prefix: "[docs] "
+    labels:
+      - documentation
+      - enhancement
+    close-older-issues: true
+    max: 1
+---
+
 # Documentation Maintenance
 
 Weekly scan for documentation drift: finds mismatches between code and docs, outdated references, and missing documentation.
-
-## Configuration
-
-```yaml
-on:
-  schedule:
-    - cron: '0 9 * * 1'  # Every Monday at 09:00 UTC
-  workflow_dispatch: {}   # Allow manual trigger
-
-permissions:
-  contents: read
-  issues: read
-  pull-requests: read
-
-engine: copilot
-
-network:
-  - defaults
-  - node
-
-tools:
-  - github:
-      - repos
-      - issues
-  - edit
-  - bash:
-      - cat
-      - grep
-      - find
-      - head
-      - wc
-      - tail
-      - ls
-
-safe-outputs:
-  - create-issue:
-      title-prefix: "[docs] "
-      labels:
-        - documentation
-        - enhancement
-      close-older-issues: true
-      max: 1
-```
-
-## Instructions
 
 You are a documentation auditor for a monorepo task management app with a Vue 3 frontend (`frontend/`) and Express/Prisma backend (`backend/`).
 

@@ -1,60 +1,43 @@
-# PR Code Review
-
-AI-powered code review that runs **only when explicitly requested** via a `/copilot review` comment. This preserves the human-first review process: junior developers complete `@Code-Review-Trainer` AutoMCQ and a human reviews before AI provides a second-pass safety net.
-
-## Configuration
-
-```yaml
+---
 on:
   issue_comment:
     types: [created]
-
-# Only run when:
-# 1. The comment is on a pull request (not a regular issue)
-# 2. The comment body contains '/copilot review'
-# 3. The commenter has write permission to the repository
 if: |
   github.event.issue.pull_request &&
-  contains(github.event.comment.body, '/copilot review') &&
-  github.event.comment.author_association in ['OWNER', 'MEMBER', 'COLLABORATOR']
-
+  contains(github.event.comment.body, '/copilot review')
 permissions:
   contents: read
+  actions: read
+  issues: read
   pull-requests: read
-
-engine: copilot
-
+engine:
+  id: copilot
+  agent: implement
 network:
-  - defaults
-  - node
-
+  allowed:
+    - defaults
+    - node
 tools:
-  - github:
-      - repos
-      - pull_requests
-  - edit
-  - bash:
-      - cat
-      - grep
-      - head
-      - tail
-      - wc
-
+  github:
+    toolsets: [default]
+  edit:
+  bash:
+    - cat
+    - grep
+    - head
+    - tail
+    - wc
 safe-outputs:
-  - create-pull-request-review-comment:
-      max: 10
-      side: RIGHT
-  - submit-pull-request-review:
-      max: 1
-```
+  create-pull-request-review-comment:
+    max: 10
+    side: RIGHT
+  submit-pull-request-review:
+    max: 1
+---
 
-## Imports
+# PR Code Review
 
-- `.github/agents/implement.agent.md` — codebase conventions, patterns, and architecture knowledge
-
-## Instructions
-
-You are a code reviewer for a monorepo task management app. Review the PR diff against the project's conventions and security patterns. Focus on issues that a human reviewer might miss — you are a second-pass safety net, not the primary reviewer.
+AI-powered second-pass code review. Runs **only when explicitly requested** via a `/copilot review` comment. This preserves the human-first review process: junior developers complete `@Code-Review-Trainer` AutoMCQ and a human reviews before AI provides a safety net.
 
 ### Review Checklist
 
@@ -78,15 +61,15 @@ You are a code reviewer for a monorepo task management app. Review the PR diff a
 
 These are common patterns in AI-generated code that indicate insufficient review:
 
-| Pattern | Risk | What to flag |
-|---------|------|-------------|
-| `cors({ origin: '*' })` | Allows all origins | Flag unless the endpoint is intentionally public |
-| Direct `req.body` to Prisma | Mass assignment / injection | Must whitelist every field |
-| Missing `await` on async call | Returns Promise, not data | TypeScript may not catch this |
-| `npm install [unknown-package]` | Supply chain attack (hallucinated package) | Verify the package exists on npm |
-| Empty `catch` blocks | Silent failure masking | What should happen on failure? |
-| Hardcoded credentials | Secret exposure | Must use environment variables |
-| `allow_all_origins: true` | CORS misconfiguration | Same risk as `cors({ origin: '*' })` |
+| Pattern                         | Risk                                       | What to flag                                     |
+| ------------------------------- | ------------------------------------------ | ------------------------------------------------ |
+| `cors({ origin: '*' })`         | Allows all origins                         | Flag unless the endpoint is intentionally public |
+| Direct `req.body` to Prisma     | Mass assignment / injection                | Must whitelist every field                       |
+| Missing `await` on async call   | Returns Promise, not data                  | TypeScript may not catch this                    |
+| `npm install [unknown-package]` | Supply chain attack (hallucinated package) | Verify the package exists on npm                 |
+| Empty `catch` blocks            | Silent failure masking                     | What should happen on failure?                   |
+| Hardcoded credentials           | Secret exposure                            | Must use environment variables                   |
+| `allow_all_origins: true`       | CORS misconfiguration                      | Same risk as `cors({ origin: '*' })`             |
 
 #### Testing
 

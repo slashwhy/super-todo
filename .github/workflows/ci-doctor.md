@@ -1,61 +1,49 @@
-# CI Failure Diagnosis
-
-Automatically diagnoses CI failures, identifies root causes, and creates an issue with analysis and proposed fixes.
-
-## Configuration
-
-```yaml
+---
 on:
   workflow_run:
     workflows: ["CI"]
     types: [completed]
     branches: [main]
-
 if: github.event.workflow_run.conclusion == 'failure'
-
 permissions:
   contents: read
   actions: read
   issues: read
-
-engine: copilot
-
+  pull-requests: read
+engine:
+  id: copilot
+  agent: implement
 network:
-  - defaults
-  - node
-
+  allowed:
+    - defaults
+    - node
 tools:
-  - github:
-      - repos
-      - issues
-      - actions
-  - edit
-  - bash:
-      - cat
-      - grep
-      - head
-      - tail
-      - npm
-      - npx
-      - find
-      - ls
-  - agentic-workflows
-
+  github:
+    toolsets: [default]
+  edit:
+  bash:
+    - cat
+    - grep
+    - head
+    - tail
+    - npm
+    - npx
+    - find
+    - ls
+  agentic-workflows:
 safe-outputs:
-  - create-issue:
-      title-prefix: "[ci-fix] "
-      labels:
-        - bug
-        - ci
-      close-older-issues: true
-      max: 1
-```
+  create-issue:
+    title-prefix: "[ci-fix] "
+    labels:
+      - bug
+      - ci
+    close-older-issues: true
+    max: 1
+---
 
-## Imports
+# CI Failure Diagnosis
 
-- `.github/agents/implement.agent.md` — codebase conventions and architecture knowledge
-
-## Instructions
+Automatically diagnoses CI failures, identifies root causes, and creates an issue with analysis and proposed fixes.
 
 You are a CI failure diagnostician for a monorepo task management app with a Vue 3 frontend and Express/Prisma backend.
 
@@ -71,12 +59,12 @@ You are a CI failure diagnostician for a monorepo task management app with a Vue
 
 The CI pipeline has 4 jobs:
 
-| Job | What it does | Common failure causes |
-|-----|-------------|----------------------|
-| `lint` | ESLint on `frontend/` | New lint rules, missing imports, unused variables |
-| `build` | TypeScript compilation for frontend + backend | Type errors, missing types, import path issues |
-| `test-backend` | `vitest run` in `backend/` | Failed assertions, Prisma mock issues, missing `.js` extensions |
-| `test-frontend` | `vitest run` in `frontend/` | Component mount failures, missing Pinia setup, DOM assertion failures |
+| Job             | What it does                                  | Common failure causes                                                 |
+| --------------- | --------------------------------------------- | --------------------------------------------------------------------- |
+| `lint`          | ESLint on `frontend/`                         | New lint rules, missing imports, unused variables                     |
+| `build`         | TypeScript compilation for frontend + backend | Type errors, missing types, import path issues                        |
+| `test-backend`  | `vitest run` in `backend/`                    | Failed assertions, Prisma mock issues, missing `.js` extensions       |
+| `test-frontend` | `vitest run` in `frontend/`                   | Component mount failures, missing Pinia setup, DOM assertion failures |
 
 ### Issue Format
 
