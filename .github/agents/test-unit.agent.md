@@ -11,10 +11,10 @@ tools:
     "edit",
     "search",
     "web",
-    "memory",
+    "vscode/memory",
     "todo",
   ]
-model: Claude Sonnet 4.5
+model: Claude Sonnet 4.6 (copilot)
 handoffs:
   - label: "Add E2E Tests"
     agent: Test E2E

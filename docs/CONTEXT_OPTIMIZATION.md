@@ -87,7 +87,7 @@ When @Specify plans a feature, the planning conversation can consume 50-100K tok
 
 ### The Solution
 
-Plans are persisted as files in `.ai/plans/{issue-name}/plan.md`:
+Plans are persisted to `/memories/session/plan.md`:
 
 ```
 @Specify (Session 1)              @Implement (Session 2)
@@ -105,7 +105,7 @@ Plans are persisted as files in `.ai/plans/{issue-name}/plan.md`:
 
 ### Workflow
 
-1. **@Specify** creates `.ai/plans/{issue-name}/plan.md` with all decisions resolved
+1. **@Specify** creates `/memories/session/plan.md` with all decisions resolved
 2. User opens a **new chat session** with @Implement
 3. **@Implement** reads the plan file via `#file:` reference
 4. Implementation starts with a clean context window (~113K available)
@@ -115,14 +115,9 @@ Plans are persisted as files in `.ai/plans/{issue-name}/plan.md`:
 ### File Structure
 
 ```
-.ai/                          ← Gitignored
-  plans/
-    TASK-123-user-profile/    ← Named after issue
-      plan.md                 ← Implementation plan
-    fix-login-redirect/
-      plan.md
-    chore-update-vue/
-      plan.md
+/memories/                    ← Persistent memory
+  session/                    ← Cleared after session
+    plan.md                   ← Implementation plan
 ```
 
 ### Issue Name Convention
@@ -150,7 +145,7 @@ Our agent workflow is inspired by the [Structured Autonomy][structured-autonomy]
 │  Premium Model  │     │  Premium Model  │     │  Balanced Model │
 └─────────────────┘     └─────────────────┘     └─────────────────┘
        Plan                 Detailed code            Execute
-    .ai/plans/             instructions             step by step
+ /memories/session/        instructions             step by step
 ```
 
 | Phase                      | Model Cost               | Token Usage               | Output                               |
@@ -170,7 +165,7 @@ Our agent workflow is inspired by the [Structured Autonomy][structured-autonomy]
 
 | Aspect           | awesome-copilot SA                          | Our Workflow                               |
 | ---------------- | ------------------------------------------- | ------------------------------------------ |
-| Plan storage     | `plans/` in workspace root                  | `.ai/plans/` (gitignored)                  |
+| Plan storage     | `plans/` in workspace root                  | `/memories/session/plan.md`                |
 | Generate phase   | Required (separate prompt)                  | Optional (plan is detailed enough)         |
 | Implementation   | Cheap model, follows instructions           | Balanced model, follows plan + conventions |
 | Workflow trigger | `/sa-plan`, `/sa-generate`, `/sa-implement` | `@specify plan`, `@implement`              |

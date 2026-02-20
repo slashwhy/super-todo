@@ -5,4 +5,4 @@ agent: Implement
 
 # Implement
 
-Implement a plan from a .ai/plans/{issue-name}/plan.md file created by @Specify.
+Implement a plan from /memories/session/plan.md created by @Specify.

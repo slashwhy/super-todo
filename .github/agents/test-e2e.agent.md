@@ -25,10 +25,11 @@ tools:
     "figma-desktop/get_variable_defs",
     "io.github.chromedevtools/chrome-devtools-mcp/*",
     "playwright/*",
+    "vscode/memory",
     "todo",
   ]
-model: Claude Sonnet 4.5
-user-invokable: true
+model: Claude Sonnet 4.6 (copilot)
+user-invocable: true
 disable-model-invocation: true
 handoffs:
   - label: "Fix Implementation"
