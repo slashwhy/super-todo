@@ -55,7 +55,7 @@ cd frontend && npm install && npm run dev     # App → http://localhost:5173
 
 | Resource   | Path                                             | Notes                                               |
 | ---------- | ------------------------------------------------ | --------------------------------------------------- |
-| Tasks      | `/api/tasks`                                     | Filters: `status`, `priority`, `isVital`, `ownerId` |
+| Tasks      | `/api/tasks`                                     | Filters: `status`, `priority`, `category`, `isVital`, `ownerId` |
 | Users      | `/api/users`                                     | CRUD                                                |
 | Categories | `/api/categories`                                | CRUD                                                |
 | Config     | `/api/config/statuses`, `/api/config/priorities` | Lookup tables                                       |
