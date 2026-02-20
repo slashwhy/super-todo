@@ -212,7 +212,7 @@ test.describe('Task CRUD Operations', () => {
   test.describe('Data Integrity', () => {
     test('task cards maintain data consistency', async ({ page }) => {
       // Intercept API call to verify response structure
-      let apiResponse: any = null
+      let apiResponse: unknown = null
       
       await page.route('**/api/tasks*', async (route) => {
         const response = await route.fetch()
