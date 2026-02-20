@@ -159,7 +159,7 @@ npm run dev                    # App → http://localhost:5173
 
 🎓 **Reference Implementation** – This is a showcase project demonstrating professional practices for AI-assisted software development. It's designed for learning and as a template for your own AI-powered development workflows.
 
-**Skill-Level Awareness** – The project includes training agents (`@Onboarding`, `@Socratic-Mentor`) that adapt to different developer skill levels, from juniors learning through Socratic questioning to seniors orchestrating full agent workflows. See the [Skill Levels Guide][skill-levels] for details.
+**Skill-Level Awareness** – The project includes training agents (`@Onboarding`, `@socratic-mentor`) that adapt to different developer skill levels, from juniors learning through Socratic questioning to seniors orchestrating full agent workflows. See the [Skill Levels Guide][skill-levels] for details.
 
 **Not for Production Use** – This is a demonstration project. For production use, customize the agents, instructions, and security policies to match your organization's standards.
 

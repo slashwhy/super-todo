@@ -189,7 +189,7 @@ Before marking a step complete:
 
 ## Skill Level Guidance
 
-For developers new to this codebase or tech stack: consider using `@Onboarding` first to understand project conventions, and `@Socratic-Mentor` to build mental models before implementing. Proficient developers can use this agent directly.
+For developers new to this codebase or tech stack: consider using `@Onboarding` first to understand project conventions, and `@socratic-mentor` to build mental models before implementing. Proficient developers can use this agent directly.
 
 ### Pair Programming Modes
 

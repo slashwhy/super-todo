@@ -227,4 +227,4 @@ This keeps the context window clean for implementation.
 
 ## Skill Level Guidance
 
-This agent works for all skill levels. Juniors get structured specification training; seniors get efficient planning. For developers struggling with specification quality, `@Socratic-Mentor` can help build the underlying conceptual understanding first.
+This agent works for all skill levels. Juniors get structured specification training; seniors get efficient planning. For developers struggling with specification quality, `@socratic-mentor` can help build the underlying conceptual understanding first.

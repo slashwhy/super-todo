@@ -13,7 +13,7 @@
 | [**@Test Unit**][agent-test-unit]        | Unit & integration tests | ✅ Yes       | ✅ Yes     | After implementation, regression tests, component props/emits validation |
 | [**@Test E2E**][agent-test-e2e]          | End-to-end tests         | ✅ Yes       | ❌ No      | User interaction flows, complete workflows, cross-feature scenarios      |
 | [**@Onboarding**][agent-onboarding]      | Project orientation       | ❌ Read-only | ❌ No      | First day on project, exploring conventions, understanding tooling       |
-| [**@Socratic Mentor**][agent-socratic]   | Pedagogical tutoring      | ❌ Read-only | ❌ No      | Learning concepts, debugging with understanding, mentoring juniors      |
+| [**@socratic-mentor**][agent-socratic]   | Pedagogical tutoring      | ❌ Read-only | ❌ No      | Learning concepts, debugging with understanding, mentoring juniors      |
 
 > **Auto-Infer:** When `✅ Yes`, Copilot can auto-select this agent based on task context. When `❌ No`, you must explicitly select the agent.
 
@@ -87,7 +87,7 @@ Use the **Continue In** control in Chat view, or type `@cli` or `@cloud` in your
 
 @Onboarding (Explore)   →  Understand project structure and conventions
        ↓
-@Socratic Mentor        →  Build conceptual understanding
+@socratic-mentor        →  Build conceptual understanding
        ↓
 @Specify (Plan)         →  Enter production workflow with solid foundation
 ```
@@ -128,18 +128,18 @@ In addition to the 4 production agents, this project includes **2 training agent
 | Aspect | Training Agents | Production Agents |
 |--------|----------------|-------------------|
 | **Purpose** | Build understanding | Build software |
-| **Tools** | Read-only (`read`, `search`, `agent`, `web`, `vscode/askQuestions`, `vscode/memory`) | Full capabilities including `edit` and `execute` |
+| **Tools** | Read-only (`read`, `search`, `agent`, `web`, `vscode/askQuestions`, `vscode/memory`) | Role-specific tools (some read-only, some with `edit`/`execute`) |
 | **Output** | Explanations, questions, guidance | Code, tests, plans |
-| **Code generation** | Never | Core function |
+| **Code generation** | Never | Varies by agent (many generate code; some are read-only) |
 
 ### @Onboarding
 
 Project orientation guide for newcomers. Walks through project structure, explains conventions, and helps developers pick their first task. Uses three modes: Project Tour, Convention Explorer, and First Task Guide.
 
 - **Model:** Sonnet (balanced — exploration/explanation)
-- **Handoffs:** → `@Socratic-Mentor`, → `@Specify & Validate`
+- **Handoffs:** → `@socratic-mentor`, → `@Specify & Validate`
 
-### @Socratic Mentor
+### @socratic-mentor
 
 Pedagogical tutor using Socratic questioning. Never provides direct code answers. Uses prediction-first gates, the Five Whys technique, and comprehension validation to build deep understanding.
 

@@ -169,7 +169,7 @@ describe("Resource Routes", () => {
 
 ## Skill Level Guidance
 
-For developers unfamiliar with Vitest/Vue Test Utils patterns: `@Socratic-Mentor` can explain testing concepts before writing tests. This agent generates tests — ensure you understand the test assertions, not just that they pass.
+For developers unfamiliar with Vitest/Vue Test Utils patterns: `@socratic-mentor` can explain testing concepts before writing tests. This agent generates tests — ensure you understand the test assertions, not just that they pass.
 
 ---
 

@@ -59,7 +59,7 @@ Walk the developer through the project structure, tech stack, agent system, and 
 6. **Next Steps:** Based on their goals, suggest:
    - Explore a specific convention → Mode 2
    - Pick a first task → Mode 3
-   - Understand a concept deeply → hand off to `@Socratic-Mentor`
+   - Understand a concept deeply → hand off to `@socratic-mentor`
 
 ### Mode 2: Convention Explorer
 
