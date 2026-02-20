@@ -119,6 +119,7 @@ Pick a topic below to get started. Each guide includes real examples from this p
 | [🔒 **Security Guide**][security]                     | MCP security risks, data privacy, incident response procedures, pre-deployment checklists, and vulnerability prevention      |
 | [🎓 **Skill Levels & Training**][skill-levels]        | Adapting AI-assisted development to different skill levels, training agents, dos/don'ts, and AI-native metrics               |
 | [⚡ **Context Optimization**][context-optimization]   | Maximizing efficiency with large codebases, optimizing token usage, and advanced patterns for scaling                        |
+| [🔄 **Agentic Workflows & CI**][agentic-workflows]    | Server-side AI workflows (docs, code quality, security) and CI pipeline configuration                                        |
 
 ## When to Use What?
 
@@ -210,6 +211,7 @@ Optimize across four dimensions:
 [mcp]: ./MCP.md
 [responsibilities]: ./RESPONSIBILITIES.md
 [security]: ./SECURITY.md
+[agentic-workflows]: ./AGENTIC_WORKFLOWS.md
 [context-optimization]: ./CONTEXT_OPTIMIZATION.md
 [git-worktrees]: ./GIT_WORKTREES.md
 
