@@ -28,6 +28,20 @@ Comprehensive security checklist for full-stack applications.
 | **Context Poisoning** | Medium | Suspicious comments that could manipulate AI suggestions |
 | **Prompt Injection Vectors** | High | User input rendered in contexts AI might process (logs, error messages) |
 | **Outdated Patterns** | Medium | Deprecated APIs or security anti-patterns from AI training data |
+| **Non-Compliant Patterns** | Medium | AI generating code that ignores project conventions (e.g., passing `req.body` directly to Prisma) |
+| **Phantom Dependencies** | High | AI adding `import` statements for packages not in `package.json` or that don't exist on npm |
+| **Insecure Defaults** | Medium | AI using insecure defaults common in training data (e.g., `cors({ origin: '*' })`, disabled CSRF) |
+| **Over-Engineering (God Service)** | Low | AI creating monolithic solutions with unnecessary complexity just because boilerplate is "free" |
+
+#### AI-ism Detection Checklist
+
+When reviewing AI-generated code, specifically check for these common LLM output patterns:
+
+1. **Verify all imports:** Run `npm ls <package>` for any unfamiliar package. Check npm for download count (>10k weekly) and last publish date
+2. **Check for invented APIs:** LLMs sometimes generate method calls that look plausible but don't exist (e.g., `prisma.task.findFirstOrCreate()`)
+3. **Scan for insecure defaults:** Look for permissive CORS, disabled auth middleware, `any` types masking validation gaps
+4. **Watch for training data leaks:** Generic variable names, TODO comments from other projects, or boilerplate that doesn't match project conventions
+5. **Validate error handling:** AI often generates optimistic code paths without proper error handling or with catch blocks that swallow errors silently
 
 ### MCP Server Security
 

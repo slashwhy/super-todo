@@ -55,7 +55,8 @@ Walk the developer through the project structure, tech stack, agent system, and 
    - `.github/prompts/` — Reusable task templates
    - `docs/` — Documentation guides
 4. **Agent System:** Explain the 6 agents (4 production + 2 training), their roles, and the handoff workflow
-5. **Next Steps:** Based on their goals, suggest:
+5. **Ghost Text Policy:** For junior developers, recommend discussing with the team whether to disable inline autocomplete during initial onboarding to enforce original thought and prevent passive review habits
+6. **Next Steps:** Based on their goals, suggest:
    - Explore a specific convention → Mode 2
    - Pick a first task → Mode 3
    - Understand a concept deeply → hand off to `@Socratic-Mentor`

@@ -8,6 +8,12 @@
 
 AI code generation creates a **cognitive crisis**: developers can produce working code without understanding it. This leads to the **Illusion of Competence** — the gap between _producing_ code and _comprehending_ it widens as AI handles more of the implementation work.
 
+### The Neuroscience: Retrieval Practice vs Passive Review
+
+From a cognitive science perspective, deep retention is forged through **Retrieval Practice** — the active effort of pulling information from memory and reconstructing solutions. By contrast, AI-assisted coding often results in **Passive Review**, a low-cognitive-load activity where developers read and approve solutions they didn't produce. Passive review creates "fragile memories" — the developer recognizes a solution when they see it, but cannot reproduce or adapt it independently.
+
+This is why our training agents enforce **desirable difficulty**: `@Socratic-Mentor` deliberately withholds direct answers, forcing developers to retrieve knowledge actively rather than passively consuming AI output.
+
 ### The Risks
 
 | Risk                          | Description                                                    | Impact                                              |
@@ -23,6 +29,15 @@ The solution is not _less_ AI — it's **structured AI usage** that matches the 
 ## The Seniority Competency Matrix
 
 Different skill levels need different relationships with AI tools. This matrix maps each level to their ideal agent workflow.
+
+### Traditional vs AI-Augmented Engineering
+
+| Dimension | Traditional View | AI-Augmented View | Accountability Horizon |
+|-----------|-----------------|-------------------|------------------------|
+| **Technical Execution** | Writing clean code manually | Verifying AI output; defining specs and plans | Hours to Days |
+| **Knowledge Base** | Syntax & API memorization | System architecture; AI failure modes | Weeks to Months |
+| **Debugging** | Manual step-by-step tracing | Analyzing agent logs; hypothesis-first testing | Months to Years |
+| **Mentorship** | Pair programming with humans | Curating AI knowledge; teaching "AI Skepticism" | Infinite (Legacy) |
 
 ### Junior: Learning Accelerator
 
@@ -186,6 +201,30 @@ Different skill levels need different relationships with AI tools. This matrix m
 @socratic-mentor Why do we use field whitelisting in route handlers?
 ```
 
+## Human-AI Pair Programming Modes
+
+When working with `@Implement`, developers operate in one of two modes:
+
+| Mode | Human Role | AI Role | Best For |
+|------|-----------|---------|----------|
+| **Mode A: AI Navigator** | Types the code | Critiques logic, suggests architecture, reviews without providing syntax | Learning, building deep understanding |
+| **Mode B: AI Driver** | Steers via prompts and reviews | Generates code from specs and plans | Velocity on well-specified tasks |
+
+**Guidance by seniority:**
+- **Juniors** should primarily use **Mode A** — type code themselves while AI suggests improvements. This builds muscle memory and retrieval practice.
+- **Mid-levels** alternate between modes based on task familiarity.
+- **Seniors** primarily use **Mode B** for implementation, reserving their energy for architectural review and specification quality.
+
+All modes follow the **Plan-Act-Verify** loop: the AI provides a plan, the human approves, the AI acts, and the human verifies.
+
+## Atomic PRs and AI-Generated Code Reviews
+
+When working with AI-generated code, enforce these review practices:
+
+- **Atomic PRs:** Keep pull requests small and focused on a single concern. AI can generate large amounts of code quickly — resist the temptation to bundle everything into one PR.
+- **Natural Language Summary:** Every PR with AI-generated code should include a summary the author can explain and defend orally. If you can't explain what changed and why, the PR isn't ready.
+- **Hallucination Check:** Before merging, verify that all imported packages exist, have sufficient downloads, and are actively maintained. See the [security-review skill](../.github/skills/security-review/SKILL.md) for the AI-ism detection checklist.
+
 ## Core Concepts
 
 ### Cognitive Forcing Functions (CFFs)
@@ -218,6 +257,8 @@ AI-generated inline suggestions (ghost text) should be treated with the same scr
 - **Understand** what it does and why
 - **Verify** it follows project conventions
 - **Reject** if you can't explain it
+
+**For juniors:** Teams may choose to **disable ghost text entirely** during onboarding to enforce original thought and prevent the "Tab-Complete Zombie" pattern. This is a team-level decision — the key principle is that juniors must produce their own reasoning before seeing AI suggestions.
 
 ### SDD Maturity Model (Specification-Driven Development)
 
