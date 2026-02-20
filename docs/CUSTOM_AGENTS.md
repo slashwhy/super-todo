@@ -12,8 +12,8 @@
 | [**@Implement**][agent-implement]        | Feature implementation   | ✅ Yes       | ❌ No      | Build from scratch, from design, quick fixes                             |
 | [**@Test Unit**][agent-test-unit]        | Unit & integration tests | ✅ Yes       | ✅ Yes     | After implementation, regression tests, component props/emits validation |
 | [**@Test E2E**][agent-test-e2e]          | End-to-end tests         | ✅ Yes       | ❌ No      | User interaction flows, complete workflows, cross-feature scenarios      |
-| [**@Onboarding**][agent-onboarding]      | Project orientation       | ❌ Read-only | ❌ No      | First day on project, exploring conventions, understanding tooling       |
-| [**@socratic-mentor**][agent-socratic]   | Pedagogical tutoring      | ❌ Read-only | ❌ No      | Learning concepts, debugging with understanding, mentoring juniors      |
+| [**@Onboarding**][agent-onboarding]      | Project orientation      | ❌ Read-only | ❌ No      | First day on project, exploring conventions, understanding tooling       |
+| [**@socratic-mentor**][agent-socratic]   | Pedagogical tutoring     | ❌ Read-only | ❌ No      | Learning concepts, debugging with understanding, mentoring juniors       |
 
 > **Auto-Infer:** When `✅ Yes`, Copilot can auto-select this agent based on task context. When `❌ No`, you must explicitly select the agent.
 
@@ -125,12 +125,12 @@ This ensures that features, bug fixes, library updates, and refactors don't sile
 
 In addition to the 4 production agents, this project includes **2 training agents** designed for learning and onboarding. Training agents differ fundamentally from production agents:
 
-| Aspect | Training Agents | Production Agents |
-|--------|----------------|-------------------|
-| **Purpose** | Build understanding | Build software |
-| **Tools** | Read-only (`read`, `search`, `agent`, `web`, `vscode/askQuestions`, `vscode/memory`) | Role-specific tools (some read-only, some with `edit`/`execute`) |
-| **Output** | Explanations, questions, guidance | Code, tests, plans |
-| **Code generation** | Never | Varies by agent (many generate code; some are read-only) |
+| Aspect              | Training Agents                                                                      | Production Agents                                                |
+| ------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| **Purpose**         | Build understanding                                                                  | Build software                                                   |
+| **Tools**           | Read-only (`read`, `search`, `agent`, `web`, `vscode/askQuestions`, `vscode/memory`) | Role-specific tools (some read-only, some with `edit`/`execute`) |
+| **Output**          | Explanations, questions, guidance                                                    | Code, tests, plans                                               |
+| **Code generation** | Never                                                                                | Varies by agent (many generate code; some are read-only)         |
 
 ### @Onboarding
 
@@ -307,6 +307,7 @@ This means you can install many skills without consuming context—only relevant
 
 ## 🔗 Related
 
+- [Agentic Workflows & CI][agentic-workflows] – Server-side AI workflows and CI pipeline
 - [Agents Overview][vscode-agents-overview] – VS Code agent types and environments
 - [Custom Prompts][custom-prompts] – Reusable task templates
 - [Custom Instructions][custom-instructions] – Instruction hierarchy
@@ -341,6 +342,7 @@ This means you can install many skills without consuming context—only relevant
 
 <!-- Project Documentation -->
 
+[agentic-workflows]: ./AGENTIC_WORKFLOWS.md
 [custom-prompts]: ./CUSTOM_PROMPTS.md
 [custom-instructions]: ./CUSTOM_INSTRUCTIONS.md
 [context-optimization]: ./CONTEXT_OPTIMIZATION.md

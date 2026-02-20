@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/cache@v4
+        with:
+          path: frontend/node_modules
+          key: frontend-modules-${{ hashFiles('frontend/package-lock.json') }}
+          restore-keys: frontend-modules-
+      - run: cd frontend && npm ci
+      - run: cd frontend && npm run lint
+
+  test-frontend:
+    name: Test Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/cache@v4
+        with:
+          path: frontend/node_modules
+          key: frontend-modules-${{ hashFiles('frontend/package-lock.json') }}
+          restore-keys: frontend-modules-
+      - run: cd frontend && npm ci
+      - run: cd frontend && npm run test:run
+
+  test-backend:
+    name: Test Backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/cache@v4
+        with:
+          path: backend/node_modules
+          key: backend-modules-${{ hashFiles('backend/package-lock.json') }}
+          restore-keys: backend-modules-
+      - run: cd backend && npm ci
+      - run: cd backend && npm run test:run
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: [lint, test-frontend, test-backend]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/cache@v4
+        with:
+          path: frontend/node_modules
+          key: frontend-modules-${{ hashFiles('frontend/package-lock.json') }}
+          restore-keys: frontend-modules-
+      - run: cd frontend && npm ci
+      - run: cd frontend && npm run build
