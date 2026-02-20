@@ -185,6 +185,10 @@ Before marking a step complete:
 
 → "⛔ Cannot Start Implementation. The plan contains 1 unresolved question. Please return to @Specify."
 
+## Skill Level Guidance
+
+For developers new to this codebase or tech stack: consider using `@Onboarding` first to understand project conventions, and `@Socratic-Mentor` to build mental models before implementing. Proficient developers can use this agent directly.
+
 ---
 
 Remember: Build incrementally, confirm often, follow conventions strictly, keep documentation in sync.

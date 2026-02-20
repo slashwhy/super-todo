@@ -47,24 +47,25 @@
 ┌──────────────────────────────────────────────────────────────────────────────┐
 │                        GitHub Copilot Agent Mode                             │
 ├──────────────────────────────────────────────────────────────────────────────┤
-│  Agents (4)           │  Instructions (10)    │  Skills (11)                 │
+│  Agents (6)           │  Instructions (10)    │  Skills (11)                 │
 │  ├── Implement        │  ├── Global           │  ├── Architectural Docs      │
 │  ├── Specify          │  ├── Backend Routes   │  ├── Backend Routes          │
 │  ├── Test Unit        │  ├── Pinia Stores     │  ├── Code Documentation      │
-│  └── Test E2E         │  ├── Prisma Database  │  ├── E2E Testing             │
-│                       │  ├── Styling          │  ├── Pinia Stores            │
-│                       │  ├── Testing Backend  │  ├── Prisma Database         │
+│  ├── Test E2E         │  ├── Prisma Database  │  ├── E2E Testing             │
+│  ├── Onboarding       │  ├── Styling          │  ├── Pinia Stores            │
+│  └── Socratic Mentor  │  ├── Testing Backend  │  ├── Prisma Database         │
 │                       │  ├── Testing E2E      │  ├── Security Review         │
 │                       │  ├── Testing Frontend │  ├── Styling                 │
 │                       │  ├── Vue Components   │  ├── Unit Testing            │
 │                       │  └── Vue Composables  │  ├── Vue Components          │
 │                       │                       │  └── Vue Composables         │
 ├──────────────────────────────────────────────────────────────────────────────┤
-│  Prompts (7)                                                                 │
+│  Prompts (10)                                                                │
 │  ├── Generate API Endpoint     ├── Generate Pinia Store                      │
 │  ├── Generate Component        ├── Generate Unit Test                        │
 │  ├── Generate E2E Test         ├── Review Security                           │
-│  └── Specify                                                                 │
+│  ├── Specify                   ├── Implement                                 │
+│  ├── Onboard                   └── Mentor                                    │
 ├──────────────────────────────────────────────────────────────────────────────┤
 │  MCP Integrations (4)                                                        │
 │  ├── Atlassian (Jira/Confluence)     ├── Chrome DevTools                     │
@@ -158,6 +159,8 @@ npm run dev                    # App → http://localhost:5173
 
 🎓 **Reference Implementation** – This is a showcase project demonstrating professional practices for AI-assisted software development. It's designed for learning and as a template for your own AI-powered development workflows.
 
+**Skill-Level Awareness** – The project includes training agents (`@Onboarding`, `@Socratic-Mentor`) that adapt to different developer skill levels, from juniors learning through Socratic questioning to seniors orchestrating full agent workflows. See the [Skill Levels Guide][skill-levels] for details.
+
 **Not for Production Use** – This is a demonstration project. For production use, customize the agents, instructions, and security policies to match your organization's standards.
 
 **Code Quality Notice** – While we strive to maintain the code quality standards expected at [slashwhy](https://github.com/slashwhy), the experimental and educational nature of this project means quality cannot be guaranteed. Code in this repository does not necessarily reflect the production code quality expectations of slashwhy.
@@ -172,6 +175,7 @@ npm run dev                    # App → http://localhost:5173
 <!-- Project Documentation -->
 
 [ai-guide]: docs/AI_DEVELOPMENT_GUIDE.md
+[skill-levels]: docs/AI_SKILL_LEVELS.md
 [custom-agents]: docs/CUSTOM_AGENTS.md
 [custom-instructions]: docs/CUSTOM_INSTRUCTIONS.md
 [custom-prompts]: docs/CUSTOM_PROMPTS.md

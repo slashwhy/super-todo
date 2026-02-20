@@ -12,6 +12,8 @@
 | [**@Implement**][agent-implement]        | Feature implementation   | ✅ Yes       | ❌ No      | Build from scratch, from design, quick fixes                             |
 | [**@Test Unit**][agent-test-unit]        | Unit & integration tests | ✅ Yes       | ✅ Yes     | After implementation, regression tests, component props/emits validation |
 | [**@Test E2E**][agent-test-e2e]          | End-to-end tests         | ✅ Yes       | ❌ No      | User interaction flows, complete workflows, cross-feature scenarios      |
+| [**@Onboarding**][agent-onboarding]      | Project orientation       | ❌ Read-only | ❌ No      | First day on project, exploring conventions, understanding tooling       |
+| [**@Socratic Mentor**][agent-socratic]   | Pedagogical tutoring      | ❌ Read-only | ❌ No      | Learning concepts, debugging with understanding, mentoring juniors      |
 
 > **Auto-Infer:** When `✅ Yes`, Copilot can auto-select this agent based on task context. When `❌ No`, you must explicitly select the agent.
 
@@ -80,6 +82,14 @@ Use the **Continue In** control in Chat view, or type `@cli` or `@cloud` in your
 @Test E2E               →  "Validate Complete"
        ↓
 @Specify (Validate)     →  Ready for merge
+
+— Training Workflow (for newcomers) —
+
+@Onboarding (Explore)   →  Understand project structure and conventions
+       ↓
+@Socratic Mentor        →  Build conceptual understanding
+       ↓
+@Specify (Plan)         →  Enter production workflow with solid foundation
 ```
 
 Each arrow is a **handoff**—you review before the next agent begins.
@@ -110,6 +120,33 @@ Every plan includes a "Documentation Impact Assessment" section. @Implement chec
 | API / README            | Endpoints, data models, commands correct?   |
 
 This ensures that features, bug fixes, library updates, and refactors don't silently invalidate project documentation.
+
+## 🎓 Training Agents
+
+In addition to the 4 production agents, this project includes **2 training agents** designed for learning and onboarding. Training agents differ fundamentally from production agents:
+
+| Aspect | Training Agents | Production Agents |
+|--------|----------------|-------------------|
+| **Purpose** | Build understanding | Build software |
+| **Tools** | Read-only (`read`, `search`, `agent`, `web`, `vscode/askQuestions`, `vscode/memory`) | Full capabilities including `edit` and `execute` |
+| **Output** | Explanations, questions, guidance | Code, tests, plans |
+| **Code generation** | Never | Core function |
+
+### @Onboarding
+
+Project orientation guide for newcomers. Walks through project structure, explains conventions, and helps developers pick their first task. Uses three modes: Project Tour, Convention Explorer, and First Task Guide.
+
+- **Model:** Sonnet (balanced — exploration/explanation)
+- **Handoffs:** → `@Socratic-Mentor`, → `@Specify & Validate`
+
+### @Socratic Mentor
+
+Pedagogical tutor using Socratic questioning. Never provides direct code answers. Uses prediction-first gates, the Five Whys technique, and comprehension validation to build deep understanding.
+
+- **Model:** Opus (premium — reasoning-heavy pedagogical questioning)
+- **Handoffs:** → `@Specify & Validate`, → `@Implement` (only after comprehension validated)
+
+> 📖 **Details:** [AI Skill Levels & Training][skill-levels]
 
 ## ⚙️ Model Selection
 
@@ -277,6 +314,7 @@ This means you can install many skills without consuming context—only relevant
 - [MCP Integrations][mcp] – External tool connections
 - [Developer Responsibilities][responsibilities] – Agent accountability and workflows
 - [Security Guide][security] – Agent security constraints and MCP risks
+- [Skill Levels & Training][skill-levels] – Adapting AI development to different skill levels
 
 <!-- Agent Files -->
 
@@ -284,6 +322,8 @@ This means you can install many skills without consuming context—only relevant
 [agent-implement]: ../.github/agents/implement.agent.md
 [agent-test-unit]: ../.github/agents/test-unit.agent.md
 [agent-test-e2e]: ../.github/agents/test-e2e.agent.md
+[agent-onboarding]: ../.github/agents/onboarding.agent.md
+[agent-socratic]: ../.github/agents/socratic-mentor.agent.md
 [agent-files]: ../.github/agents/
 
 <!-- Skill Files -->
@@ -304,6 +344,7 @@ This means you can install many skills without consuming context—only relevant
 [custom-prompts]: ./CUSTOM_PROMPTS.md
 [custom-instructions]: ./CUSTOM_INSTRUCTIONS.md
 [context-optimization]: ./CONTEXT_OPTIMIZATION.md
+[skill-levels]: ./AI_SKILL_LEVELS.md
 [mcp]: ./MCP.md
 [responsibilities]: ./RESPONSIBILITIES.md
 [security]: ./SECURITY.md

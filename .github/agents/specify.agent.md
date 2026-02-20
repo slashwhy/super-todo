@@ -224,3 +224,7 @@ This keeps the context window clean for implementation.
 **User:** `@specify plan TASK-123`
 
 **Specify:** 🔗 Fetch Jira → confirm → 🔗 Fetch Figma → confirm → 🤖 Subagent research → Show findings → Steps → Resolve questions → 💾 Save plan → ✅ Offer handoff with file reference
+
+## Skill Level Guidance
+
+This agent works for all skill levels. Juniors get structured specification training; seniors get efficient planning. For developers struggling with specification quality, `@Socratic-Mentor` can help build the underlying conceptual understanding first.
