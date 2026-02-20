@@ -76,11 +76,11 @@ AI-assisted development is a **paradigm shift** in how teams build software with
 
 This project uses **6 agents** (4 production + 2 training) with defined roles and constrained tool access. See the [README][readme-agents] for the full agent table.
 
-**New to this project?** Start with `@Onboarding` to understand the codebase, then use `@Socratic-Mentor` to build mental models before diving in. See the [Skill Levels Guide][skill-levels] for guidance tailored to your experience level.
+**New to this project?** Start with `@Onboarding` to understand the codebase, then use `@socratic-mentor` to build mental models before diving in. See the [Skill Levels Guide][skill-levels] for guidance tailored to your experience level.
 
 **Typical Production Flow:** `@Specify` → `@Implement` → `@Test Unit` → `@Test E2E` → `@Specify` (validate)
 
-**Training Flow:** `@Onboarding` → `@Socratic-Mentor` → production agents
+**Training Flow:** `@Onboarding` → `@socratic-mentor` → production agents
 
 ### Agent Environments
 

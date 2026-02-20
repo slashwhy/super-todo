@@ -221,7 +221,7 @@ test("shows error on API failure", async ({ page }) => {
 
 ## Skill Level Guidance
 
-For developers new to Playwright or E2E testing: `@Socratic-Mentor` can explain Page Object patterns and testing strategies before writing E2E tests.
+For developers new to Playwright or E2E testing: `@socratic-mentor` can explain Page Object patterns and testing strategies before writing E2E tests.
 
 ---
 

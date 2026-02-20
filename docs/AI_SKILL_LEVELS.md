@@ -12,7 +12,7 @@ AI code generation creates a **cognitive crisis**: developers can produce workin
 
 From a cognitive science perspective, deep retention is forged through **Retrieval Practice** — the active effort of pulling information from memory and reconstructing solutions. By contrast, AI-assisted coding often results in **Passive Review**, a low-cognitive-load activity where developers read and approve solutions they didn't produce. Passive review creates "fragile memories" — the developer recognizes a solution when they see it, but cannot reproduce or adapt it independently.
 
-This is why our training agents enforce **desirable difficulty**: `@Socratic-Mentor` deliberately withholds direct answers, forcing developers to retrieve knowledge actively rather than passively consuming AI output.
+This is why our training agents enforce **desirable difficulty**: `@socratic-mentor` deliberately withholds direct answers, forcing developers to retrieve knowledge actively rather than passively consuming AI output.
 
 ### The Risks
 
@@ -45,14 +45,14 @@ Different skill levels need different relationships with AI tools. This matrix m
 | ------------------ | ----------------------------------------------------------------------- |
 | **Goal**           | Build foundational understanding through productive friction            |
 | **AI Role**        | Tutor and explainer, not code generator                                 |
-| **Primary Agents** | `@Onboarding` → `@Socratic-Mentor` → `@Specify`                         |
+| **Primary Agents** | `@Onboarding` → `@socratic-mentor` → `@Specify`                         |
 | **Key Practice**   | Prediction-first: always hypothesize before asking AI                   |
 | **Risk**           | Accepting code without understanding → address with comprehension gates |
 
 **Recommended workflow:**
 
 1. Start with `@Onboarding` to understand project structure and conventions
-2. Use `@Socratic-Mentor` to build mental models of patterns and concepts
+2. Use `@socratic-mentor` to build mental models of patterns and concepts
 3. Use `@Specify` to learn structured planning (input: what you learned)
 4. Review `@Implement` output carefully — explain each change to yourself
 5. Write tests with `@Test Unit` — understand what each assertion validates
@@ -72,7 +72,7 @@ Different skill levels need different relationships with AI tools. This matrix m
 1. Use `@Specify` for planning — review the generated plan critically
 2. Use `@Implement` for execution — verify each step against the plan
 3. Use `@Test Unit` / `@Test E2E` for coverage — understand the test strategy
-4. Return to `@Socratic-Mentor` when encountering unfamiliar patterns
+4. Return to `@socratic-mentor` when encountering unfamiliar patterns
 
 ### Senior: Orchestrator / Fleet Manager
 
@@ -89,7 +89,7 @@ Different skill levels need different relationships with AI tools. This matrix m
 1. Design architecture and conventions first (these constrain AI output)
 2. Use `@Specify` for complex features — delegate simpler plans to mid-levels
 3. Review `@Implement` output for architectural concerns (not syntax)
-4. Use `@Socratic-Mentor` to mentor juniors through code review discussions
+4. Use `@socratic-mentor` to mentor juniors through code review discussions
 5. Focus on instruction and skill file quality — these are your leverage points
 
 ## Dos and Don'ts
@@ -108,10 +108,10 @@ Different skill levels need different relationships with AI tools. This matrix m
 
 | ✅ Do                                                  | ❌ Don't                                                  |
 | ------------------------------------------------------ | --------------------------------------------------------- |
-| Start with `@Onboarding` and `@Socratic-Mentor`        | Start with `@Implement` before understanding the codebase |
+| Start with `@Onboarding` and `@socratic-mentor`        | Start with `@Implement` before understanding the codebase |
 | State your hypothesis before asking for debugging help | Ask "fix this" without thinking about the cause           |
 | Explain AI-generated code to yourself or a peer        | Copy-paste AI output without understanding it             |
-| Ask `@Socratic-Mentor` about unfamiliar patterns       | Pretend to understand something you don't                 |
+| Ask `@socratic-mentor` about unfamiliar patterns       | Pretend to understand something you don't                 |
 | Track what you learn in notes                          | Treat AI as a shortcut to avoid learning                  |
 
 ### For Seniors
@@ -119,7 +119,7 @@ Different skill levels need different relationships with AI tools. This matrix m
 | ✅ Do                                                | ❌ Don't                                                |
 | ---------------------------------------------------- | ------------------------------------------------------- |
 | Invest in instruction and skill file quality         | Ignore the AI customization system                      |
-| Use `@Socratic-Mentor` when mentoring juniors        | Do all code reviews manually when AI can surface issues |
+| Use `@socratic-mentor` when mentoring juniors        | Do all code reviews manually when AI can surface issues |
 | Design architecture before delegating to AI          | Let AI make architectural decisions                     |
 | Review AI output for security and design concerns    | Only review for syntax correctness                      |
 | Calibrate agent constraints based on team experience | Grant maximum autonomy without safeguards               |
@@ -133,7 +133,7 @@ Different skill levels need different relationships with AI tools. This matrix m
 │  @Onboarding ──── Project tour, conventions, first task guide    │
 │       │                                                          │
 │       ▼                                                          │
-│  @Socratic-Mentor ── Concept exploration, Socratic questioning   │
+│  @socratic-mentor ── Concept exploration, Socratic questioning   │
 │       │                                                          │
 │       ▼ (comprehension validated)                                │
 ├─────────────────────────────────────────────────────────────────┤
@@ -154,13 +154,13 @@ Different skill levels need different relationships with AI tools. This matrix m
 
 ### Key Differences: Training vs Production Agents
 
-| Aspect              | Training Agents                           | Production Agents               |
-| ------------------- | ----------------------------------------- | ------------------------------- |
-| **Purpose**         | Build understanding                       | Build software                  |
-| **Tools**           | Read-only (no `edit`, no `execute`)       | Full capabilities               |
-| **Output**          | Explanations, questions, guidance         | Code, tests, plans              |
-| **Code generation** | Never                                     | Core function                   |
-| **When to use**     | Learning, onboarding, concept exploration | Planning, implementing, testing |
+| Aspect              | Training Agents                           | Production Agents                                           |
+| ------------------- | ----------------------------------------- | ----------------------------------------------------------- |
+| **Purpose**         | Build understanding                       | Build software                                              |
+| **Tools**           | Read-only (no `edit`, no `execute`)       | Role-dependent: read-only or edit/execute based on agent    |
+| **Output**          | Explanations, questions, guidance         | Code, tests, plans, validations, reviews                    |
+| **Code generation** | Never                                     | Role-dependent: core for builder agents; unused by validators |
+| **When to use**     | Learning, onboarding, concept exploration | Planning, implementing, testing, validating, reviewing      |
 
 ## Agent Reference
 
@@ -182,7 +182,7 @@ Different skill levels need different relationships with AI tools. This matrix m
 @onboarding I want to start contributing — what should I work on?
 ```
 
-### @Socratic-Mentor
+### @socratic-mentor
 
 **Role:** Pedagogical tutor using Socratic questioning.
 
@@ -233,11 +233,11 @@ CFFs are deliberate friction points that prevent autopilot behavior:
 
 | CFF                       | Description                                      | Implementation                                         |
 | ------------------------- | ------------------------------------------------ | ------------------------------------------------------ |
-| **Prediction-First Gate** | Must hypothesize before debugging                | `@Socratic-Mentor` requires hypothesis before analysis |
-| **Comprehension Gate**    | Must demonstrate understanding before proceeding | `@Socratic-Mentor` validates before handoff            |
+| **Prediction-First Gate** | Must hypothesize before debugging                | `@socratic-mentor` requires hypothesis before analysis |
+| **Comprehension Gate**    | Must demonstrate understanding before proceeding | `@socratic-mentor` validates before handoff            |
 | **Spec-Before-Code**      | Must plan before implementing                    | `@Specify` creates plan before `@Implement` starts     |
 | **Review Gate**           | Must review before merging                       | Handoffs require human approval                        |
-| **Why Obligation**        | Must explain _why_, not just _what_              | `@Socratic-Mentor` contrasts alternatives              |
+| **Why Obligation**        | Must explain _why_, not just _what_              | `@socratic-mentor` contrasts alternatives              |
 
 ### Plan-Act-Verify Cycle
 
@@ -296,7 +296,7 @@ Track these metrics to measure the health of AI-assisted development:
 ### Phase 1: Foundation (Weeks 1-4)
 
 - [ ] All developers complete `@Onboarding` tour
-- [ ] Juniors paired with `@Socratic-Mentor` for first tasks
+- [ ] Juniors paired with `@socratic-mentor` for first tasks
 - [ ] Establish baseline metrics (acceptance rate, defect capture rate)
 - [ ] Team agreement on spec-before-code workflow
 
@@ -310,7 +310,7 @@ Track these metrics to measure the health of AI-assisted development:
 ### Phase 3: Optimization (Weeks 9-12)
 
 - [ ] Measure and review AI-native metrics
-- [ ] Identify and address skill gaps with targeted `@Socratic-Mentor` sessions
+- [ ] Identify and address skill gaps with targeted `@socratic-mentor` sessions
 - [ ] Optimize agent workflows based on team feedback
 - [ ] Document team-specific conventions in instruction files
 
