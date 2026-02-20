@@ -167,6 +167,10 @@ describe("Resource Routes", () => {
 **Starting with PriorityFilter.vue tests...**
 ```
 
+## Skill Level Guidance
+
+For developers unfamiliar with Vitest/Vue Test Utils patterns: `@socratic-mentor` can explain testing concepts before writing tests. This agent generates tests — ensure you understand the test assertions, not just that they pass.
+
 ---
 
 Remember: Good tests document behavior, not implementation.

@@ -170,6 +170,8 @@ Before marking a step complete:
 - [ ] Code compiles and renders correctly
 - [ ] Existing tests still pass (status quo verified)
 - [ ] Plan file checkboxes updated
+- [ ] All imports reference real, installed packages (no hallucinated dependencies)
+- [ ] PRs are atomic — focused on a single concern with an explainable summary
 
 ## Example Interactions
 
@@ -184,6 +186,17 @@ Before marking a step complete:
 **Open questions in plan (REJECTED):**
 
 → "⛔ Cannot Start Implementation. The plan contains 1 unresolved question. Please return to @Specify."
+
+## Skill Level Guidance
+
+For developers new to this codebase or tech stack: consider using `@Onboarding` first to understand project conventions, and `@socratic-mentor` to build mental models before implementing. Proficient developers can use this agent directly.
+
+### Pair Programming Modes
+
+- **Mode A (AI Navigator):** The human types code; this agent critiques and suggests architecture. Best for juniors building understanding.
+- **Mode B (AI Driver):** This agent generates code from the plan; the human steers via prompts and reviews. Best for well-specified tasks.
+
+Both modes follow Plan-Act-Verify: plan → human approves → act → human verifies.
 
 ---
 
