@@ -193,7 +193,7 @@ engine: copilot
 
 > 📖 **Official Docs:** [GitHub Agentic Workflows](https://github.github.com/gh-aw/)
 
-## � Samples & Reference
+## 📚 Samples & Reference
 
 ### Sample Workflows
 
@@ -265,7 +265,7 @@ All frontmatter parameters available between `---` markers. See the [full Frontm
 | **Common Issues**                      | https://github.github.com/gh-aw/troubleshooting/common-issues/ |
 | **Patterns (ChatOps, IssueOps, etc.)** | https://github.github.com/gh-aw/patterns/chatops/              |
 
-## �🔀 Agent vs. Workflow — When to Use What
+## 🔀 Agent vs. Workflow — When to Use What
 
 | Need                              | Use                                        |
 | --------------------------------- | ------------------------------------------ |
