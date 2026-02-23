@@ -116,7 +116,7 @@ onMounted(async () => {
 }
 
 .page__error {
-  background-color: rgba(242, 30, 30, 0.1);
+  background-color: var(--color-error-bg);
   border: 1px solid var(--color-accent-red);
   border-radius: var(--radius-md);
   padding: var(--spacing-md);
@@ -127,10 +127,5 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
-}
-
-.page__placeholder {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-lg);
 }
 </style>

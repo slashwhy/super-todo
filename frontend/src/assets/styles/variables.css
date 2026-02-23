@@ -10,6 +10,7 @@
   --color-accent-green: #04c400;
   --color-accent-red: #f21e1e;
   --color-accent-purple: #0225ff;
+  --color-error-bg: rgba(242, 30, 30, 0.1);
   
   /* Neutral Colors */
   --color-background: #f5f8ff;

@@ -47,14 +47,9 @@ export const useTasksStore = defineStore('tasks', () => {
     loading.value = true
     error.value = null
     try {
-      const params = new URLSearchParams()
-      if (filters) {
-        Object.entries(filters).forEach(([key, value]) => {
-          if (value !== undefined) {
-            params.append(key, value)
-          }
-        })
-      }
+      const params = new URLSearchParams(
+        Object.entries(filters ?? {}).filter(([, v]) => v !== undefined) as [string, string][]
+      )
       const queryString = params.toString()
       const url = queryString ? `/api/tasks?${queryString}` : '/api/tasks'
       
