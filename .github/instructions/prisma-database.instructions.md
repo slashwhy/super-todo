@@ -9,7 +9,7 @@ applyTo: 'backend/prisma/**'
 
 ```prisma
 model Task {
-  id          String       @id @default(uuid())
+  id          String       @id @default(cuid())
   title       String
   description String?
   isVital     Boolean      @default(false)
@@ -126,7 +126,7 @@ const [deletedTask, updatedStats] = await prisma.$transaction([
 
 ## Schema Design Guidelines
 
-- Use UUID for primary keys (`@id @default(uuid())`)
+- Use CUID for primary keys (`@id @default(cuid())`)
 - Always add `createdAt` and `updatedAt` timestamps
 - Make relations explicit with foreign key fields
 - Use optional relations (`?`) appropriately
