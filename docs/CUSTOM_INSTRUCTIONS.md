@@ -4,7 +4,7 @@
 
 **Audience:** Developers customizing Copilot behavior | **Prerequisites:** None
 
-> 📖 **Official Docs:** [VS Code Custom Instructions][vscode-instructions] · [GitHub Repository Instructions][github-instructions]
+> 📖 **Official Docs:** [VS Code Custom Instructions][vscode-instructions] · [GitHub Repository Instructions][github-instructions] · [Customization Cheat Sheet][copilot-cheat-sheet]
 
 ## 🚀 Quick Start – Choose Your Agent
 
@@ -20,7 +20,9 @@
 
 **Priority:** Personal > Repository > Organization (all combined, conflicts favor more specific)
 
-> 💡 **Tip:** Custom instructions affect chat and agent mode, not inline suggestions as you type.
+> � **Official feature comparison:** [Customization Cheat Sheet][copilot-cheat-sheet] — covers all instruction types and IDE/surface support.
+
+> �💡 **Tip:** Custom instructions affect chat and agent mode, not inline suggestions as you type.
 
 ## 📚 What & Why
 
@@ -268,3 +270,4 @@ Loaded when an agent is invoked. See [Custom Agents][custom-agents] for details.
 [vscode-instructions]: https://code.visualstudio.com/docs/copilot/customization/custom-instructions
 [github-instructions]: https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions
 [custom-instructions-matrix]: https://docs.github.com/en/copilot/reference/custom-instructions-support
+[copilot-cheat-sheet]: https://docs.github.com/en/copilot/reference/customization-cheat-sheet

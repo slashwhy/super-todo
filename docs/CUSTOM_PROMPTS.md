@@ -115,13 +115,15 @@ Generate a GraphQL resolver with Redis caching.
 
 ## 🔄 Prompt vs Instruction vs Agent vs Skill
 
-| Feature | Custom Prompt | Custom Instruction | Custom Agent | Skill |
-|---------|---------------|-------------------|--------------|-------|
-| **Purpose** | Trigger agent for task | Coding standards | Specialized persona | Reusable knowledge |
-| **Persistence** | On-demand | Always applied | On-demand | On-demand |
-| **Scope** | One interaction | All matching files | Entire workflow | Referenced by agents |
-| **File type** | `.prompt.md` | `.instructions.md` | `.agent.md` | `SKILL.md` |
-| **Best for** | Quick task triggers | Conventions | Multi-step processes | Domain checklists |
+| Feature | Custom Prompt | Custom Instruction | Custom Agent | Subagent | Skill |
+|---------|---------------|-------------------|--------------|----------|-------|
+| **Purpose** | Trigger agent for task | Coding standards | Specialized persona | Isolated subtask | Reusable knowledge |
+| **Persistence** | On-demand | Always applied | On-demand | Runtime only | On-demand |
+| **Scope** | One interaction | All matching files | Entire workflow | Isolated context | Referenced by agents |
+| **File type** | `.prompt.md` | `.instructions.md` | `.agent.md` | N/A | `SKILL.md` |
+| **Best for** | Quick task triggers | Conventions | Multi-step processes | Codebase research, test runs | Domain checklists |
+
+> 📖 **Official comparison:** [Customization Cheat Sheet][copilot-cheat-sheet] — also covers subagents and MCP, with IDE/surface support matrix.
 
 
 ## 📐 Patterns
@@ -236,3 +238,6 @@ Follow the style guide at https://example.com/style-guide
 
 <!-- Instructions Files Referenced -->
 [vue-comp-instructions]: ../.github/instructions/vue-components.instructions.md
+
+<!-- External Documentation -->
+[copilot-cheat-sheet]: https://docs.github.com/en/copilot/reference/customization-cheat-sheet

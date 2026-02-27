@@ -139,6 +139,7 @@ npm run dev                    # App → http://localhost:5173
 | -------------------------------------------------------- | --------------------------------- |
 | [What is GitHub Copilot?][copilot-what-is]               | Overview and capabilities         |
 | [Response Customization][copilot-response-customization] | Examples and best practices       |
+| [Customization Cheat Sheet][copilot-cheat-sheet]         | Compare all customization features (instructions, agents, prompts, skills, MCP) |
 | [Trust Center][copilot-trust-center]                     | Security, privacy, and compliance |
 
 ### Model Context Protocol
@@ -154,6 +155,7 @@ npm run dev                    # App → http://localhost:5173
 | Resource                           | Purpose                               |
 | ---------------------------------- | ------------------------------------- |
 | [Awesome Copilot][awesome-copilot] | Community examples and best practices |
+| [Customization Library][copilot-customization-library] | Official curated examples of customization features |
 
 ## 📄 About This Project
 
@@ -202,6 +204,8 @@ npm run dev                    # App → http://localhost:5173
 
 [copilot-what-is]: https://docs.github.com/en/copilot/get-started/what-is-github-copilot
 [copilot-response-customization]: https://docs.github.com/en/copilot/concepts/prompting/response-customization
+[copilot-cheat-sheet]: https://docs.github.com/en/copilot/reference/customization-cheat-sheet
+[copilot-customization-library]: https://docs.github.com/en/copilot/tutorials/customization-library
 [copilot-trust-center]: https://copilot.github.trust.page/
 
 <!-- Model Context Protocol -->

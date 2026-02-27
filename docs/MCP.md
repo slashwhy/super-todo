@@ -24,6 +24,8 @@ MCP enables agents to:
 - Execute workflows (browser automation, test runs)
 - Integrate with services without custom code
 
+> 📖 **See also:** [Customization Cheat Sheet][copilot-cheat-sheet] — how MCP compares to other Copilot customization features (instructions, agents, prompts, skills).
+
 
 ## 🔄 How It Works
 
@@ -167,7 +169,9 @@ Font: Inter 14px    →    --font-body
 
 ## ⚙️ Configuration
 
-**Location:** `~/.copilot/mcp-servers.json`
+**Location:** `mcp.json` (path varies by IDE — VS Code uses `.vscode/mcp.json` in the workspace for project-level config)
+
+Alternatively, MCP servers can be scoped to a specific agent by adding a `mcp-servers` property directly in the agent's YAML frontmatter (`.agent.md` file).
 
 ```json
 {
@@ -281,3 +285,4 @@ Connecting MCP servers without understanding what data flows through them.
 [mcp-site]: https://modelcontextprotocol.io/
 [mcp-architecture]: https://modelcontextprotocol.io/docs/learn/architecture
 [mcp-build-servers]: https://modelcontextprotocol.io/docs/develop/build-server
+[copilot-cheat-sheet]: https://docs.github.com/en/copilot/reference/customization-cheat-sheet

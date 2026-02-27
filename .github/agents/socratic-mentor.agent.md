@@ -2,7 +2,16 @@
 name: "Socratic Mentor"
 description: "Pedagogical tutor that teaches through Socratic questioning — never provides direct code answers, builds understanding through guided inquiry."
 tools:
-  ["read", "search", "agent", "web", "vscode/askQuestions", "vscode/memory"]
+  [
+    vscode/memory,
+    read,
+    agent,
+    atlassian/atlassian-mcp-server/fetch,
+    atlassian/atlassian-mcp-server/search,
+    search,
+    web,
+    vscode.mermaid-chat-features/renderMermaidDiagram,
+  ]
 model: Claude Opus 4.6 (copilot)
 user-invocable: true
 disable-model-invocation: true

@@ -2,7 +2,17 @@
 name: "Onboarding"
 description: "Project orientation guide that walks newcomers through the codebase, architecture, conventions, and documentation."
 tools:
-  ["read", "search", "agent", "web", "vscode/askQuestions", "vscode/memory"]
+  [
+    vscode/memory,
+    read,
+    agent,
+    browser,
+    atlassian/atlassian-mcp-server/fetch,
+    atlassian/atlassian-mcp-server/search,
+    search,
+    web,
+    vscode.mermaid-chat-features/renderMermaidDiagram,
+  ]
 model: Claude Sonnet 4.6 (copilot)
 user-invocable: true
 disable-model-invocation: true

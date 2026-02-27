@@ -17,11 +17,13 @@
 
 > **Auto-Infer:** When `✅ Yes`, Copilot can auto-select this agent based on task context. When `❌ No`, you must explicitly select the agent.
 
-> 📖 **Official Docs:** [VS Code Custom Agents][vscode-agents] · [GitHub Custom Agents][github-agents]
+> 📖 **Official Docs:** [VS Code Custom Agents][vscode-agents] · [GitHub Custom Agents][github-agents] · [Customization Cheat Sheet][copilot-cheat-sheet]
 
 ## 🎯 What & Why
 
 Custom agents are specialized AI personas in [`.github/agents/*.agent.md`][agent-files]. Each has a focused role, minimal tools, and defined handoffs.
+
+**Scope:** `.github/agents/` covers the repository. For org/enterprise-wide agents, place them in `agents/` within a `.github-private` repo. Agents can also be defined at the user profile level.
 
 **Why separate agents?**
 
@@ -263,7 +265,7 @@ You are a **code reviewer**:
 
 Skills are folders of instructions, scripts, and resources that Copilot loads on-demand. Unlike custom instructions (which define coding standards), skills enable specialized capabilities with scripts, examples, and other resources.
 
-**Location:** Project skills in `.github/skills/<skill-name>/SKILL.md` or `.claude/skills/<skill-name>/SKILL.md` · Personal skills in `~/.copilot/skills/<skill-name>/SKILL.md`
+**Location:** Project skills in `.github/skills/<skill-name>/SKILL.md` · Personal skills in `~/.copilot/skills/<skill-name>/SKILL.md`
 
 > 📖 **Learn more:** [About Agent Skills][github-about-agent-skills]
 
@@ -303,7 +305,7 @@ This means you can install many skills without consuming context—only relevant
 | **Standard**    | Open standard ([agentskills.io][agentskills])    | VS Code-specific                           |
 | **When to use** | More detailed instructions for specialized tasks | Simple rules relevant to almost every task |
 
-> 📖 **Docs:** [VS Code Agent Skills][vscode-agent-skills] · [GitHub About Agent Skills][github-about-agent-skills] · [Skills Standard][agentskills] · [Reference Skills][reference-skills]
+> 📖 **Docs:** [VS Code Agent Skills][vscode-agent-skills] · [GitHub About Agent Skills][github-about-agent-skills] · [Skills Standard][agentskills] · [Reference Skills][reference-skills] · [Customization Cheat Sheet][copilot-cheat-sheet]
 
 ## 🔗 Related
 
@@ -360,6 +362,7 @@ This means you can install many skills without consuming context—only relevant
 [vscode-cloud-agents]: https://code.visualstudio.com/docs/copilot/agents/cloud-agents
 [github-agents]: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents
 [agent-config-ref]: https://docs.github.com/en/copilot/reference/custom-agents-configuration
+[copilot-cheat-sheet]: https://docs.github.com/en/copilot/reference/customization-cheat-sheet
 
 <!-- Agent Skills & Standards -->
 

@@ -3,21 +3,23 @@ name: "Implement"
 description: "Full-stack implementation agent that builds features from persistent plan files (/memories/session/plan.md) using Vue 3, Express, Prisma, and project conventions."
 tools:
   [
-    "vscode",
-    "vscode/askQuestions",
-    "execute",
-    "read",
-    "agent",
-    "edit",
-    "search",
-    "web",
-    "figma-desktop/get_code_connect_map",
-    "figma-desktop/get_design_context",
-    "figma-desktop/get_metadata",
-    "figma-desktop/get_screenshot",
-    "figma-desktop/get_variable_defs",
-    "vscode/memory",
-    "todo",
+    vscode,
+    execute,
+    read,
+    agent,
+    browser,
+    atlassian/atlassian-mcp-server/fetch,
+    atlassian/atlassian-mcp-server/search,
+    figma-desktop/get_code_connect_map,
+    figma-desktop/get_design_context,
+    figma-desktop/get_metadata,
+    figma-desktop/get_screenshot,
+    figma-desktop/get_variable_defs,
+    edit,
+    search,
+    web,
+    vscode.mermaid-chat-features/renderMermaidDiagram,
+    todo,
   ]
 model: Claude Sonnet 4.6 (copilot)
 user-invocable: true

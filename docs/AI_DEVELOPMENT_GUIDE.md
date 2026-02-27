@@ -38,10 +38,13 @@ Quick lookup for all Copilot customization features:
 | **Custom Prompts**      | Reusable task templates                  | `.prompt.md`       | [CUSTOM_PROMPTS.md][custom-prompts]           |
 | **Custom Instructions** | Coding standards & conventions           | `.instructions.md` | [CUSTOM_INSTRUCTIONS.md][custom-instructions] |
 | **Custom Agents**       | Specialized AI personas with roles       | `.agent.md`        | [CUSTOM_AGENTS.md][custom-agents]             |
+| **Subagents**           | Delegated subtasks in isolated context   | N/A (runtime)      | [CONTEXT_OPTIMIZATION.md][context-optimization] |
 | **Skills**              | On-demand knowledge modules              | `SKILL.md`         | [CUSTOM_AGENTS.md][skills-reference]          |
-| **MCP**                 | External tool connections                | `mcp-servers.json` | [MCP.md][mcp]                                 |
+| **MCP**                 | External tool connections                | `mcp.json`         | [MCP.md][mcp]                                 |
 
 **Learning path:** Smart Actions → Prompts → Instructions → Agents → MCP
+
+> 📖 **Official comparison:** [Customization Cheat Sheet][copilot-cheat-sheet] — compare all features, usage scenarios, and IDE support in one place.
 
 ## Built-in Smart Actions
 
@@ -132,6 +135,8 @@ Choose the right tool for your needs:
 | 🤖 A **different persona/permissions**              | [Custom Agent][custom-agents]                     | `.github/agents/*.agent.md`              |
 | 🛠️ **Complex procedures/scripts**                   | [Agent Skill][skills-reference]                   | `.github/skills/*/SKILL.md`              |
 | 🎯 **Reusable task templates**                      | [Custom Prompts][custom-prompts]                  | `.github/prompts/*.prompt.md`            |
+
+> 📖 **Official reference:** [Customization Cheat Sheet][copilot-cheat-sheet] — full comparison including subagents and IDE/surface support matrix.
 
 ## Project Structure
 
@@ -224,6 +229,7 @@ Optimize across four dimensions:
 <!-- GitHub Copilot Documentation -->
 
 [copilot-what-is]: https://docs.github.com/en/copilot/get-started/what-is-github-copilot
+[copilot-cheat-sheet]: https://docs.github.com/en/copilot/reference/customization-cheat-sheet
 [copilot-custom-instructions]: https://code.visualstudio.com/docs/copilot/customization/custom-instructions
 [copilot-response-customization]: https://docs.github.com/en/copilot/concepts/prompting/response-customization
 [copilot-smart-actions]: https://code.visualstudio.com/docs/copilot/copilot-smart-actions

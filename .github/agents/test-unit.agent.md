@@ -3,16 +3,17 @@ name: "Test Unit"
 description: "Unit and integration testing specialist using Vitest, Vue Test Utils, and Supertest for comprehensive test coverage."
 tools:
   [
-    "vscode",
-    "vscode/askQuestions",
-    "execute",
-    "read",
-    "agent",
-    "edit",
-    "search",
-    "web",
-    "vscode/memory",
-    "todo",
+    vscode,
+    execute,
+    read,
+    agent,
+    atlassian/atlassian-mcp-server/fetch,
+    atlassian/atlassian-mcp-server/search,
+    edit,
+    search,
+    web,
+    vscode.mermaid-chat-features/renderMermaidDiagram,
+    todo,
   ]
 model: Claude Sonnet 4.6 (copilot)
 handoffs:
