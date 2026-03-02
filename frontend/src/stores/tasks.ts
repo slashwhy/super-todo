@@ -29,7 +29,8 @@ export const useTasksStore = defineStore('tasks', () => {
   const tasksByCategory = computed(() => 
     tasks.value.reduce((acc, task) => {
       const key = task.category?.name ?? 'Uncategorized'
-      acc[key] = [...(acc[key] || []), task]
+      if (!acc[key]) acc[key] = []
+      acc[key].push(task)
       return acc
     }, {} as Record<string, Task[]>)
   )
@@ -37,7 +38,8 @@ export const useTasksStore = defineStore('tasks', () => {
   const tasksByStatus = computed(() => 
     tasks.value.reduce((acc, task) => {
       const key = task.status.name
-      acc[key] = [...(acc[key] || []), task]
+      if (!acc[key]) acc[key] = []
+      acc[key].push(task)
       return acc
     }, {} as Record<string, Task[]>)
   )
@@ -47,16 +49,10 @@ export const useTasksStore = defineStore('tasks', () => {
     loading.value = true
     error.value = null
     try {
-      const params = new URLSearchParams()
-      if (filters) {
-        Object.entries(filters).forEach(([key, value]) => {
-          if (value !== undefined) {
-            params.append(key, value)
-          }
-        })
-      }
-      const queryString = params.toString()
-      const url = queryString ? `/api/tasks?${queryString}` : '/api/tasks'
+      const params = new URLSearchParams(
+        Object.fromEntries(Object.entries(filters ?? {}).filter(([, v]) => v !== undefined))
+      )
+      const url = params.size ? `/api/tasks?${params}` : '/api/tasks'
       
       const response = await fetch(url)
       if (!response.ok) {

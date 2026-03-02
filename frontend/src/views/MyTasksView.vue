@@ -128,9 +128,4 @@ onMounted(async () => {
   flex-direction: column;
   gap: var(--spacing-lg);
 }
-
-.page__placeholder {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-lg);
-}
 </style>
