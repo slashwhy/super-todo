@@ -47,7 +47,7 @@ npm run test          # Watch mode
 
 | Resource | Endpoints |
 |----------|-----------|
-| Tasks | `GET\|POST /api/tasks`, `GET\|PUT\|DELETE /api/tasks/:id`, `GET /api/tasks/stats/summary` |
+| Tasks | `GET\|POST /api/tasks`, `GET\|PATCH\|DELETE /api/tasks/:id`, `GET /api/tasks/stats/summary` |
 | Users | `GET\|POST /api/users`, `GET\|PUT\|DELETE /api/users/:id` |
 | Categories | `GET\|POST /api/categories`, `GET\|PUT\|DELETE /api/categories/:id` |
 | Config | `GET\|POST\|PUT\|DELETE /api/config/statuses`, `/api/config/priorities` |
