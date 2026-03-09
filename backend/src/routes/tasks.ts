@@ -3,6 +3,14 @@ import { prisma } from "../lib/prisma.js";
 
 const router = Router();
 
+const TASK_INCLUDE = {
+  status: true,
+  priority: true,
+  category: true,
+  owner: true,
+  assignee: true,
+} as const;
+
 // Helper: Validate that statusId and priorityId exist
 async function validateStatusAndPriority(
   statusId?: string,
@@ -36,13 +44,7 @@ router.get("/", async (req, res) => {
         ...(isVital && { isVital: isVital === "true" }),
         ...(ownerId && { ownerId: ownerId as string }),
       },
-      include: {
-        status: true,
-        priority: true,
-        category: true,
-        owner: true,
-        assignee: true,
-      },
+      include: TASK_INCLUDE,
       orderBy: [{ createdAt: "desc" }],
     });
 
@@ -58,13 +60,7 @@ router.get("/:id", async (req, res) => {
   try {
     const task = await prisma.task.findUnique({
       where: { id: req.params.id },
-      include: {
-        status: true,
-        priority: true,
-        category: true,
-        owner: true,
-        assignee: true,
-      },
+      include: TASK_INCLUDE,
     });
 
     if (!task) {
@@ -119,13 +115,7 @@ router.post("/", async (req, res) => {
         ownerId,
         assigneeId,
       },
-      include: {
-        status: true,
-        priority: true,
-        category: true,
-        owner: true,
-        assignee: true,
-      },
+      include: TASK_INCLUDE,
     });
 
     res.status(201).json(task);
@@ -184,13 +174,7 @@ router.patch("/:id", async (req, res) => {
         ...(categoryId !== undefined && { categoryId }),
         ...(assigneeId !== undefined && { assigneeId }),
       },
-      include: {
-        status: true,
-        priority: true,
-        category: true,
-        owner: true,
-        assignee: true,
-      },
+      include: TASK_INCLUDE,
     });
 
     res.json(task);

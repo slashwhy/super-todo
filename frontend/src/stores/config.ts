@@ -10,14 +10,18 @@ export const useConfigStore = defineStore('config', () => {
   const loading = ref(false)
   const error = ref<string | null>(null)
 
+  async function fetchAndSet<T>(url: string, setter: (data: T) => void, label: string) {
+    const response = await fetch(url)
+    if (!response.ok) {
+      throw new Error(`Failed to fetch ${label}: ${response.statusText}`)
+    }
+    setter(await response.json())
+  }
+
   // Actions
   async function fetchStatuses() {
     try {
-      const response = await fetch('/api/config/statuses')
-      if (!response.ok) {
-        throw new Error(`Failed to fetch statuses: ${response.statusText}`)
-      }
-      statuses.value = await response.json()
+      await fetchAndSet<TaskStatus[]>('/api/config/statuses', d => (statuses.value = d), 'statuses')
     } catch (e) {
       console.error('Error fetching statuses:', e)
     }
@@ -25,11 +29,7 @@ export const useConfigStore = defineStore('config', () => {
 
   async function fetchPriorities() {
     try {
-      const response = await fetch('/api/config/priorities')
-      if (!response.ok) {
-        throw new Error(`Failed to fetch priorities: ${response.statusText}`)
-      }
-      priorities.value = await response.json()
+      await fetchAndSet<TaskPriority[]>('/api/config/priorities', d => (priorities.value = d), 'priorities')
     } catch (e) {
       console.error('Error fetching priorities:', e)
     }
@@ -37,11 +37,7 @@ export const useConfigStore = defineStore('config', () => {
 
   async function fetchCategories() {
     try {
-      const response = await fetch('/api/categories')
-      if (!response.ok) {
-        throw new Error(`Failed to fetch categories: ${response.statusText}`)
-      }
-      categories.value = await response.json()
+      await fetchAndSet<Category[]>('/api/categories', d => (categories.value = d), 'categories')
     } catch (e) {
       console.error('Error fetching categories:', e)
     }
