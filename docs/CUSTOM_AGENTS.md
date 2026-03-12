@@ -284,6 +284,7 @@ Skills are folders of instructions, scripts, and resources that Copilot loads on
 | [`e2e-testing`][skill-e2e-testing]                                 | Playwright Page Objects, `data-testid` selectors    |
 | [`code-documentation`][skill-code-documentation]                   | TSDoc patterns, when to document                    |
 | [`architectural-documentation`][skill-architectural-documentation] | Implementation plans, ADRs, README updates          |
+| [`security-review`][skill-security-review]                         | OWASP security checklist for API endpoints and frontend vulnerabilities |
 
 ### How Skills Work (Progressive Disclosure)
 
@@ -342,6 +343,7 @@ This means you can install many skills without consuming context—only relevant
 [skill-e2e-testing]: ../.github/skills/e2e-testing/SKILL.md
 [skill-code-documentation]: ../.github/skills/code-documentation/SKILL.md
 [skill-architectural-documentation]: ../.github/skills/architectural-documentation/SKILL.md
+[skill-security-review]: ../.github/skills/security-review/SKILL.md
 
 <!-- Project Documentation -->
 
