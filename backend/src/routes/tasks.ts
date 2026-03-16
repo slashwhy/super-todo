@@ -3,6 +3,17 @@ import { prisma } from "../lib/prisma.js";
 
 const router = Router();
 
+const TASK_INCLUDE = {
+  status: true,
+  priority: true,
+  category: true,
+  owner: true,
+  assignee: true,
+} as const;
+
+const pct = (count: number, total: number): number =>
+  total > 0 ? Math.round((count / total) * 100) : 0;
+
 // Helper: Validate that statusId and priorityId exist
 async function validateStatusAndPriority(
   statusId?: string,
@@ -36,13 +47,7 @@ router.get("/", async (req, res) => {
         ...(isVital && { isVital: isVital === "true" }),
         ...(ownerId && { ownerId: ownerId as string }),
       },
-      include: {
-        status: true,
-        priority: true,
-        category: true,
-        owner: true,
-        assignee: true,
-      },
+      include: TASK_INCLUDE,
       orderBy: [{ createdAt: "desc" }],
     });
 
@@ -58,13 +63,7 @@ router.get("/:id", async (req, res) => {
   try {
     const task = await prisma.task.findUnique({
       where: { id: req.params.id },
-      include: {
-        status: true,
-        priority: true,
-        category: true,
-        owner: true,
-        assignee: true,
-      },
+      include: TASK_INCLUDE,
     });
 
     if (!task) {
@@ -119,13 +118,7 @@ router.post("/", async (req, res) => {
         ownerId,
         assigneeId,
       },
-      include: {
-        status: true,
-        priority: true,
-        category: true,
-        owner: true,
-        assignee: true,
-      },
+      include: TASK_INCLUDE,
     });
 
     res.status(201).json(task);
@@ -184,13 +177,7 @@ router.patch("/:id", async (req, res) => {
         ...(categoryId !== undefined && { categoryId }),
         ...(assigneeId !== undefined && { assigneeId }),
       },
-      include: {
-        status: true,
-        priority: true,
-        category: true,
-        owner: true,
-        assignee: true,
-      },
+      include: TASK_INCLUDE,
     });
 
     res.json(task);
@@ -242,11 +229,9 @@ router.get("/stats/summary", async (req, res) => {
       inProgress,
       notStarted,
       vital,
-      completedPercentage: total > 0 ? Math.round((completed / total) * 100) : 0,
-      inProgressPercentage:
-        total > 0 ? Math.round((inProgress / total) * 100) : 0,
-      notStartedPercentage:
-        total > 0 ? Math.round((notStarted / total) * 100) : 0,
+      completedPercentage: pct(completed, total),
+      inProgressPercentage: pct(inProgress, total),
+      notStartedPercentage: pct(notStarted, total),
     });
   } catch (error) {
     console.error("Error fetching task stats:", error);

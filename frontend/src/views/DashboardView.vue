@@ -242,8 +242,4 @@ onMounted(async () => {
   color: var(--color-accent-red);
 }
 
-.dashboard__placeholder {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-lg);
-}
 </style>
