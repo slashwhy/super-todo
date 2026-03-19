@@ -39,22 +39,20 @@
 
 - [Developer Responsibilities](#-developer-responsibilities) – Your accountability when working AI-Assisted
 - [Getting Started](#-getting-started) – Run locally in 3 steps
-- [System Architecture](#-system-architecture) – Visual overview
 - [Tech Stack](#-tech-stack) – Technologies used
-- [Documentation](#-documentation) – All learning resources
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────┐
 │                        GitHub Copilot Agent Mode                             │
 ├──────────────────────────────────────────────────────────────────────────────┤
-│  Agents (6)           │  Instructions (10)    │  Skills (11)                 │
+│  Agents (7)           │  Instructions (10)    │  Skills (11)                 │
 │  ├── Implement        │  ├── Global           │  ├── Architectural Docs      │
 │  ├── Specify          │  ├── Backend Routes   │  ├── Backend Routes          │
 │  ├── Test Unit        │  ├── Pinia Stores     │  ├── Code Documentation      │
 │  ├── Test E2E         │  ├── Prisma Database  │  ├── E2E Testing             │
 │  ├── Onboarding       │  ├── Styling          │  ├── Pinia Stores            │
-│  └── Socratic Mentor  │  ├── Testing Backend  │  ├── Prisma Database         │
-│                       │  ├── Testing E2E      │  ├── Security Review         │
+│  ├── Socratic Mentor  │  ├── Testing Backend  │  ├── Prisma Database         │
+│  └── Agentic Workflows│  ├── Testing E2E      │  ├── Security Review         │
 │                       │  ├── Testing Frontend │  ├── Styling                 │
 │                       │  ├── Vue Components   │  ├── Unit Testing            │
 │                       │  └── Vue Composables  │  ├── Vue Components          │

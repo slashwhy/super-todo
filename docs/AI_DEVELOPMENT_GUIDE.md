@@ -77,7 +77,7 @@ AI-assisted development is a **paradigm shift** in how teams build software with
 
 ## The Multi-Agent System
 
-This project uses **6 agents** (4 production + 2 training) with defined roles and constrained tool access. See the [README][readme-agents] for the full agent table.
+This project uses **7 agents** (4 production + 2 training + 1 workflow) with defined roles and constrained tool access. See the [README][readme-agents] for the full agent table.
 
 **New to this project?** Start with `@Onboarding` to understand the codebase, then use `@socratic-mentor` to build mental models before diving in. See the [Skill Levels Guide][skill-levels] for guidance tailored to your experience level.
 
@@ -143,7 +143,7 @@ Choose the right tool for your needs:
 ```
 .github/
 ├── copilot-instructions.md              # 🌍 Global rules: Tech stack, conventions, security
-├── agents/                              # 🤖 6 agent definitions (4 production + 2 training)
+├── agents/                              # 🤖 7 agent definitions (4 production + 2 training + 1 workflow)
 ├── instructions/                        # 📋 9 path-specific instruction files
 ├── prompts/                             # 🎯 10 reusable prompt templates
 └── skills/                              # ⚡ 11 specialized knowledge modules
@@ -205,7 +205,7 @@ Optimize across four dimensions:
 [multi-agent]: #the-multi-agent-system
 [doc-by-topic]: #documentation-by-topic
 [what-is-ai]: #what-is-ai-assisted-development
-[readme-agents]: ../README.md#multi-agent-system
+[readme-agents]: ../README.md
 
 <!-- Documentation Files -->
 
