@@ -14,6 +14,7 @@
 | [**@Test E2E**][agent-test-e2e]          | End-to-end tests         | ✅ Yes       | ❌ No      | User interaction flows, complete workflows, cross-feature scenarios      |
 | [**@Onboarding**][agent-onboarding]      | Project orientation      | ❌ Read-only | ❌ No      | First day on project, exploring conventions, understanding tooling       |
 | [**@socratic-mentor**][agent-socratic]   | Pedagogical tutoring     | ❌ Read-only | ❌ No      | Learning concepts, debugging with understanding, mentoring juniors       |
+| **@agentic-workflows**                   | Workflow management      | ❌ Read-only | ❌ No      | Create, debug, and upgrade GitHub Agentic Workflows (gh-aw)              |
 
 > **Auto-Infer:** When `✅ Yes`, Copilot can auto-select this agent based on task context. When `❌ No`, you must explicitly select the agent.
 
@@ -125,7 +126,7 @@ This ensures that features, bug fixes, library updates, and refactors don't sile
 
 ## 🎓 Training Agents
 
-In addition to the 4 production agents, this project includes **2 training agents** designed for learning and onboarding. Training agents differ fundamentally from production agents:
+In addition to the 4 production agents, this project includes **2 training agents** and **1 workflow agent** designed for specific purposes. Training agents differ fundamentally from production agents:
 
 | Aspect              | Training Agents                                                                      | Production Agents                                                |
 | ------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
