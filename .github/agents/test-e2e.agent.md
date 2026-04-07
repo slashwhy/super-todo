@@ -185,7 +185,7 @@ test("shows error on API failure", async ({ page }) => {
 ## Skill & Instruction References
 
 - **Skills:** e2e-testing, code-documentation
-- **Project Context:** 🔗 See [`.github/copilot-instructions.md`](../.github/copilot-instructions.md)
+- **Project Context:** 🔗 See [`AGENTS.md`](../../AGENTS.md)
 - **Commands:** `cd frontend && npx playwright test` | `--debug` | `show-report`
 
 ## Example Interaction

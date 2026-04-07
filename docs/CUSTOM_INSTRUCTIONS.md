@@ -10,13 +10,12 @@
 
 ## Quick Reference
 
-| Type              | Location                                 | Use When                                                                                              |
-| ----------------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| **Global**        | `.github/copilot-instructions.md`        | Project-wide coding standards, always loaded                                                          |
-| **Path-specific** | `.github/instructions/*.instructions.md` | Rules for specific file types (uses `applyTo` glob)                                                   |
-| **AGENTS.md**     | Root or subfolders                       | Cross-tool compatibility (not used in this project—see [why](#-agentsmd-open-standard-for-ai-agents)) |
-| **Agent**         | `.github/agents/*.agent.md`              | Specialized personas with tools & handoffs                                                            |
-| **Skills**        | `.github/skills/*/SKILL.md`              | Reusable workflows with scripts (see [Skills Reference][skills-reference])                            |
+| Type              | Location                                 | Use When                                                                   |
+| ----------------- | ---------------------------------------- | -------------------------------------------------------------------------- |
+| **Global**        | `AGENTS.md` (root)                       | Project-wide coding standards, always loaded (cross-tool compatible)       |
+| **Path-specific** | `.github/instructions/*.instructions.md` | Rules for specific file types (uses `applyTo` glob)                        |
+| **Agent**         | `.github/agents/*.agent.md`              | Specialized personas with tools & handoffs                                 |
+| **Skills**        | `.github/skills/*/SKILL.md`              | Reusable workflows with scripts (see [Skills Reference][skills-reference]) |
 
 **Priority:** Personal > Repository > Organization (all combined, conflicts favor more specific)
 
@@ -43,24 +42,21 @@ When you start a chat or invoke an agent, Copilot gathers applicable instruction
 User starts @Implement to edit TaskCard.vue
                     ↓
 ┌───────────────────────────────────────────────────────┐
-│ 1. Global Instructions                                │
-│    .github/copilot-instructions.md                    │
+│ 1. Global Instructions (AGENTS.md)                    │
+│    AGENTS.md (root)                                   │
 │    → Always loaded for every chat request             │
+│    → Cross-tool compatible (Copilot, Claude, Cursor)  │
 ├───────────────────────────────────────────────────────┤
-│ 2. AGENTS.md (if present and enabled)                 │
-│    AGENTS.md in root or nearest subfolder             │
-│    → Not used in this project (see docs)              │
-├───────────────────────────────────────────────────────┤
-│ 3. Path-Specific Instructions                         │
+│ 2. Path-Specific Instructions                         │
 │    vue-components.instructions.md (applyTo: **/*.vue) │
 │    styling.instructions.md (applyTo: **/*.vue)        │
 │    → Loaded when editing/creating matching files      │
 ├───────────────────────────────────────────────────────┤
-│ 4. Agent Instructions                                 │
+│ 3. Agent Instructions                                 │
 │    .github/agents/implement.agent.md                  │
 │    → Loaded when @Implement is invoked                │
 ├───────────────────────────────────────────────────────┤
-│ 5. Skills (on-demand)                                 │
+│ 4. Skills (on-demand)                                 │
 │    .github/skills/vue-components/SKILL.md             │
 │    → Loaded when task matches skill description       │
 └───────────────────────────────────────────────────────┘
@@ -72,12 +68,12 @@ User starts @Implement to edit TaskCard.vue
 
 ### 🌍 Global Instructions
 
-**File:** `.github/copilot-instructions.md`
+**File:** `AGENTS.md` (project root)
 
-Always loaded. Keep short (1-2 pages):
+This project uses `AGENTS.md` — the [open standard][agents-md-standard] supported by 12+ AI tools — as the global instructions file. It's always loaded and should be kept short (1-2 pages):
 
 ```markdown
-# Project Name - Copilot Instructions
+# Project Name - Instructions
 
 ## Tech Stack
 
@@ -102,7 +98,7 @@ Always loaded. Keep short (1-2 pages):
 - Hardcode API keys
 ```
 
-See [copilot-instructions.md][global-instructions] for this project's example.
+See [AGENTS.md][global-instructions] for this project's global instructions.
 
 ### 🎯 Path-Specific Instructions
 
@@ -160,6 +156,15 @@ Use `<script setup lang="ts">` syntax...
 
 `AGENTS.md` is an **open standard** supported by 12+ AI tools: GitHub Copilot, Claude Code, OpenAI Codex, Cursor, Aider, Google Jules, and more. It's maintained by the [Agentic AI Foundation](https://agents.md/) under the Linux Foundation.
 
+#### Why This Project Uses AGENTS.md
+
+This project uses `AGENTS.md` in the project root as its global instructions file because:
+
+1. **Cross-tool compatibility** — Instructions work with any AI tool team members use (Copilot, Claude Code, Cursor, etc.)
+2. **Open standard** — Supported by the [Agentic AI Foundation][agents-md-standard] and 12+ tools, future-proof
+3. **Subdirectory nesting** — Supports overrides per subdirectory in monorepos
+4. **Full Copilot support** — GitHub Copilot reads `AGENTS.md` for chat, agent mode, and cloud agent sessions
+
 #### AGENTS.md vs copilot-instructions.md
 
 | Aspect           | `AGENTS.md`                | `.github/copilot-instructions.md` |
@@ -170,44 +175,11 @@ Use `<script setup lang="ts">` syntax...
 | **Copilot Chat** | ✅ (agents only)           | ✅ (all features)                 |
 | **Format**       | Plain markdown             | Plain markdown                    |
 
-#### Why This Project Doesn't Use AGENTS.md
+> 💡 **Note:** If you need Copilot Code Review instructions, you can add a `.github/copilot-instructions.md` alongside `AGENTS.md`. Copilot reads both files.
 
-This sample project uses **`.github/copilot-instructions.md`** instead because:
+> 📌 **VS Code setup:** Enable `chat.useAgentsMdFile` in settings. For subfolder support, enable `chat.useNestedAgentsMdFiles` (experimental).
 
-1. **GitHub Copilot focus** – This project demonstrates Copilot-specific features (custom agents, path-specific instructions, skills) that require the Copilot ecosystem
-2. **Full feature support** – `copilot-instructions.md` works with Copilot Chat, Code Review, and Coding Agent; `AGENTS.md` only works with the Coding Agent
-3. **No cross-tool requirement** – The team uses GitHub Copilot exclusively, so portability to other AI tools isn't needed
-
-#### When to Use AGENTS.md Instead
-
-Consider using `AGENTS.md` if:
-
-- **Multi-tool teams** – Team members use Claude Code, Cursor or other AI tools
-- **Open source projects** – Contributors may use different AI assistants
-- **Monorepos** – Need different instructions per package/subdirectory
-- **AI portability** – Want instructions that work regardless of which AI tool is used
-
-> 💡 **Tip:** You can use BOTH files. Copilot reads both—use `copilot-instructions.md` for Copilot-specific features and `AGENTS.md` for cross-tool compatibility.
-
-**Example AGENTS.md:**
-
-```markdown
-# AGENTS.md
-
-This project uses Vue 3, Express, and Prisma.
-
-## Build
-
-npm install && npm run dev
-
-## Test
-
-npm run test
-```
-
-> 📌 **Note:** Enable with `chat.useAgentsMdFile` setting. For subfolder support, enable `chat.useNestedAgentsMdFiles` (experimental).
-
-> 📖 **Learn more:** [AGENTS.md Standard](https://agents.md/) · [GitHub Docs](https://agents.md/docs/supported-frameworks#github-copilot)
+> 📖 **Learn more:** [AGENTS.md Standard][agents-md-standard] · [GitHub Docs](https://agents.md/docs/supported-frameworks#github-copilot)
 
 ### 🎭 Agent Instructions
 
@@ -238,7 +210,7 @@ Loaded when an agent is invoked. See [Custom Agents][custom-agents] for details.
 
 **Instructions not being applied?**
 
-1. Check file location matches the type (`.github/copilot-instructions.md`, `.github/instructions/`, etc.)
+1. Check file location matches the type (`AGENTS.md` in root, `.github/instructions/`, etc.)
 2. For path-specific: verify `applyTo` glob matches the file you're editing
 3. Check **References** section in chat response to see which files were used
 4. Enable `github.copilot.chat.codeGeneration.useInstructionFiles` setting for global file
@@ -250,7 +222,7 @@ Loaded when an agent is invoked. See [Custom Agents][custom-agents] for details.
 
 <!-- Internal Docs -->
 
-[global-instructions]: ../.github/copilot-instructions.md
+[global-instructions]: ../AGENTS.md
 [custom-agents]: ./CUSTOM_AGENTS.md
 [mcp]: ./MCP.md
 
@@ -263,7 +235,7 @@ Loaded when an agent is invoked. See [Custom Agents][custom-agents] for details.
 
 <!-- Skills Reference -->
 
-[skills-reference]: ./CUSTOM_AGENTS.md#skills-reference
+[skills-reference]: ./SKILLS.md
 
 <!-- External Documentation -->
 
@@ -271,3 +243,4 @@ Loaded when an agent is invoked. See [Custom Agents][custom-agents] for details.
 [github-instructions]: https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions
 [custom-instructions-matrix]: https://docs.github.com/en/copilot/reference/custom-instructions-support
 [copilot-cheat-sheet]: https://docs.github.com/en/copilot/reference/customization-cheat-sheet
+[agents-md-standard]: https://agents.md/

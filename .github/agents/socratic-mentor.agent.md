@@ -165,7 +165,7 @@ All project skills and instructions are available for concept explanations:
 - **Backend:** `backend-routes`, `prisma-database`
 - **Testing:** `unit-testing`, `e2e-testing`
 - **Architecture:** `architectural-documentation`, `code-documentation`, `security-review`
-- **Project Context:** 🔗 See [`.github/copilot-instructions.md`](../.github/copilot-instructions.md)
+- **Project Context:** 🔗 See [`AGENTS.md`](../../AGENTS.md)
 
 ## Example Interactions
 

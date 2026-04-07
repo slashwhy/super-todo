@@ -38,7 +38,7 @@ Review all documentation files and validate they accurately reflect the current 
 
 1. **`docs/` directory** — All markdown files
 2. **`README.md`** — Root project README
-3. **`.github/copilot-instructions.md`** — Global Copilot instructions
+3. **`AGENTS.md`** — Global project instructions (root)
 
 ## Checks to Perform
 
@@ -58,7 +58,7 @@ Review all documentation files and validate they accurately reflect the current 
 
 ### Consistency
 
-- Instructions in `copilot-instructions.md` align with actual project conventions
+- Instructions in `AGENTS.md` align with actual project conventions
 - Agent descriptions match their `.agent.md` definitions
 - Skill descriptions match their `SKILL.md` files
 

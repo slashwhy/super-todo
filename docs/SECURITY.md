@@ -120,6 +120,26 @@ Understanding the unique threats introduced by AI-assisted development:
 | **Impact** | Privilege escalation or unauthorized data modification |
 | **Mitigation** | Minimal permissions per agent; separate read-only and write access |
 
+### 6. 🪝 Hook Script Risks
+
+| Aspect | Details |
+|--------|---------|
+| **Mechanism** | [Copilot hooks](./HOOKS.md) execute shell commands during agent sessions; malicious or poorly written scripts can cause harm |
+| **Example** | Hook script uses `eval "$TOOL_ARGS"` instead of `jq` — attacker crafts tool args with injected commands |
+| **Impact** | Command injection, data exfiltration, or unauthorized file modification |
+| **Mitigation** | Always parse JSON with `jq`, never use `eval` or unquoted expansion, review hook scripts in PRs |
+
+**Additional hook security guidelines:**
+
+| Risk | Mitigation |
+|------|------------|
+| Secret exposure in hook logs | Never log tokens or passwords; mask sensitive data |
+| Timeout DoS | Set reasonable `timeoutSec` values (default: 30s) |
+| Supply chain attacks via hook dependencies | Pin dependencies; avoid `curl \| bash` patterns |
+| Overly permissive file permissions | Set `chmod 755` on scripts; restrict write access |
+
+> **Defense in depth:** This project's [`safety-guard.sh`](../.github/hooks/scripts/safety-guard.sh) hook uses `preToolUse` to deny edits to generated code and block destructive commands — a programmatic safety net complementing agent tool restrictions. See [HOOKS.md](./HOOKS.md) for details.
+
 ---
 
 ## MCP Security Risks

@@ -215,7 +215,7 @@ This keeps the context window clean for implementation.
 ## Skill & Instruction References
 
 - **Skills:** architectural-documentation, security-review
-- **Project Context:** 🔗 See [`.github/copilot-instructions.md`](../.github/copilot-instructions.md)
+- **Project Context:** 🔗 See [`AGENTS.md`](../../AGENTS.md)
 
 ## Example
 

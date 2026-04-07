@@ -32,6 +32,8 @@ Custom agents are specialized AI personas in [`.github/agents/*.agent.md`][agent
 - **Safety** – Read-only agents can't accidentally modify code
 - **Least privilege** – Fewer tools = smaller attack surface, faster responses, less context usage
 
+> **Complementary enforcement:** Agent tool restrictions define _which_ tools an agent can use. [Hooks](./HOOKS.md) provide programmatic policy enforcement during execution — blocking edits to protected files, denying dangerous commands, and automating side effects like formatting. Together they form a defense-in-depth approach.
+
 ## 🌐 Agent Environments
 
 VS Code supports four main categories of agents, each designed for different use cases and levels of interaction. Custom agents (defined in `.agent.md` files) can be used with local, background, and cloud agents to apply the same role or persona across environments.
@@ -215,7 +217,7 @@ handoffs:
 
 # Reviewer – Code Quality Specialist with skill (see skills reference later)
 
-You analyze code changes for quality issues, convention violations, and potential bugs. You automatically benefit from relevant [**skills**](#-skills-reference) like `code-documentation` to understand project standards.
+You analyze code changes for quality issues, convention violations, and potential bugs. You automatically benefit from relevant [**skills**](./SKILLS.md) like `code-documentation` to understand project standards.
 
 ## Role
 
@@ -264,59 +266,20 @@ You are a **code reviewer**:
 
 ## 🎓 Skills Reference
 
-Skills are folders of instructions, scripts, and resources that Copilot loads on-demand. Unlike custom instructions (which define coding standards), skills enable specialized capabilities with scripts, examples, and other resources.
+Skills are folders of instructions, scripts, and resources that Copilot loads on-demand. This project uses **11 skills** covering frontend, backend, testing, and documentation patterns.
 
-**Location:** Project skills in `.github/skills/<skill-name>/SKILL.md` · Personal skills in `~/.copilot/skills/<skill-name>/SKILL.md`
-
-> 📖 **Learn more:** [About Agent Skills][github-about-agent-skills]
-
-### This Project's Skills
-
-| Skill                                                              | Description                                         |
-| ------------------------------------------------------------------ | --------------------------------------------------- |
-| [`vue-components`][skill-vue-components]                           | Vue 3 Composition API patterns, props, emits, slots |
-| [`vue-composables`][skill-vue-composables]                         | Reusable composition functions with `use*` naming   |
-| [`pinia-stores`][skill-pinia-stores]                               | State management with Setup Store syntax            |
-| [`prisma-database`][skill-prisma-database]                         | ORM queries, migrations, relations                  |
-| [`backend-routes`][skill-backend-routes]                           | Express handlers, async/await, field whitelisting   |
-| [`styling`][skill-styling]                                         | CSS variables, BEM naming, responsive patterns      |
-| [`unit-testing`][skill-unit-testing]                               | Vitest patterns, AAA, mocking                       |
-| [`e2e-testing`][skill-e2e-testing]                                 | Playwright Page Objects, `data-testid` selectors    |
-| [`code-documentation`][skill-code-documentation]                   | TSDoc patterns, when to document                    |
-| [`architectural-documentation`][skill-architectural-documentation] | Implementation plans, ADRs, README updates          |
-| [`security-review`][skill-security-review]                         | OWASP security checklist for API endpoints and frontend vulnerabilities |
-
-### How Skills Work (Progressive Disclosure)
-
-| Level               | What Happens                                                                     |
-| ------------------- | -------------------------------------------------------------------------------- |
-| **1. Discovery**    | Copilot reads `name` and `description` from frontmatter to decide relevance      |
-| **2. Instructions** | If relevant, loads the `SKILL.md` body into context                              |
-| **3. Resources**    | Accesses scripts, examples, and docs in the skill directory only when referenced |
-
-This means you can install many skills without consuming context—only relevant content loads.
-
-### Skills vs Custom Instructions
-
-| Aspect          | Agent Skills                                     | Custom Instructions                        |
-| --------------- | ------------------------------------------------ | ------------------------------------------ |
-| **Purpose**     | Specialized capabilities and workflows           | Define coding standards and guidelines     |
-| **Portability** | VS Code, Copilot CLI, and coding agent           | VS Code and GitHub.com only                |
-| **Content**     | Instructions, scripts, examples, resources       | Instructions only                          |
-| **Scope**       | Task-specific, loaded on-demand                  | Always applied (or via glob patterns)      |
-| **Standard**    | Open standard ([agentskills.io][agentskills])    | VS Code-specific                           |
-| **When to use** | More detailed instructions for specialized tasks | Simple rules relevant to almost every task |
-
-> 📖 **Docs:** [VS Code Agent Skills][vscode-agent-skills] · [GitHub About Agent Skills][github-about-agent-skills] · [Skills Standard][agentskills] · [Reference Skills][reference-skills] · [Customization Cheat Sheet][copilot-cheat-sheet]
+> 📖 **Full guide:** [SKILLS.md][skills] — Skill format, creating new skills, progressive disclosure, and this project's complete skill inventory.
 
 ## 🔗 Related
 
 - [Agentic Workflows & CI][agentic-workflows] – Server-side AI workflows and CI pipeline
 - [Agents Overview][vscode-agents-overview] – VS Code agent types and environments
 - [Custom Prompts][custom-prompts] – Reusable task templates
+- [Agent Skills][skills] – On-demand knowledge modules
 - [Custom Instructions][custom-instructions] – Instruction hierarchy
 - [Context Optimization][context-optimization] – Plan-based handoff and Structured Autonomy
 - [MCP Integrations][mcp] – External tool connections
+- [Hooks][hooks] – Agent session lifecycle automation
 - [Developer Responsibilities][responsibilities] – Agent accountability and workflows
 - [Security Guide][security] – Agent security constraints and MCP risks
 - [Skill Levels & Training][skill-levels] – Adapting AI development to different skill levels
@@ -331,23 +294,11 @@ This means you can install many skills without consuming context—only relevant
 [agent-socratic]: ../.github/agents/socratic-mentor.agent.md
 [agent-files]: ../.github/agents/
 
-<!-- Skill Files -->
-
-[skill-vue-components]: ../.github/skills/vue-components/SKILL.md
-[skill-vue-composables]: ../.github/skills/vue-composables/SKILL.md
-[skill-pinia-stores]: ../.github/skills/pinia-stores/SKILL.md
-[skill-prisma-database]: ../.github/skills/prisma-database/SKILL.md
-[skill-backend-routes]: ../.github/skills/backend-routes/SKILL.md
-[skill-styling]: ../.github/skills/styling/SKILL.md
-[skill-unit-testing]: ../.github/skills/unit-testing/SKILL.md
-[skill-e2e-testing]: ../.github/skills/e2e-testing/SKILL.md
-[skill-code-documentation]: ../.github/skills/code-documentation/SKILL.md
-[skill-architectural-documentation]: ../.github/skills/architectural-documentation/SKILL.md
-[skill-security-review]: ../.github/skills/security-review/SKILL.md
-
 <!-- Project Documentation -->
 
 [agentic-workflows]: ./AGENTIC_WORKFLOWS.md
+[skills]: ./SKILLS.md
+[hooks]: ./HOOKS.md
 [custom-prompts]: ./CUSTOM_PROMPTS.md
 [custom-instructions]: ./CUSTOM_INSTRUCTIONS.md
 [context-optimization]: ./CONTEXT_OPTIMIZATION.md
@@ -366,10 +317,3 @@ This means you can install many skills without consuming context—only relevant
 [github-agents]: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents
 [agent-config-ref]: https://docs.github.com/en/copilot/reference/custom-agents-configuration
 [copilot-cheat-sheet]: https://docs.github.com/en/copilot/reference/customization-cheat-sheet
-
-<!-- Agent Skills & Standards -->
-
-[vscode-agent-skills]: https://code.visualstudio.com/docs/copilot/customization/agent-skills
-[github-about-agent-skills]: https://docs.github.com/en/copilot/concepts/agents/about-agent-skills
-[agentskills]: https://agentskills.io/
-[reference-skills]: https://github.com/anthropics/skills

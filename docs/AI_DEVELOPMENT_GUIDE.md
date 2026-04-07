@@ -39,10 +39,11 @@ Quick lookup for all Copilot customization features:
 | **Custom Instructions** | Coding standards & conventions           | `.instructions.md` | [CUSTOM_INSTRUCTIONS.md][custom-instructions] |
 | **Custom Agents**       | Specialized AI personas with roles       | `.agent.md`        | [CUSTOM_AGENTS.md][custom-agents]             |
 | **Subagents**           | Delegated subtasks in isolated context   | N/A (runtime)      | [CONTEXT_OPTIMIZATION.md][context-optimization] |
-| **Skills**              | On-demand knowledge modules              | `SKILL.md`         | [CUSTOM_AGENTS.md][skills-reference]          |
+| **Skills**              | On-demand knowledge modules              | `SKILL.md`         | [SKILLS.md][skills]                           |
+| **Hooks**               | Agent session lifecycle automation       | `.github/hooks/*.json` | [HOOKS.md][hooks]                          |
 | **MCP**                 | External tool connections                | `mcp.json`         | [MCP.md][mcp]                                 |
 
-**Learning path:** Smart Actions → Prompts → Instructions → Agents → MCP
+**Learning path:** Smart Actions → Prompts → Instructions → Agents → Hooks → MCP
 
 > 📖 **Official comparison:** [Customization Cheat Sheet][copilot-cheat-sheet] — compare all features, usage scenarios, and IDE support in one place.
 
@@ -117,11 +118,13 @@ Pick a topic below to get started. Each guide includes real examples from this p
 | [🤖 **Agents**][custom-agents]                        | Understanding agent roles and responsibilities, model selection, tool constraints, and how each agent works in your workflow |
 | [📋 **Custom Instructions**][custom-instructions]     | Learning the instruction hierarchy and best practices for encoding project conventions, coding standards, and patterns       |
 | [🎯 **Custom Prompts**][custom-prompts]               | Creating reusable prompt templates for recurring tasks, automating workflows, and triggering specific agent behaviors        |
+| [🎓 **Agent Skills**][skills]                           | On-demand knowledge modules, creating skills, progressive disclosure, and skill inventory                                    |
 | [🔌 **MCP Integrations**][mcp]                        | Connecting external services, APIs, databases, and specialized tools to extend agent capabilities                            |
 | [👤 **Developer Responsibilities**][responsibilities] | Understanding your accountability, code review practices, AI-assisted workflows, and decision-making frameworks              |
 | [🔒 **Security Guide**][security]                     | MCP security risks, data privacy, incident response procedures, pre-deployment checklists, and vulnerability prevention      |
 | [🎓 **Skill Levels & Training**][skill-levels]        | Adapting AI-assisted development to different skill levels, training agents, dos/don'ts, and AI-native metrics               |
 | [⚡ **Context Optimization**][context-optimization]   | Maximizing efficiency with large codebases, optimizing token usage, and advanced patterns for scaling                        |
+| [⚙️ **Hooks**][hooks]                                  | Automating agent behavior with pre/post tool checks, safety guards, and formatting                                           |
 | [🔄 **Agentic Workflows & CI**][agentic-workflows]    | Server-side AI workflows (docs, code quality, security) and CI pipeline configuration                                        |
 
 ## When to Use What?
@@ -130,11 +133,12 @@ Choose the right tool for your needs:
 
 | Need                                                | Solution                                          | File                                     |
 | --------------------------------------------------- | ------------------------------------------------- | ---------------------------------------- |
-| 🌍 Rules that apply **everywhere**                  | [Global Instructions][when-global-instructions]   | `.github/copilot-instructions.md`        |
+| 🌍 Rules that apply **everywhere**                  | [Global Instructions][when-global-instructions]   | `AGENTS.md` (root)                       |
 | 📋 Rules for **specific file types** or **folders** | [Path-Specific Instructions][custom-instructions] | `.github/instructions/*.instructions.md` |
 | 🤖 A **different persona/permissions**              | [Custom Agent][custom-agents]                     | `.github/agents/*.agent.md`              |
-| 🛠️ **Complex procedures/scripts**                   | [Agent Skill][skills-reference]                   | `.github/skills/*/SKILL.md`              |
+| 🛠️ **Complex procedures/scripts**                   | [Agent Skill][skills]                             | `.github/skills/*/SKILL.md`              |
 | 🎯 **Reusable task templates**                      | [Custom Prompts][custom-prompts]                  | `.github/prompts/*.prompt.md`            |
+| ⚙️ **Automated checks during agent sessions**        | [Hooks][hooks]                                    | `.github/hooks/*.json`                   |
 
 > 📖 **Official reference:** [Customization Cheat Sheet][copilot-cheat-sheet] — full comparison including subagents and IDE/surface support matrix.
 
@@ -142,20 +146,24 @@ Choose the right tool for your needs:
 
 ```
 .github/
-├── copilot-instructions.md              # 🌍 Global rules: Tech stack, conventions, security
 ├── agents/                              # 🤖 7 agent definitions (4 production + 2 training + 1 workflow)
+├── hooks/                               # ⚙️ Agent session hooks (safety guard, auto-formatter)
 ├── instructions/                        # 📋 9 path-specific instruction files
 ├── prompts/                             # 🎯 10 reusable prompt templates
 └── skills/                              # ⚡ 11 specialized knowledge modules
 
+AGENTS.md                                    # 🌍 Global rules (cross-tool compatible)
+
 docs/
 ├── AI_DEVELOPMENT_GUIDE.md              # ← You are here (high-level overview)
-├── CUSTOM_AGENTS.md                     # 🤖 Agent definitions & skills
+├── CUSTOM_AGENTS.md                     # 🤖 Agent definitions
+├── SKILLS.md                            # 🎓 Agent skills guide
 ├── CUSTOM_INSTRUCTIONS.md               # 📋 Instruction hierarchy & best practices
 ├── CUSTOM_PROMPTS.md                    # 🎯 Reusable prompt templates
 ├── MCP.md                               # 🔌 Model Context Protocol guide
 ├── RESPONSIBILITIES.md                  # 👤 Developer accountability & AI workflows
 ├── SECURITY.md                          # 🔒 Security safeguards & best practices
+├── HOOKS.md                             # ⚙️ Agent session hooks guide
 ├── CONTEXT_OPTIMIZATION.md              # ⚡ Advanced: context optimization
 └── GIT_WORKTREES.md                     # 🌳 Advanced: parallel development
 ```
@@ -216,15 +224,17 @@ Optimize across four dimensions:
 [mcp]: ./MCP.md
 [responsibilities]: ./RESPONSIBILITIES.md
 [security]: ./SECURITY.md
+[hooks]: ./HOOKS.md
 [agentic-workflows]: ./AGENTIC_WORKFLOWS.md
 [context-optimization]: ./CONTEXT_OPTIMIZATION.md
 [git-worktrees]: ./GIT_WORKTREES.md
 
 <!-- Anchor Links -->
 
-[skills-reference]: ./CUSTOM_AGENTS.md#skills-reference
+[skills-reference]: ./SKILLS.md
+[skills]: ./SKILLS.md
 [built-in-smart-actions]: #built-in-smart-actions
-[when-global-instructions]: ../.github/copilot-instructions.md
+[when-global-instructions]: ../AGENTS.md
 
 <!-- GitHub Copilot Documentation -->
 

@@ -112,7 +112,7 @@ Help the developer pick and understand their first task.
 
 | Area                     | Files                                                   |
 | ------------------------ | ------------------------------------------------------- |
-| **Global conventions**   | `.github/copilot-instructions.md`                       |
+| **Global conventions**   | `AGENTS.md` (root)                                      |
 | **Agent system**         | `docs/CUSTOM_AGENTS.md`, `docs/AI_DEVELOPMENT_GUIDE.md` |
 | **Architecture**         | `docs/AI_DEVELOPMENT_GUIDE.md`                          |
 | **Security**             | `docs/SECURITY.md`, `docs/RESPONSIBILITIES.md`          |

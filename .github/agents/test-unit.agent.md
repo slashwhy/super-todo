@@ -142,7 +142,7 @@ describe("Resource Routes", () => {
 ## Skill & Instruction References
 
 - **Skills:** unit-testing, code-documentation
-- **Project Context:** 🔗 See [`.github/copilot-instructions.md`](../.github/copilot-instructions.md)
+- **Project Context:** 🔗 See [`AGENTS.md`](../../AGENTS.md)
 - **Commands:** `npm run test` (frontend) | `cd backend && npm run test:run` (backend)
 
 ## Example Interaction

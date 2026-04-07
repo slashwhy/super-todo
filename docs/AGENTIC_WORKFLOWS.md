@@ -27,15 +27,17 @@
 
 ## 🌐 Overview
 
-This project uses **two complementary AI layers** that serve different purposes:
+This project uses **three complementary AI automation layers** that serve different purposes:
 
-| Aspect      | VS Code Agents                      | Agentic Workflows                   |
-| ----------- | ----------------------------------- | ----------------------------------- |
-| **Where**   | Your IDE (local)                    | GitHub Actions (server-side)        |
-| **When**    | During development, on demand       | On schedule or events, autonomously |
-| **How**     | Interactive chat, human-in-the-loop | Event-driven, autonomous execution  |
-| **Purpose** | Help you write code                 | Maintain repo quality               |
-| **Overlap** | None — they are complementary       | None — they are complementary       |
+| Aspect      | VS Code Agents                      | Hooks                                        | Agentic Workflows                   |
+| ----------- | ----------------------------------- | -------------------------------------------- | ----------------------------------- |
+| **Where**   | Your IDE (local)                    | During agent sessions (cloud agent & CLI)    | GitHub Actions (server-side)        |
+| **When**    | During development, on demand       | Automatically at lifecycle points            | On schedule or events, autonomously |
+| **How**     | Interactive chat, human-in-the-loop | Shell scripts triggered by agent events      | Event-driven, autonomous execution  |
+| **Purpose** | Help you write code                 | Enforce policies & automate side effects     | Maintain repo quality               |
+| **Config**  | `.github/agents/*.agent.md`         | `.github/hooks/*.json`                       | `.github/workflows/*.md`            |
+
+> **Hooks** are the bridge between agents and workflows — they enforce policies (like blocking edits to generated files) and automate side effects (like formatting) during any agent session. See [HOOKS.md][hooks] for details.
 
 ## 🤖 VS Code Agents (`.github/agents/`)
 
@@ -293,6 +295,7 @@ All frontmatter parameters available between `---` markers. See the [full Frontm
 <!-- Documentation -->
 
 [custom-agents]: ./CUSTOM_AGENTS.md
+[hooks]: ./HOOKS.md
 [ai-guide]: ./AI_DEVELOPMENT_GUIDE.md
 [responsibilities]: ./RESPONSIBILITIES.md
 [security]: ./SECURITY.md

@@ -59,7 +59,7 @@ Plans are stored in `/memories/session/plan.md` (created by @Specify). This enab
 ✅ Make a todo list from steps in the implementation plan  
 ✅ Confirm with the user before starting each major step  
 ✅ Use the `vscode/askQuestions` tool when clarification is needed (don't write questions as text)  
-✅ Reference project conventions from `.github/instructions/` and copilot-instructions.md  
+✅ Reference project conventions from `.github/instructions/` and `AGENTS.md`  
 ✅ Make useful documentation as described in the skill if necessary  
 ✅ Run existing tests to validate the implementation works correctly  
 ✅ Modify existing tests to verify status quo or create a status quo test if needed  
@@ -154,11 +154,11 @@ Ask the user: "Implementation and documentation updates are complete. Should I c
 - **Frontend:** vue-components, vue-composables, pinia-stores, styling
 - **Backend:** backend-routes, prisma-database
 - **Documentation:** code-documentation, architectural-documentation
-- **Instructions:** `.github/instructions/*` and `.github/copilot-instructions.md`
+- **Instructions:** `.github/instructions/*` and `AGENTS.md`
 
 ## Project Context
 
-🔗 See [`.github/copilot-instructions.md`](../.github/copilot-instructions.md) for tech stack and file locations.
+🔗 See [`AGENTS.md`](../../AGENTS.md) for tech stack and file locations.
 
 ## Implementation Checklist
 

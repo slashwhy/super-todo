@@ -190,7 +190,7 @@ npm run dev                    # App → http://localhost:5173
 <!-- Features and Sections -->
 
 [instruction-hierarchy]: docs/CUSTOM_INSTRUCTIONS.md#instruction-hierarchy
-[skills-reference]: docs/CUSTOM_AGENTS.md#skills-reference
+[skills-reference]: docs/SKILLS.md
 
 <!-- Extensions -->
 

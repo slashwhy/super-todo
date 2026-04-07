@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": "./scripts/safety-guard.sh",
+        "cwd": ".github/hooks",
+        "timeoutSec": 15,
+        "comment": "Block edits to protected files (generated code, migrations) and dangerous commands"
+      }
+    ],
+    "postToolUse": [
+      {
+        "type": "command",
+        "bash": "./scripts/auto-format.sh",
+        "cwd": ".github/hooks",
+        "timeoutSec": 30,
+        "comment": "Auto-format edited frontend files with Prettier"
+      }
+    ]
+  }
+}
