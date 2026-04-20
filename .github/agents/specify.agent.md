@@ -128,6 +128,22 @@ As a [user] I want [capability] So that [outcome]
 | #   | Criterion | Testable? | Complexity |
 | --- | --------- | --------- | ---------- |
 
+## Sprint Contract
+
+**Done Definition:** [explicit statement of when this feature is complete — not "the code works" but the specific observable outcome]
+
+| Criterion | Test Type         | Pass Condition                              |
+| --------- | ----------------- | ------------------------------------------- |
+| [AC #1]   | Unit / E2E / Manual | [what a passing run looks like]           |
+| [AC #2]   | Unit / E2E / Manual | [what a passing run looks like]           |
+
+**Quality Metrics:**
+
+- [ ] No new TypeScript errors (`npm run type-check`)
+- [ ] All existing tests still pass
+- [ ] [convention-specific requirement, e.g., "CSS variables used, no hardcoded values"]
+- [ ] [non-functional requirement, e.g., "API response <200ms for typical payload"]
+
 ## Implementation Steps
 
 ### Step 1: [Step Name]

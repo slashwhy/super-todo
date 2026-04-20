@@ -115,6 +115,8 @@ This flow maps directly to the **Research → Plan → Implement (RPI)** workflo
 
 > 📖 **Why this works:** See [Context Optimization – Plan-Based Handoff][context-optimization] for the token budget analysis.
 
+> **Generator-Evaluator mapping:** The Planner/Generator/Evaluator roles in this table map directly onto the Generator-Evaluator architectural pattern. See [Architectural Patterns → Generator-Evaluator](#generator-evaluator-pattern).
+
 ### Plan-Based Handoff
 
 Plans are persisted to `/memories/session/plan.md` so @Implement can start in a **new chat session** with a clean context window. This prevents context overflow from the planning phase consuming tokens needed for implementation.
@@ -142,7 +144,62 @@ Every plan includes a "Documentation Impact Assessment" section. @Implement chec
 
 This ensures that features, bug fixes, library updates, and refactors don't silently invalidate project documentation.
 
-## 🎓 Training Agents
+## �️ Architectural Patterns
+
+The agent workflow implements several architectural patterns drawn from multi-agent system research. Understanding these helps when extending the system or debugging workflow failures.
+
+### Generator-Evaluator Pattern
+
+Inspired by GAN (Generative Adversarial Network) architectures, the **Generator-Evaluator pattern** separates the agent that creates output from the agent(s) that judge it — preventing the generator from also grading its own work.
+
+| Role          | Agent(s)                           | Responsibility                                          |
+| ------------- | ---------------------------------- | ------------------------------------------------------- |
+| **Planner**   | `@Specify & Validate`              | Defines what success looks like via the Sprint Contract |
+| **Generator** | `@Implement`                       | Produces code to meet the specification                 |
+| **Evaluator** | `@Test Unit` + `@Test E2E`         | Validates correctness against acceptance criteria       |
+| **Judge**     | `@Specify & Validate` (re-invoked) | Confirms implementation matches the original intent     |
+
+**Current gap:** The test agents validate functional correctness but not quality criteria such as design cohesion, naming conventions, or architectural fit. These are currently reviewed during the final `@Specify & Validate` step rather than by a dedicated evaluator agent.
+
+> 📖 **Related:** [RPI Workflow](#rpi-workflow) — the RPI phases map directly onto these Generator-Evaluator roles.
+
+### Sprint Contracts
+
+A **Sprint Contract** is a formal "Definition of Done" that `@Specify` negotiates with the developer before implementation begins. It makes acceptance criteria explicit, testable, and gradable — bridging the gap between a high-level specification and verifiable code.
+
+Sprint Contracts are embedded in every `plan.md` as a **Done Criteria** section:
+
+| Element                 | Description                                                       |
+| ----------------------- | ----------------------------------------------------------------- |
+| **Acceptance Criteria** | Numbered, testable conditions the implementation must satisfy     |
+| **Test Strategy**       | Which test types cover which criteria (unit / E2E / manual)       |
+| **Done Definition**     | The explicit bar for "this is complete"                           |
+| **Quality Metrics**     | Non-functional criteria (performance, a11y, convention adherence) |
+
+The Sprint Contract is what `@Test Unit` and `@Test E2E` test against. When `@Specify & Validate` runs its validation pass, it checks the implementation against the Sprint Contract rather than re-interpreting the original Jira ticket.
+
+> 📖 **Implementation:** The plan template in [`.github/agents/specify.agent.md`][agent-specify] includes a Sprint Contract section.
+
+### Independent Review Protocol
+
+When `@Test Unit` reports failures, the default flow is to hand back to `@Implement` to fix them. Research on multi-agent systems suggests a more reliable alternative for persistent failures: route the fix to a **fresh `@Implement` session** rather than the one that wrote the original code.
+
+| Aspect                  | Standard Fix Flow            | Independent Review               |
+| ----------------------- | ---------------------------- | -------------------------------- |
+| **Who fixes**           | Same @Implement session      | New @Implement session           |
+| **Context**             | Carries original assumptions | Starts from failing test output  |
+| **Error reinforcement** | Can repeat the same mistakes | Fresh perspective on the failure |
+| **Overhead**            | Low — continue in same chat  | Medium — pass test report across |
+
+**Current recommendation:** The standard handoff back to `@Implement` is sufficient for most failures. Adopt the Independent Review Protocol when:
+
+- The same test has failed more than twice on the same logic
+- The failing code was written in a long session where context drift is likely
+- Fixing it requires rethinking the original approach rather than patching a typo
+
+> ⚠️ **Trade-off:** Independent review adds orchestration overhead. Reserve it for cases where the standard loop has already failed twice.
+
+## �🎓 Training Agents
 
 In addition to the 4 production agents, this project includes **2 training agents** and **1 workflow agent** designed for specific purposes. Training agents differ fundamentally from production agents:
 
