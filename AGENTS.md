@@ -37,6 +37,36 @@ cd frontend && npm install && npm run dev     # App → http://localhost:5173
 
 ## Critical Rules
 
+### Think Before Coding
+
+- State assumptions explicitly. If uncertain, ask.
+- If multiple interpretations exist, present them — don't pick silently.
+- If a simpler approach exists, say so. Push back when warranted.
+
+### Minimal, Surgical Changes
+
+- Only change what the task requires. Don't "improve" adjacent code.
+- Match existing style (see Key Conventions), even if you'd do it differently.
+- Remove imports/variables/functions that YOUR changes made unused.
+- Don't remove pre-existing dead code unless asked — mention it instead.
+- Every changed line should trace directly to the user's request.
+
+### Simplicity First
+
+- Minimum code that solves the problem. Nothing speculative.
+- No abstractions for single-use code. No "flexibility" that wasn't requested.
+
+### Plan and Verify
+
+- For multi-step tasks, state a brief plan with verification steps before implementing.
+- Verify that changes respect layer boundaries (App → BLoCs → Domain ← Data).
+- After changes that affect DI or models, prompt the user to run code generation — never run it yourself.
+
+### Safety
+
+- Ask before destructive actions (deleting files, force-pushing, resetting state).
+- Don't hardcode secrets, tokens, or credentials. Use environment config.
+
 **Always:**
 
 - Use `.js` extension in backend ESM imports: `import { prisma } from "../lib/prisma.js"`
@@ -53,12 +83,12 @@ cd frontend && npm install && npm run dev     # App → http://localhost:5173
 
 ## API Endpoints
 
-| Resource   | Path                                             | Notes                                               |
-| ---------- | ------------------------------------------------ | --------------------------------------------------- |
+| Resource   | Path                                             | Notes                                                           |
+| ---------- | ------------------------------------------------ | --------------------------------------------------------------- |
 | Tasks      | `/api/tasks`                                     | Filters: `status`, `priority`, `category`, `isVital`, `ownerId` |
-| Users      | `/api/users`                                     | CRUD                                                |
-| Categories | `/api/categories`                                | CRUD                                                |
-| Config     | `/api/config/statuses`, `/api/config/priorities` | Lookup tables                                       |
+| Users      | `/api/users`                                     | CRUD                                                            |
+| Categories | `/api/categories`                                | CRUD                                                            |
+| Config     | `/api/config/statuses`, `/api/config/priorities` | Lookup tables                                                   |
 
 ## Data Model
 
