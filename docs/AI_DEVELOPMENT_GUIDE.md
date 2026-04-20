@@ -31,17 +31,17 @@ This is a **showcase project** demonstrating best practices for using GitHub Cop
 
 Quick lookup for all Copilot customization features:
 
-| Feature                 | Purpose                                  | File Type          | Documentation                                 |
-| ----------------------- | ---------------------------------------- | ------------------ | --------------------------------------------- |
-| **Smart Actions**       | Built-in IDE commands (no setup needed)  | N/A                | [VS Code Copilot][copilot-smart-actions]      |
-| **Agent Environments**  | Local, background, and cloud agent types | N/A                | [Agents Overview][vscode-agents-overview]     |
-| **Custom Prompts**      | Reusable task templates                  | `.prompt.md`       | [CUSTOM_PROMPTS.md][custom-prompts]           |
-| **Custom Instructions** | Coding standards & conventions           | `.instructions.md` | [CUSTOM_INSTRUCTIONS.md][custom-instructions] |
-| **Custom Agents**       | Specialized AI personas with roles       | `.agent.md`        | [CUSTOM_AGENTS.md][custom-agents]             |
-| **Subagents**           | Delegated subtasks in isolated context   | N/A (runtime)      | [CONTEXT_OPTIMIZATION.md][context-optimization] |
-| **Skills**              | On-demand knowledge modules              | `SKILL.md`         | [SKILLS.md][skills]                           |
-| **Hooks**               | Agent session lifecycle automation       | `.github/hooks/*.json` | [HOOKS.md][hooks]                          |
-| **MCP**                 | External tool connections                | `mcp.json`         | [MCP.md][mcp]                                 |
+| Feature                 | Purpose                                  | File Type              | Documentation                                   |
+| ----------------------- | ---------------------------------------- | ---------------------- | ----------------------------------------------- |
+| **Smart Actions**       | Built-in IDE commands (no setup needed)  | N/A                    | [VS Code Copilot][copilot-smart-actions]        |
+| **Agent Environments**  | Local, background, and cloud agent types | N/A                    | [Agents Overview][vscode-agents-overview]       |
+| **Custom Prompts**      | Reusable task templates                  | `.prompt.md`           | [CUSTOM_PROMPTS.md][custom-prompts]             |
+| **Custom Instructions** | Coding standards & conventions           | `.instructions.md`     | [CUSTOM_INSTRUCTIONS.md][custom-instructions]   |
+| **Custom Agents**       | Specialized AI personas with roles       | `.agent.md`            | [CUSTOM_AGENTS.md][custom-agents]               |
+| **Subagents**           | Delegated subtasks in isolated context   | N/A (runtime)          | [CONTEXT_OPTIMIZATION.md][context-optimization] |
+| **Skills**              | On-demand knowledge modules              | `SKILL.md`             | [SKILLS.md][skills]                             |
+| **Hooks**               | Agent session lifecycle automation       | `.github/hooks/*.json` | [HOOKS.md][hooks]                               |
+| **MCP**                 | External tool connections                | `mcp.json`             | [MCP.md][mcp]                                   |
 
 **Learning path:** Smart Actions → Prompts → Instructions → Agents → Hooks → MCP
 
@@ -75,6 +75,46 @@ AI-assisted development is a **paradigm shift** in how teams build software with
 - ✅ **Safety** – Humans remain in command
 - ✅ **Productivity** – Developers focus on problem-solving
 - ✅ **Traceability** – Clear audit trail of who did what
+
+## Harness Engineering
+
+The `.github/` directory is more than configuration — it is a **deliberate harness** that shapes how AI agents behave, what they can access, and how they collaborate across every session.
+
+> **Harness Engineering:** Designing and maintaining the system of instructions, agent definitions, tool constraints, and workflows that make AI agents reliably useful in your specific codebase.
+
+Each layer of the harness plays a defined role:
+
+| Component             | Location                | Role                                                     |
+| --------------------- | ----------------------- | -------------------------------------------------------- |
+| **Global Rules**      | `AGENTS.md`             | Baseline conventions applied across all tools and agents |
+| **Instructions**      | `.github/instructions/` | Path-scoped coding standards and domain patterns         |
+| **Agent Definitions** | `.github/agents/`       | Personas, role boundaries, and tool constraints          |
+| **Skills**            | `.github/skills/`       | On-demand knowledge modules loaded when relevant         |
+| **Hooks**             | `.github/hooks/`        | Session lifecycle automation (safety guards, formatting) |
+| **Workflows**         | `.github/workflows/`    | CI and agentic pipeline automation                       |
+
+The harness evolves continuously: when agents produce incorrect outputs or violate conventions, the harness is updated rather than just re-prompting. This creates a **continuous improvement loop** where observed failures feed back into better constraints.
+
+> **Tool-agnostic:** Depending on your stack, the harness may live elsewhere. A custom agent framework might define agents in `agent.yaml`, an MCP server config, or a platform-specific folder — the concept is the same regardless of tooling.
+
+📖 **Components:** [CUSTOM_INSTRUCTIONS.md][custom-instructions] · [CUSTOM_AGENTS.md][custom-agents] · [SKILLS.md][skills-reference] · [HOOKS.md][hooks] · [AGENTIC_WORKFLOWS.md][agentic-workflows]
+
+### Context Engineering
+
+**Context Engineering** is the practice of deliberately controlling what information the model receives — which instructions load, when skills activate, and how much codebase context flows into each session.
+
+> Context engineering is not just about fitting within token limits. It's about ensuring the model receives the _right_ information at the _right_ time to produce reliable, convention-following outputs.
+
+Key practices in this project:
+
+| Practice             | Mechanism                                                     | Docs                                            |
+| -------------------- | ------------------------------------------------------------- | ----------------------------------------------- |
+| Minimal instructions | Each instruction solves one problem; no global noise          | [CUSTOM_INSTRUCTIONS.md][custom-instructions]   |
+| Skills on demand     | Loaded only when the agent invokes them                       | [SKILLS.md][skills-reference]                   |
+| Subagent isolation   | Research runs in a separate context; only the summary returns | [CONTEXT_OPTIMIZATION.md][context-optimization] |
+| Plan-based handoff   | Planning sessions never bleed into implementation             | [CONTEXT_OPTIMIZATION.md][context-optimization] |
+
+📖 **Details:** [Context Optimization][context-optimization]
 
 ## The Multi-Agent System
 
@@ -118,13 +158,13 @@ Pick a topic below to get started. Each guide includes real examples from this p
 | [🤖 **Agents**][custom-agents]                        | Understanding agent roles and responsibilities, model selection, tool constraints, and how each agent works in your workflow |
 | [📋 **Custom Instructions**][custom-instructions]     | Learning the instruction hierarchy and best practices for encoding project conventions, coding standards, and patterns       |
 | [🎯 **Custom Prompts**][custom-prompts]               | Creating reusable prompt templates for recurring tasks, automating workflows, and triggering specific agent behaviors        |
-| [🎓 **Agent Skills**][skills]                           | On-demand knowledge modules, creating skills, progressive disclosure, and skill inventory                                    |
+| [🎓 **Agent Skills**][skills]                         | On-demand knowledge modules, creating skills, progressive disclosure, and skill inventory                                    |
 | [🔌 **MCP Integrations**][mcp]                        | Connecting external services, APIs, databases, and specialized tools to extend agent capabilities                            |
 | [👤 **Developer Responsibilities**][responsibilities] | Understanding your accountability, code review practices, AI-assisted workflows, and decision-making frameworks              |
 | [🔒 **Security Guide**][security]                     | MCP security risks, data privacy, incident response procedures, pre-deployment checklists, and vulnerability prevention      |
 | [🎓 **Skill Levels & Training**][skill-levels]        | Adapting AI-assisted development to different skill levels, training agents, dos/don'ts, and AI-native metrics               |
 | [⚡ **Context Optimization**][context-optimization]   | Maximizing efficiency with large codebases, optimizing token usage, and advanced patterns for scaling                        |
-| [⚙️ **Hooks**][hooks]                                  | Automating agent behavior with pre/post tool checks, safety guards, and formatting                                           |
+| [⚙️ **Hooks**][hooks]                                 | Automating agent behavior with pre/post tool checks, safety guards, and formatting                                           |
 | [🔄 **Agentic Workflows & CI**][agentic-workflows]    | Server-side AI workflows (docs, code quality, security) and CI pipeline configuration                                        |
 
 ## When to Use What?
@@ -138,7 +178,7 @@ Choose the right tool for your needs:
 | 🤖 A **different persona/permissions**              | [Custom Agent][custom-agents]                     | `.github/agents/*.agent.md`              |
 | 🛠️ **Complex procedures/scripts**                   | [Agent Skill][skills]                             | `.github/skills/*/SKILL.md`              |
 | 🎯 **Reusable task templates**                      | [Custom Prompts][custom-prompts]                  | `.github/prompts/*.prompt.md`            |
-| ⚙️ **Automated checks during agent sessions**        | [Hooks][hooks]                                    | `.github/hooks/*.json`                   |
+| ⚙️ **Automated checks during agent sessions**       | [Hooks][hooks]                                    | `.github/hooks/*.json`                   |
 
 > 📖 **Official reference:** [Customization Cheat Sheet][copilot-cheat-sheet] — full comparison including subagents and IDE/surface support matrix.
 

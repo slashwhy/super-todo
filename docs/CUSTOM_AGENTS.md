@@ -99,6 +99,22 @@ Use the **Continue In** control in Chat view, or type `@cli` or `@cloud` in your
 
 Each arrow is a **handoff**—you review before the next agent begins.
 
+### RPI Workflow
+
+This flow maps directly to the **Research → Plan → Implement (RPI)** workflow pattern:
+
+| RPI Phase     | Agent(s)                   | What Happens                                                   |
+| ------------- | -------------------------- | -------------------------------------------------------------- |
+| **Research**  | `@Specify & Validate`      | Reads Jira/Figma/codebase; understands context and constraints |
+| **Plan**      | `@Specify & Validate`      | Synthesizes findings into a structured `plan.md`               |
+| **Implement** | `@Implement`               | Reads plan; writes code step by step                           |
+| **Evaluate**  | `@Test Unit` + `@Test E2E` | Validates correctness; loops back to @Implement if needed      |
+| **Validate**  | `@Specify & Validate`      | Confirms implementation matches the plan's acceptance criteria |
+
+`@Specify` handles both the Research and Plan phases in a single session. Separating them from the Implement phase is what makes the handoff effective: the planning session exhausts its research budget so that `@Implement` can start fresh with a full context window.
+
+> 📖 **Why this works:** See [Context Optimization – Plan-Based Handoff][context-optimization] for the token budget analysis.
+
 ### Plan-Based Handoff
 
 Plans are persisted to `/memories/session/plan.md` so @Implement can start in a **new chat session** with a clean context window. This prevents context overflow from the planning phase consuming tokens needed for implementation.

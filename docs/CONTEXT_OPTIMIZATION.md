@@ -79,6 +79,8 @@ Use subagents to isolate research from decision-making:
 
 > 📖 **Official Docs:** [VS Code Subagents][vscode-subagents]
 
+> 💡 **Context Anxiety mitigation:** Subagents keep the main session's context window available for decisions. Research that would exhaust 30–50K tokens happens in an isolated subagent; only the summary (~1–2K) flows back. See [Context Anxiety & Context Reset](#context-anxiety) below.
+
 ## Plan-Based Handoff
 
 ### The Problem
@@ -129,6 +131,40 @@ Plans are persisted to `/memories/session/plan.md`:
 | Bug fix     | `fix-login-redirect`    |
 | Chore       | `chore-update-vue`      |
 | Docs        | `docs-api-reference`    |
+
+### Context Anxiety
+
+**Context Anxiety** describes a specific model behavior degradation that occurs as the context window approaches its limit. Symptoms include:
+
+- Skipping steps or rushing to complete tasks prematurely
+- Reduced adherence to coding conventions and instructions
+- Shorter, less thorough responses
+- Premature task closure ("this should be sufficient")
+
+**Root cause:** As tokens are consumed, the model's attention is increasingly divided between the accumulated context and generating the next output. Instructions loaded early in the session receive progressively less effective attention.
+
+**Mitigation:** Use a [Context Reset](#context-reset-vs-compaction) before symptoms appear — typically when a session has consumed more than ~60% of the context budget or when you notice output quality declining.
+
+### Context Reset vs. Compaction
+
+Two strategies exist for managing a filling context window:
+
+| Strategy          | Mechanism                                                     | Tradeoff                                              |
+| ----------------- | ------------------------------------------------------------- | ----------------------------------------------------- |
+| **Context Reset** | Close the session; start fresh referencing a state artifact   | Full coherence at the cost of raw conversation history |
+| **Compaction**    | Summarize conversation history in-place and continue          | Continuity preserved but semantic drift is possible   |
+
+**Context Reset (recommended for long tasks):**
+
+1. Save progress to an artifact (e.g., `plan.md` with checkboxes marking completed steps)
+2. Open a **new session**
+3. Reference the artifact: `Read #file:/memories/session/plan.md and continue from step N`
+4. The new session starts with a clean context window and only the artifact as payload
+
+**Compaction (built-in in some tools):**
+Some AI tools automatically summarize conversation history when the context window fills. This maintains session continuity but risks losing nuance or introducing subtle errors through summarization. Check your tool's behavior — Copilot Chat currently resets rather than compacts.
+
+> This is why the [Plan-Based Handoff](#plan-based-handoff) pattern is central to this workflow: `@Specify` and `@Implement` always run in separate sessions, each starting with a clean context. The `plan.md` file is the state artifact that bridges them.
 
 ## Structured Autonomy
 
