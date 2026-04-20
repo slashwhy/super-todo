@@ -24,7 +24,25 @@ This is why our training agents enforce **desirable difficulty**: `@socratic-men
 | **God Service Trap**          | Letting AI create monolithic solutions instead of modular ones | Unmaintainable architecture, tight coupling         |
 | **Hallucinated Dependencies** | AI invents APIs, packages, or patterns that don't exist        | Runtime failures, wasted debugging time             |
 
-The solution is not _less_ AI — it's **structured AI usage** that matches the developer's skill level.
+### Skill Decay vs. Skill Formation
+
+Skill Atrophy is real — but the research picture is more nuanced than a simple decline narrative. A 2026 study found that AI tools act as a **skill accelerator** in some contexts and a **skill inhibitor** in others:
+
+| Context | AI Effect | Mechanism |
+| ------- | --------- | --------- |
+| **Learning a new language/framework** | Accelerator ✅ | AI scaffolds unfamiliar syntax, letting the developer focus on concepts rather than lookup overhead |
+| **Exploring an unfamiliar codebase** | Accelerator ✅ | AI summarizes patterns and traces dependencies faster than manual reading |
+| **Core competency maintenance** | Inhibitor ⚠️ | Repeatedly delegating familiar tasks prevents the retrieval practice needed to maintain deep fluency |
+| **Debugging complex logic** | Inhibitor ⚠️ | Accepting AI diagnoses without working through the failure path erodes diagnostic reasoning |
+
+**Practical guidance:**
+- Use AI liberally for **exploration** — new domains, unfamiliar technologies, first-time patterns
+- Reserve **manual practice** for your core competencies — the skills your role depends on daily
+- When `@socratic-mentor` asks you to reason before it answers, that deliberate friction is the mitigation for the Inhibitor cases above
+
+> The existing `@socratic-mentor` agent already operationalizes this: it forces retrieval practice (predicting before seeing the answer) precisely in the contexts where AI would otherwise cause skill decay. Use it for your core domain, not just for onboarding.
+
+The solution is not *less* AI — it's **structured AI usage** that matches the developer's skill level.
 
 ## The Seniority Competency Matrix
 

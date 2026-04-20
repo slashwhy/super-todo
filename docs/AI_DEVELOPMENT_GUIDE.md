@@ -220,6 +220,16 @@ docs/
 | 👤  | **Human Remains in Control**      | Developers make final decisions;                        |
 | 📝  | **Auditable Workflow**            | Clear record of what each agent did and why             |
 
+## Research & Evidence
+
+The patterns in this project are informed by empirical research on AI-assisted software development. Key findings that shaped design decisions:
+
+- **Collaboration decline (Harvard/MIT 2026):** Developers using AI tools saw +12.4% more coding time but −80% fewer peer collaboration events. The plan-based workflow and required human peer reviews are direct mitigations. → [RESPONSIBILITIES.md – AI and Team Collaboration][responsibilities]
+- **Trust-to-Toil paradox (2026):** 96% of developers distrust AI code, yet 38% find reviewing it harder than human-written code. Reviewing a plan before code is written reduces this toil. → [RESPONSIBILITIES.md – Trust-to-Toil Ratio][responsibilities]
+- **Skill decay is context-dependent:** AI accelerates learning in new domains but inhibits maintenance of core competencies. The `@socratic-mentor` agent operationalizes the mitigation. → [AI Skill Levels – Skill Decay vs. Formation][skill-levels]
+- **Context window limits degrade output quality (Context Anxiety):** Models exhibit measurable output degradation as context fills. Session-separated planning and implementation is the structural fix. → [Context Optimization][context-optimization]
+- **Hierarchical agent systems have known failure modes:** Task Decomposition errors cascade and the Telephone Game effect degrades requirements fidelity. Sprint Contracts and human review gates mitigate both. → [CUSTOM_AGENTS.md – Hierarchical Agents][custom-agents]
+
 ## Model Selection
 
 > Match model capabilities to task complexity—don't default to the most powerful option.
