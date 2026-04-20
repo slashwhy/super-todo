@@ -12,7 +12,8 @@
 | [✨ Best Practices](#best-practices)           | Instructions and tools strategies |
 | [� Plan-Based Handoff](#plan-based-handoff)    | Cross-session context transfer    |
 | [🏗️ Structured Autonomy](#structured-autonomy) | Premium planning, cheap execution |
-| [🔗 Key Resources](#key-resources)             | Where to implement optimization   |
+| [� Contextual Packets](#contextual-packets)    | Focused context for delegation    |
+| [�🔗 Key Resources](#key-resources)            | Where to implement optimization   |
 
 ## What & Why
 
@@ -149,10 +150,10 @@ Plans are persisted to `/memories/session/plan.md`:
 
 Two strategies exist for managing a filling context window:
 
-| Strategy          | Mechanism                                                     | Tradeoff                                              |
-| ----------------- | ------------------------------------------------------------- | ----------------------------------------------------- |
-| **Context Reset** | Close the session; start fresh referencing a state artifact   | Full coherence at the cost of raw conversation history |
-| **Compaction**    | Summarize conversation history in-place and continue          | Continuity preserved but semantic drift is possible   |
+| Strategy          | Mechanism                                                   | Tradeoff                                               |
+| ----------------- | ----------------------------------------------------------- | ------------------------------------------------------ |
+| **Context Reset** | Close the session; start fresh referencing a state artifact | Full coherence at the cost of raw conversation history |
+| **Compaction**    | Summarize conversation history in-place and continue        | Continuity preserved but semantic drift is possible    |
 
 **Context Reset (recommended for long tasks):**
 
@@ -209,6 +210,41 @@ Our agent workflow is inspired by the [Structured Autonomy][structured-autonomy]
 | Documentation    | Not included                                | Documentation Impact Assessment            |
 
 > 📖 **Reference:** [Structured Autonomy Collection][structured-autonomy] in awesome-copilot
+
+## Contextual Packets
+
+A **Contextual Packet** is a pruned, task-scoped context artifact passed from a higher-tier agent to a lower-tier agent before delegation. Instead of forwarding the full conversation history, the delegating agent distills only what the receiving agent needs.
+
+**Why it matters:** LLMs don't attend equally to all parts of a long context. Two known failure modes arise from over-broad context:
+
+| Failure Mode           | Symptom                                                                     |
+| ---------------------- | --------------------------------------------------------------------------- |
+| **Context Dilution**   | Model attends to irrelevant background; outputs drift from the actual task  |
+| **Lost-in-the-Middle** | Instructions buried mid-context receive less attention than head/tail items |
+
+**How `@Specify` already does this:**
+
+The `plan.md` file _is_ the Contextual Packet. When `@Specify` finishes its planning session (which may consume 50-100K tokens of Jira data, Figma analysis, and codebase research), it distills the result into a structured, minimal plan file. `@Implement` reads only that file — not the full planning conversation.
+
+```
+@Specify planning session             plan.md (Contextual Packet)
+┌──────────────────────────┐          ┌───────────────────────────┐
+│ Jira ticket       ~15K   │          │ Overview             ~0.3K│
+│ Figma design      ~20K   │  distil  │ Acceptance criteria  ~0.5K│
+│ Codebase research ~30K   │ ──────▶  │ Sprint Contract      ~0.5K│
+│ Q&A rounds        ~10K   │          │ Implementation steps ~2K  │
+│ Total:            ~75K   │          │ Total:               ~3.5K│
+└──────────────────────────┘          └───────────────────────────┘
+```
+
+**Guidelines for designing Contextual Packets:**
+
+- Include decisions, not the reasoning that led to them (reasoning stays in the planning session)
+- Keep acceptance criteria explicit so the receiving agent doesn't have to re-derive them
+- Omit anything the receiving agent can look up itself via `read` or `search`
+- Order critical instructions first — they receive the most attention
+
+> 📖 **Related:** [Hierarchical Agents – Contextual Packets][custom-agents] in CUSTOM_AGENTS.md · [Plan-Based Handoff](#plan-based-handoff) for the workflow implementation
 
 ## Key Resources
 

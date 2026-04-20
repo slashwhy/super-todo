@@ -199,6 +199,58 @@ When `@Test Unit` reports failures, the default flow is to hand back to `@Implem
 
 > ⚠️ **Trade-off:** Independent review adds orchestration overhead. Reserve it for cases where the standard loop has already failed twice.
 
+### Hierarchical Agents
+
+The agent system follows a **three-tier hierarchy** that mirrors how effective software teams are organized. Each tier has a different time-horizon, responsibility scope, and level of autonomy.
+
+```
+┌─────────────────────────────────────────────────────┐
+│  High-Level (Executive)    @Specify & Validate       │
+│  → Defines WHAT; sets constraints; owns the plan     │
+├─────────────────────────────────────────────────────┤
+│  Mid-Level (Manager)       @Implement                │
+│  → Determines HOW; decomposes steps; writes code     │
+├─────────────────────────────────────────────────────┤
+│  Low-Level (Specialists)   @Test Unit · @Test E2E    │
+│  → Executes specific subtasks; reports pass/fail     │
+└─────────────────────────────────────────────────────┘
+```
+
+| Tier           | Agent(s)                  | Scope           | Output                         |
+| -------------- | ------------------------- | --------------- | ------------------------------ |
+| **High-Level** | `@Specify & Validate`     | Feature / Epic  | `plan.md` with Sprint Contract |
+| **Mid-Level**  | `@Implement`              | Step / Task     | Working code per plan step     |
+| **Low-Level**  | `@Test Unit`, `@Test E2E` | Function / Flow | Test results; pass/fail report |
+
+#### Contextual Packets
+
+`@Specify` prunes global context down to a focused **Contextual Packet** before handing off to `@Implement`. The `plan.md` file is this packet: it contains only the decisions, files, and steps relevant to the current task — not the full Jira ticket, Figma design, or research thread.
+
+This prevents two known failure modes:
+
+- **Context Dilution** — the model attends to irrelevant background information and produces off-target outputs
+- **Lost-in-the-Middle** — critical instructions buried in a long context receive less attention than instructions near the beginning or end
+
+> 📖 **Details:** [Context Optimization – Contextual Packets][context-optimization]
+
+#### Tool Saturation Risk
+
+**Tool Saturation** occurs when an agent is granted more tools than its task requires. Each extra tool:
+
+- Consumes context tokens (tool definitions are large)
+- Expands the attack surface
+- Increases the chance of a mistaken or unintended tool call
+
+The current agent tool assignments are deliberately minimal. See [Tool Selection](#️-tool-selection) for the guidance and [OWASP Agentic AI Threats][security] for the security framing.
+
+#### Known Limitations
+
+| Risk                          | Description                                                       | Mitigation                                              |
+| ----------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------- |
+| **Task Decomposition Errors** | Errors in `@Specify`'s plan cascade to all downstream agents      | Human review at the handoff gate before @Implement runs |
+| **Telephone Game Effect**     | Nuance in the original requirement degrades across each tier      | Sprint Contract makes acceptance criteria explicit      |
+| **Tier Boundary Violations**  | @Implement making architectural decisions that belong to @Specify | `@Implement` instruction: "escalate ambiguities up"     |
+
 ## �🎓 Training Agents
 
 In addition to the 4 production agents, this project includes **2 training agents** and **1 workflow agent** designed for specific purposes. Training agents differ fundamentally from production agents:
@@ -249,14 +301,17 @@ Choose the model that fits your task—don't default to the most powerful option
 
 ## 🛠️ Tool Selection
 
-**The fewer tools, the better.** Each tool you grant an agent increases risk, slows responses, and uses more context. Apply these principles when creating agents:
+**The fewer tools, the better.** Each tool you grant an agent increases risk, slows responses, and uses more context. This principle is also called **Tool Specialization** in multi-agent system research: each agent receives only the minimal toolset required for its specific role, reducing both attack surface and Tool Saturation risk (see [Hierarchical Agents – Tool Saturation Risk](#tool-saturation-risk)).
 
-| Principle                | Why                                                     |
-| ------------------------ | ------------------------------------------------------- |
-| **Least privilege**      | Grant only what's needed for the specific task          |
-| **Read-only by default** | Planning agents should never need `edit` or `execute`   |
-| **Scope MCP tools**      | Use `server/specific-tool` not `server/*` when possible |
-| **Audit periodically**   | Remove tools that aren't being used                     |
+| Principle                | Why                                                                           |
+| ------------------------ | ----------------------------------------------------------------------------- |
+| **Least privilege**      | Grant only what's needed for the specific task                                |
+| **Read-only by default** | Planning agents should never need `edit` or `execute`                         |
+| **Scope MCP tools**      | Use `server/specific-tool` not `server/*` when possible                       |
+| **Audit periodically**   | Remove tools that aren't being used                                           |
+| **One role, one set**    | Sub-agents get their own constrained toolset, not the parent agent's full set |
+
+> 🔒 **Security framing:** Overly broad tool grants correspond to OWASP Agentic AI Threat #2 (Tool Misuse) and #3 (Identity & Privilege Abuse). See [SECURITY.md][security] for the full threat mapping.
 
 **Common Tool Categories:**
 
