@@ -2,6 +2,7 @@
 name: Feature Tester
 description: "Use when: testing a feature, checking if UI works, automated feature test, take screenshot of feature, feature walkthrough, UI test, visual test, feature QA, check this feature, test this page, verify feature, test locally, browser test"
 tools: [execute, read, search, "chrome-devtools/*"]
+model: Claude Opus 4.6 (copilot)
 argument-hint: "Describe the feature to test and the depth level (User / Developer / QA / Performance)"
 ---
 
