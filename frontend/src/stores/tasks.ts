@@ -50,7 +50,7 @@ export const useTasksStore = defineStore('tasks', () => {
   async function fetchTasks(filters?: TaskFilters) {
     loading.value = true
     error.value = null
-    const minDelay = new Promise((r) => setTimeout(r, 400))
+    const minDelay = new Promise((r) => setTimeout(r, 2000))
     try {
       const params = new URLSearchParams()
       if (filters) {
