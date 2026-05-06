@@ -1,15 +1,7 @@
 ---
 name: Feature Tester
 description: "Use when: testing a feature, checking if UI works, automated feature test, take screenshot of feature, feature walkthrough, UI test, visual test, feature QA, check this feature, test this page, verify feature, test locally, browser test"
-tools:
-  [
-    execute,
-    read,
-    search,
-    atlassian/atlassian-mcp-server/search,
-    "figma-desktop/*",
-    "chrome-devtools/*",
-  ]
+tools: [execute, read, search, "chrome-devtools/*"]
 argument-hint: "Describe the feature to test and the depth level (User / Developer / QA / Performance)"
 ---
 

@@ -12,6 +12,7 @@
 | [**@Implement**][agent-implement]        | Feature implementation   | ✅ Yes       | ❌ No      | Build from scratch, from design, quick fixes                             |
 | [**@Test Unit**][agent-test-unit]        | Unit & integration tests | ✅ Yes       | ✅ Yes     | After implementation, regression tests, component props/emits validation |
 | [**@Test E2E**][agent-test-e2e]          | End-to-end tests         | ✅ Yes       | ❌ No      | User interaction flows, complete workflows, cross-feature scenarios      |
+| [**@Feature Tester**][agent-feature-tester] | Browser-based exploratory testing | ❌ Read-only | ✅ Yes | Visual testing, UI verification, feature walkthroughs, accessibility checks |
 | [**@Onboarding**][agent-onboarding]      | Project orientation      | ❌ Read-only | ❌ No      | First day on project, exploring conventions, understanding tooling       |
 | [**@socratic-mentor**][agent-socratic]   | Pedagogical tutoring     | ❌ Read-only | ❌ No      | Learning concepts, debugging with understanding, mentoring juniors       |
 | **@agentic-workflows**                   | Workflow management      | ❌ Read-only | ❌ No      | Create, debug, and upgrade GitHub Agentic Workflows (gh-aw)              |
@@ -251,9 +252,39 @@ The current agent tool assignments are deliberately minimal. See [Tool Selection
 | **Telephone Game Effect**     | Nuance in the original requirement degrades across each tier      | Sprint Contract makes acceptance criteria explicit      |
 | **Tier Boundary Violations**  | @Implement making architectural decisions that belong to @Specify | `@Implement` instruction: "escalate ambiguities up"     |
 
-## �🎓 Training Agents
+## 🧪 Feature Tester Agent
 
-In addition to the 4 production agents, this project includes **2 training agents** and **1 workflow agent** designed for specific purposes. Training agents differ fundamentally from production agents:
+The `@Feature Tester` is a browser-based exploratory testing agent that navigates the running app, interacts with features, and produces structured test reports — all from natural language prompts. It does **not write code**; it acts as a read-only QA agent.
+
+**Two complementary tool backends:**
+
+| Backend | Tools | Setup | Best For |
+|---------|-------|-------|----------|
+| **Chrome DevTools MCP** | `chrome-devtools/*` (42 tools) | MCP server config + `npx chrome-devtools-mcp@latest` | Network inspection, performance traces, Lighthouse audits, console debugging, memory profiling |
+| **VS Code Built-in Browser Tools** | `openBrowserPage`, `screenshotPage`, `clickElement`, `typeInPage`, `runPlaywrightCode`, etc. | Enable `workbench.browser.enableChatTools` setting | Zero-setup UI verification, quick visual checks, form testing, custom Playwright automation |
+
+**Depth Levels:** The agent supports four analysis depths that can be combined:
+
+- **User** — Visual verification, screenshots, plain-language findings
+- **Developer** — API calls, console errors, network requests, component identification
+- **QA** — Accessibility, responsive layout, edge cases, error boundaries
+- **Performance** — Lighthouse audit, performance trace, Core Web Vitals (Chrome DevTools MCP only)
+
+**Example prompts:**
+```
+@Feature Tester Go to the app and check every page for visual issues
+@Feature Tester Create a task, verify it saved, then delete it
+@Feature Tester Check keyboard accessibility on the task list at QA depth
+@Feature Tester Something feels slow on My Tasks — investigate at Performance depth
+```
+
+> 📖 **Agent file:** [`.github/agents/feature-tester.agent.md`][agent-feature-tester]
+> 📖 **MCP setup:** [MCP Integrations – Chrome DevTools][mcp]
+> 📖 **Built-in tools:** Requires VS Code 1.101+ with `workbench.browser.enableChatTools` enabled
+
+## 🎓 Training Agents
+
+In addition to the 5 production agents, this project includes **2 training agents** and **1 workflow agent** designed for specific purposes. Training agents differ fundamentally from production agents:
 
 | Aspect              | Training Agents                                                                      | Production Agents                                                |
 | ------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
@@ -418,6 +449,7 @@ Skills are folders of instructions, scripts, and resources that Copilot loads on
 [agent-implement]: ../.github/agents/implement.agent.md
 [agent-test-unit]: ../.github/agents/test-unit.agent.md
 [agent-test-e2e]: ../.github/agents/test-e2e.agent.md
+[agent-feature-tester]: ../.github/agents/feature-tester.agent.md
 [agent-onboarding]: ../.github/agents/onboarding.agent.md
 [agent-socratic]: ../.github/agents/socratic-mentor.agent.md
 [agent-files]: ../.github/agents/
