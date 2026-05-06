@@ -49,11 +49,9 @@ Use `navigate_page` to go to `http://localhost:5173/<route>`.
 Available routes:
 
 - `/` — Dashboard (stats, recent tasks, team)
-- `/tasks` — My Tasks (full task list with create/edit/delete)
-- `/vital` — Vital Tasks (filtered view)
+- `/my-tasks` — My Tasks (full task list with create/edit/delete)
+- `/vital-tasks` — Vital Tasks (filtered view)
 - `/categories` — Category management (CRUD)
-- `/settings` — Settings
-- `/help` — Help
 
 ### Step 4 — Verify page loaded
 
