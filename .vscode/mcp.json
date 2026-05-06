@@ -10,12 +10,7 @@
     },
     "chrome-devtools": {
       "command": "npx",
-      "args": [
-        "chrome-devtools-mcp@latest",
-        "--accept-insecure-certs",
-        "--viewport=1440x900",
-        "--no-usage-statistics"
-      ]
+      "args": ["-y", "chrome-devtools-mcp@latest", "--isolated"]
     },
     "playwright": {
       "command": "npx",
