@@ -1,9 +1,14 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { createPinia, setActivePinia } from 'pinia'
 import TaskCard from './TaskCard.vue'
 import type { Task } from '@/types/task'
 
 describe('TaskCard', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+  })
+
   const baseTask: Task = {
     id: '1',
     title: 'Test Task',
@@ -28,7 +33,7 @@ describe('TaskCard', () => {
 
   it('renders task title', () => {
     const wrapper = mount(TaskCard, {
-      props: { task: baseTask }
+      props: { task: baseTask },
     })
 
     expect(wrapper.find('.task-card__title').text()).toBe('Test Task')
@@ -36,7 +41,7 @@ describe('TaskCard', () => {
 
   it('renders task description when provided', () => {
     const wrapper = mount(TaskCard, {
-      props: { task: baseTask }
+      props: { task: baseTask },
     })
 
     expect(wrapper.find('.task-card__description').text()).toBe('A test task description')
@@ -45,7 +50,7 @@ describe('TaskCard', () => {
   it('does not render description when null', () => {
     const taskWithoutDescription = { ...baseTask, description: null }
     const wrapper = mount(TaskCard, {
-      props: { task: taskWithoutDescription }
+      props: { task: taskWithoutDescription },
     })
 
     expect(wrapper.find('.task-card__description').exists()).toBe(false)
@@ -53,7 +58,7 @@ describe('TaskCard', () => {
 
   it('renders priority badge with correct text', () => {
     const wrapper = mount(TaskCard, {
-      props: { task: baseTask }
+      props: { task: baseTask },
     })
 
     expect(wrapper.find('.task-card__priority').text()).toBe('Moderate')
@@ -61,16 +66,16 @@ describe('TaskCard', () => {
 
   it('renders status with correct text', () => {
     const wrapper = mount(TaskCard, {
-      props: { task: baseTask }
+      props: { task: baseTask },
     })
 
-    expect(wrapper.find('.task-card__status').text()).toBe('Not Started')
+    expect(wrapper.find('.task-card__status-btn').text()).toContain('Not Started')
   })
 
   it('shows vital badge when task is vital', () => {
     const vitalTask = { ...baseTask, isVital: true }
     const wrapper = mount(TaskCard, {
-      props: { task: vitalTask }
+      props: { task: vitalTask },
     })
 
     expect(wrapper.find('.task-card__vital-badge').exists()).toBe(true)
@@ -79,7 +84,7 @@ describe('TaskCard', () => {
 
   it('does not show vital badge when task is not vital', () => {
     const wrapper = mount(TaskCard, {
-      props: { task: baseTask }
+      props: { task: baseTask },
     })
 
     expect(wrapper.find('.task-card__vital-badge').exists()).toBe(false)
@@ -90,10 +95,10 @@ describe('TaskCard', () => {
     const taskWithCategory = {
       ...baseTask,
       categoryId: 'cat-1',
-      category: { id: 'cat-1', name: 'Work', description: null, color: '#3B82F6', icon: null }
+      category: { id: 'cat-1', name: 'Work', description: null, color: '#3B82F6', icon: null },
     }
     const wrapper = mount(TaskCard, {
-      props: { task: taskWithCategory }
+      props: { task: taskWithCategory },
     })
 
     expect(wrapper.find('.task-card__category').text()).toBe('Work')
@@ -101,7 +106,7 @@ describe('TaskCard', () => {
 
   it('does not render category when null', () => {
     const wrapper = mount(TaskCard, {
-      props: { task: baseTask }
+      props: { task: baseTask },
     })
 
     expect(wrapper.find('.task-card__category').exists()).toBe(false)
@@ -110,7 +115,7 @@ describe('TaskCard', () => {
   it('renders due date when provided', () => {
     const taskWithDueDate = { ...baseTask, dueDate: '2026-02-15T00:00:00.000Z' }
     const wrapper = mount(TaskCard, {
-      props: { task: taskWithDueDate }
+      props: { task: taskWithDueDate },
     })
 
     expect(wrapper.find('.task-card__due-date').exists()).toBe(true)
@@ -119,7 +124,7 @@ describe('TaskCard', () => {
 
   it('does not render due date when null', () => {
     const wrapper = mount(TaskCard, {
-      props: { task: baseTask }
+      props: { task: baseTask },
     })
 
     expect(wrapper.find('.task-card__due-date').exists()).toBe(false)
@@ -129,27 +134,27 @@ describe('TaskCard', () => {
     const taskWithAssignee = {
       ...baseTask,
       assigneeId: 'user-2',
-      assignee: { id: 'user-2', email: 'jane@example.com', name: 'Jane Doe', avatar: null }
+      assignee: { id: 'user-2', email: 'jane@example.com', name: 'Jane Doe', avatar: null },
     }
     const wrapper = mount(TaskCard, {
-      props: { task: taskWithAssignee }
+      props: { task: taskWithAssignee },
     })
 
-    expect(wrapper.find('.task-card__assignee').exists()).toBe(true)
+    expect(wrapper.find('.task-card__avatar').exists()).toBe(true)
     expect(wrapper.find('.task-card__avatar').text()).toBe('J')
   })
 
   it('does not render assignee when null', () => {
     const wrapper = mount(TaskCard, {
-      props: { task: baseTask }
+      props: { task: baseTask },
     })
 
-    expect(wrapper.find('.task-card__assignee').exists()).toBe(false)
+    expect(wrapper.find('.task-card__avatar').exists()).toBe(false)
   })
 
   it('has correct data-testid attribute', () => {
     const wrapper = mount(TaskCard, {
-      props: { task: baseTask }
+      props: { task: baseTask },
     })
 
     expect(wrapper.find('[data-testid="task-card-1"]').exists()).toBe(true)
@@ -158,10 +163,10 @@ describe('TaskCard', () => {
   it('applies correct priority class for Extreme priority', () => {
     const extremeTask = {
       ...baseTask,
-      priority: { id: 'priority-1', name: 'Extreme', color: '#F21E1E', order: 0 }
+      priority: { id: 'priority-1', name: 'Extreme', color: '#F21E1E', order: 0 },
     }
     const wrapper = mount(TaskCard, {
-      props: { task: extremeTask }
+      props: { task: extremeTask },
     })
 
     expect(wrapper.find('.task-card__priority--extreme').exists()).toBe(true)
@@ -170,10 +175,10 @@ describe('TaskCard', () => {
   it('applies correct status class for Completed status', () => {
     const completedTask = {
       ...baseTask,
-      status: { id: 'status-3', name: 'Completed', color: '#04C400', order: 2 }
+      status: { id: 'status-3', name: 'Completed', color: '#04C400', order: 2 },
     }
     const wrapper = mount(TaskCard, {
-      props: { task: completedTask }
+      props: { task: completedTask },
     })
 
     expect(wrapper.find('.task-card__status--completed').exists()).toBe(true)

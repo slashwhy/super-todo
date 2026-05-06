@@ -23,11 +23,13 @@ const { toasts, removeToast } = useToast()
 <style scoped>
 .toast-container {
   position: fixed;
-  top: var(--spacing-lg);
-  right: var(--spacing-lg);
+  bottom: var(--spacing-lg);
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1200;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
+  align-items: center;
   gap: var(--spacing-sm);
   pointer-events: none;
 }
@@ -38,17 +40,17 @@ const { toasts, removeToast } = useToast()
 
 .toast-list-enter-active,
 .toast-list-leave-active {
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .toast-list-enter-from {
   opacity: 0;
-  transform: translateX(100%);
+  transform: translateY(16px) scale(0.95);
 }
 
 .toast-list-leave-to {
   opacity: 0;
-  transform: translateX(100%);
+  transform: translateY(8px) scale(0.95);
 }
 
 .toast-list-move {

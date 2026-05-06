@@ -69,3 +69,27 @@ export interface TaskFilters {
   isVital?: string
   ownerId?: string
 }
+
+export interface CreateTaskPayload {
+  title: string
+  description?: string
+  isVital?: boolean
+  dueDate?: string | null
+  statusId: string
+  priorityId: string
+  categoryId?: string | null
+  ownerId: string
+  assigneeId?: string | null
+}
+
+export interface UpdateTaskPayload {
+  title?: string
+  description?: string | null
+  isVital?: boolean
+  dueDate?: string | null
+  completedAt?: string | null
+  statusId?: string
+  priorityId?: string
+  categoryId?: string | null
+  assigneeId?: string | null
+}

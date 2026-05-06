@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import TaskList from '@/components/tasks/TaskList.vue'
+import TaskCreateModal from '@/components/tasks/TaskCreateModal.vue'
+import TaskDetailModal from '@/components/tasks/TaskDetailModal.vue'
 import { useTasksStore } from '@/stores/tasks'
+import type { Task } from '@/types/task'
 
 const tasksStore = useTasksStore()
 const { tasks, loading, error, tasksByStatus } = storeToRefs(tasksStore)
+
+const showCreateModal = ref(false)
+const selectedTask = ref<Task | null>(null)
 
 // Get status counts for the filter tabs
 const statusCounts = computed(() => ({
@@ -18,12 +24,25 @@ const statusCounts = computed(() => ({
 onMounted(async () => {
   await tasksStore.fetchTasks()
 })
+
+function handleTaskClick(task: Task) {
+  selectedTask.value = task
+}
+
+async function handleTaskChanged() {
+  await tasksStore.fetchTasks()
+}
 </script>
 
 <template>
   <div class="page">
-    <h1 class="page__title">My Tasks</h1>
-    
+    <div class="page__header">
+      <h1 class="page__title">My Tasks</h1>
+      <button class="page__add-btn" type="button" @click="showCreateModal = true">
+        + New Task
+      </button>
+    </div>
+
     <!-- Status summary -->
     <div class="page__summary">
       <div class="page__summary-item">
@@ -50,14 +69,32 @@ onMounted(async () => {
     </div>
 
     <div class="page__content">
-      <TaskList 
-        :tasks="tasks" 
-        :loading="loading" 
+      <TaskList
+        :tasks="tasks"
+        :loading="loading"
         empty-icon="✅"
         empty-title="All caught up!"
         empty-description="You don't have any tasks assigned. New tasks will appear here when created."
+        @task-click="handleTaskClick"
+        @task-updated="handleTaskChanged"
       />
     </div>
+
+    <!-- Create Modal -->
+    <TaskCreateModal
+      v-if="showCreateModal"
+      @close="showCreateModal = false"
+      @created="handleTaskChanged"
+    />
+
+    <!-- Detail Modal -->
+    <TaskDetailModal
+      v-if="selectedTask"
+      :task="selectedTask"
+      @close="selectedTask = null"
+      @updated="handleTaskChanged"
+      @deleted="handleTaskChanged"
+    />
   </div>
 </template>
 
@@ -68,10 +105,32 @@ onMounted(async () => {
   gap: var(--spacing-lg);
 }
 
+.page__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .page__title {
   font-size: var(--font-size-3xl);
   font-weight: 500;
   color: var(--color-text-primary);
+}
+
+.page__add-btn {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.page__add-btn:hover {
+  background-color: var(--color-primary-dark);
 }
 
 .page__summary {
@@ -128,5 +187,4 @@ onMounted(async () => {
   flex-direction: column;
   gap: var(--spacing-lg);
 }
-
 </style>

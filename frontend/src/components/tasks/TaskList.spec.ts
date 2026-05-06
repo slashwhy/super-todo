@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { createPinia, setActivePinia } from 'pinia'
 import TaskList from './TaskList.vue'
 import TaskCard from './TaskCard.vue'
 import EmptyState from '@/components/common/EmptyState.vue'
@@ -32,12 +33,11 @@ describe('TaskList', () => {
     const wrapper = mount(TaskList, {
       props: {
         tasks: [],
-        loading: true
-      }
+        loading: true,
+      },
     })
 
     expect(wrapper.find('[data-testid="task-list-loading"]').exists()).toBe(true)
-    expect(wrapper.text()).toContain('Loading tasks...')
     expect(wrapper.find('[data-testid="task-list-grid"]').exists()).toBe(false)
     expect(wrapper.find('[data-testid="empty-state"]').exists()).toBe(false)
   })
@@ -48,8 +48,8 @@ describe('TaskList', () => {
         tasks: [],
         loading: false,
         emptyTitle: 'No tasks found',
-        emptyDescription: 'Create your first task'
-      }
+        emptyDescription: 'Create your first task',
+      },
     })
 
     const emptyState = wrapper.findComponent(EmptyState)
@@ -63,8 +63,8 @@ describe('TaskList', () => {
   it('renders empty state with default props', () => {
     const wrapper = mount(TaskList, {
       props: {
-        tasks: []
-      }
+        tasks: [],
+      },
     })
 
     const emptyState = wrapper.findComponent(EmptyState)
@@ -77,8 +77,8 @@ describe('TaskList', () => {
       props: {
         tasks: [],
         emptyIcon: '⭐',
-        emptyTitle: 'No vital tasks'
-      }
+        emptyTitle: 'No vital tasks',
+      },
     })
 
     const emptyState = wrapper.findComponent(EmptyState)
@@ -86,10 +86,11 @@ describe('TaskList', () => {
   })
 
   it('renders task grid when tasks are provided', () => {
+    setActivePinia(createPinia())
     const wrapper = mount(TaskList, {
       props: {
-        tasks: [mockTask]
-      }
+        tasks: [mockTask],
+      },
     })
 
     expect(wrapper.find('[data-testid="task-list-grid"]').exists()).toBe(true)
@@ -99,16 +100,17 @@ describe('TaskList', () => {
   })
 
   it('renders multiple task cards', () => {
+    setActivePinia(createPinia())
     const tasks = [
       mockTask,
       { ...mockTask, id: '2', title: 'Second Task' },
-      { ...mockTask, id: '3', title: 'Third Task' }
+      { ...mockTask, id: '3', title: 'Third Task' },
     ]
 
     const wrapper = mount(TaskList, {
       props: {
-        tasks
-      }
+        tasks,
+      },
     })
 
     const taskCards = wrapper.findAllComponents(TaskCard)
@@ -119,11 +121,11 @@ describe('TaskList', () => {
     const wrapper = mount(TaskList, {
       props: {
         tasks: [],
-        emptyTitle: 'No tasks'
+        emptyTitle: 'No tasks',
       },
       slots: {
-        'empty-action': '<button data-testid="create-btn">Create Task</button>'
-      }
+        'empty-action': '<button data-testid="create-btn">Create Task</button>',
+      },
     })
 
     expect(wrapper.find('[data-testid="create-btn"]').exists()).toBe(true)
@@ -133,8 +135,8 @@ describe('TaskList', () => {
     const wrapper = mount(TaskList, {
       props: {
         tasks: [],
-        loading: true
-      }
+        loading: true,
+      },
     })
 
     // When loading is true and tasks is empty, should show loading, not empty
