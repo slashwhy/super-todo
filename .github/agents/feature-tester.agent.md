@@ -28,6 +28,7 @@ A few rules apply across all depths:
 - **Always prefer `take_snapshot` over `take_screenshot` for targeting.** Snapshots return the a11y tree with stable `uid`s that `click`, `fill`, `hover`, `wait_for` need. Use screenshots for the report's visual evidence, snapshots for the agent's eyes.
 - **Always `wait_for` after any action that triggers a network request, route change, or async render.** Wait on a stable element, not a fixed timeout. This is the single biggest reliability lever — skipping it produces false negatives.
 - **Always re-snapshot after a state change.** Old uids go stale once the DOM updates.
+- **Never embed screenshot URIs in your report text.** The `vscode-chat-response-resource://` URIs returned by `take_screenshot` are scoped to the tool-result block and do NOT render as markdown images. Screenshots display automatically inline with each tool call — your report should reference them by step/context (e.g. "see screenshot after Step 3") rather than attempting `![](uri)` syntax.
 
 ## Workflow
 
@@ -134,7 +135,10 @@ Narrate each step briefly in the running output. If a step fails unexpectedly, s
 <2-3 sentence overview>
 
 ### Screenshots
-<inline screenshots with captions; desktop + mobile side by side for User depth>
+<DO NOT embed vscode-chat-response-resource:// URIs as markdown images — they won't render.
+Screenshots are already visible inline above each take_screenshot tool call.
+Reference them here by step number, e.g. "See screenshot after Step 4 (form submit)".
+For desktop vs mobile comparison, note which screenshot is which.>
 
 ### Findings
 <detailed findings per depth level, in the order the user requested>
@@ -175,9 +179,3 @@ Narrate each step briefly in the running output. If a step fails unexpectedly, s
 - ALWAYS take at least one screenshot per test, even if everything looks fine.
 - ALWAYS include the final structured report, even for quick checks or aborted tests.
 - If something fails unexpectedly, capture: screenshot of the failure, latest snapshot, console messages, and any in-flight network requests. Then stop.
-
-## Notes for the showcase
-
-- Run the MCP server with `--isolated` in your config so each test session starts clean. The agent doesn't manage state hygiene; the server does.
-- For demos, run with `--headless=false` (the default) so viewers see the real Chrome window operating in real time.
-- Tools intentionally exercised across depths: `navigate_page`, `take_snapshot`, `take_screenshot`, `click`, `fill`, `fill_form`, `press_key`, `hover`, `wait_for`, `emulate`, `list_console_messages`, `list_network_requests`, `get_network_request`, `evaluate_script`, `handle_dialog`, `performance_start_trace`, `performance_stop_trace`, `performance_analyze_insight`. Roughly 17 of the 26 available tools — broad enough to showcase, focused enough to stay coherent.
