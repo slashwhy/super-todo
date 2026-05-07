@@ -10,7 +10,7 @@
     },
     "chrome-devtools": {
       "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp@latest", "--isolated"]
+      "args": ["chrome-devtools-mcp@latest", "--isolated=true"]
     },
     "playwright": {
       "command": "npx",

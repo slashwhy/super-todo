@@ -147,11 +147,13 @@ Font: Inter 14px    →    --font-body
   "mcpServers": {
     "chrome-devtools": {
       "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp@latest"]
+      "args": ["chrome-devtools-mcp@latest", "--isolated=true"]
     }
   }
 }
 ```
+
+> **`--isolated=true`** — Creates a temporary user-data-dir that is automatically cleaned up after the browser is closed, ensuring a clean browser state for each session.
 
 **Tool Categories (42 tools):**
 
@@ -290,7 +292,7 @@ Alternatively, MCP servers can be scoped to a specific agent by adding a `mcp-se
     "chrome-devtools": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp@latest"]
+      "args": ["chrome-devtools-mcp@latest", "--isolated=true"]
     }
   }
 }
