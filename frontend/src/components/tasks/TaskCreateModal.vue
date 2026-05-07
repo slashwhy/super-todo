@@ -38,15 +38,14 @@ const form = ref({
 onMounted(async () => {
   await Promise.all([configStore.fetchAll(), usersStore.fetchUsers()])
   // Set defaults
-  if (statuses.value.length > 0) {
-    form.value.statusId = statuses.value[0].id
-  }
-  if (priorities.value.length > 0) {
-    form.value.priorityId = priorities.value[0].id
-  }
-  if (users.value.length > 0) {
-    form.value.ownerId = users.value[0].id
-  }
+  const [firstStatus] = statuses.value
+  if (firstStatus) form.value.statusId = firstStatus.id
+
+  const [firstPriority] = priorities.value
+  if (firstPriority) form.value.priorityId = firstPriority.id
+
+  const [firstUser] = users.value
+  if (firstUser) form.value.ownerId = firstUser.id
 })
 
 async function handleSubmit() {
