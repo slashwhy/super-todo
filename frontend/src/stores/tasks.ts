@@ -1,6 +1,12 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import type { Task, TaskStats, TaskFilters } from '@/types/task'
+import type {
+  Task,
+  TaskStats,
+  TaskFilters,
+  CreateTaskPayload,
+  UpdateTaskPayload,
+} from '@/types/task'
 
 export const useTasksStore = defineStore('tasks', () => {
   // State
@@ -10,42 +16,41 @@ export const useTasksStore = defineStore('tasks', () => {
   const error = ref<string | null>(null)
 
   // Getters (computed)
-  const vitalTasks = computed(() => 
-    tasks.value.filter(t => t.isVital)
+  const vitalTasks = computed(() => tasks.value.filter((t) => t.isVital))
+
+  const completedTasks = computed(() => tasks.value.filter((t) => t.status.name === 'Completed'))
+
+  const inProgressTasks = computed(() => tasks.value.filter((t) => t.status.name === 'In Progress'))
+
+  const notStartedTasks = computed(() => tasks.value.filter((t) => t.status.name === 'Not Started'))
+
+  const tasksByCategory = computed(() =>
+    tasks.value.reduce(
+      (acc, task) => {
+        const key = task.category?.name ?? 'Uncategorized'
+        acc[key] = [...(acc[key] || []), task]
+        return acc
+      },
+      {} as Record<string, Task[]>,
+    ),
   )
 
-  const completedTasks = computed(() => 
-    tasks.value.filter(t => t.status.name === 'Completed')
-  )
-
-  const inProgressTasks = computed(() => 
-    tasks.value.filter(t => t.status.name === 'In Progress')
-  )
-
-  const notStartedTasks = computed(() => 
-    tasks.value.filter(t => t.status.name === 'Not Started')
-  )
-
-  const tasksByCategory = computed(() => 
-    tasks.value.reduce((acc, task) => {
-      const key = task.category?.name ?? 'Uncategorized'
-      acc[key] = [...(acc[key] || []), task]
-      return acc
-    }, {} as Record<string, Task[]>)
-  )
-
-  const tasksByStatus = computed(() => 
-    tasks.value.reduce((acc, task) => {
-      const key = task.status.name
-      acc[key] = [...(acc[key] || []), task]
-      return acc
-    }, {} as Record<string, Task[]>)
+  const tasksByStatus = computed(() =>
+    tasks.value.reduce(
+      (acc, task) => {
+        const key = task.status.name
+        acc[key] = [...(acc[key] || []), task]
+        return acc
+      },
+      {} as Record<string, Task[]>,
+    ),
   )
 
   // Actions
   async function fetchTasks(filters?: TaskFilters) {
     loading.value = true
     error.value = null
+    const minDelay = new Promise((r) => setTimeout(r, 2000))
     try {
       const params = new URLSearchParams()
       if (filters) {
@@ -57,8 +62,8 @@ export const useTasksStore = defineStore('tasks', () => {
       }
       const queryString = params.toString()
       const url = queryString ? `/api/tasks?${queryString}` : '/api/tasks'
-      
-      const response = await fetch(url)
+
+      const [response] = await Promise.all([fetch(url), minDelay])
       if (!response.ok) {
         throw new Error(`Failed to fetch tasks: ${response.statusText}`)
       }
@@ -99,6 +104,49 @@ export const useTasksStore = defineStore('tasks', () => {
     }
   }
 
+  async function createTask(payload: CreateTaskPayload): Promise<Task> {
+    const response = await fetch('/api/tasks', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+    if (!response.ok) {
+      const data = await response.json()
+      throw new Error(data.error || 'Failed to create task')
+    }
+    const newTask: Task = await response.json()
+    tasks.value.unshift(newTask)
+    return newTask
+  }
+
+  async function updateTask(id: string, payload: UpdateTaskPayload): Promise<Task> {
+    const response = await fetch(`/api/tasks/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+    if (!response.ok) {
+      const data = await response.json()
+      throw new Error(data.error || 'Failed to update task')
+    }
+    const updatedTask: Task = await response.json()
+    const index = tasks.value.findIndex((t) => t.id === id)
+    if (index !== -1) {
+      tasks.value[index] = updatedTask
+    }
+    return updatedTask
+  }
+
+  async function deleteTask(id: string): Promise<void> {
+    const response = await fetch(`/api/tasks/${id}`, {
+      method: 'DELETE',
+    })
+    if (!response.ok) {
+      throw new Error('Failed to delete task')
+    }
+    tasks.value = tasks.value.filter((t) => t.id !== id)
+  }
+
   function $reset() {
     tasks.value = []
     stats.value = null
@@ -123,6 +171,9 @@ export const useTasksStore = defineStore('tasks', () => {
     fetchTasks,
     fetchStats,
     fetchTaskById,
-    $reset
+    createTask,
+    updateTask,
+    deleteTask,
+    $reset,
   }
 })

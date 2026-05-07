@@ -1,29 +1,50 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import AppIcon from '@/components/icons/AppIcon.vue'
+import { useDarkMode } from '@/composables/useDarkMode'
 
 const searchQuery = ref('')
+const isScrolled = ref(false)
+const { isDark, toggle: toggleDark } = useDarkMode()
+
+function handleScroll() {
+  isScrolled.value = window.scrollY > 10
+}
+
+onMounted(() => window.addEventListener('scroll', handleScroll, { passive: true }))
+onUnmounted(() => window.removeEventListener('scroll', handleScroll))
 
 // Use computed for reactive date values (updates if component remounts)
 const currentDate = computed(() => new Date())
-const dayName = computed(() => 
-  currentDate.value.toLocaleDateString('en-US', { weekday: 'long' })
-)
-const formattedDate = computed(() => 
+const dayName = computed(() => currentDate.value.toLocaleDateString('en-US', { weekday: 'long' }))
+const formattedDate = computed(() =>
   currentDate.value.toLocaleDateString('en-GB', {
     day: '2-digit',
     month: '2-digit',
-    year: 'numeric'
-  })
+    year: 'numeric',
+  }),
 )
+
+const emit = defineEmits<{
+  'toggle-sidebar': []
+}>()
 </script>
 
 <template>
-  <header class="header" role="banner">
+  <header class="header" :class="{ 'header--scrolled': isScrolled }" role="banner">
+    <button
+      class="header__hamburger"
+      type="button"
+      aria-label="Toggle menu"
+      @click="emit('toggle-sidebar')"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
     <div class="header__brand">
-      <h1 class="header__logo">
-        <span class="header__logo-accent">Dash</span>board
-      </h1>
+      <h1 class="header__logo"><span class="header__logo-accent">Dash</span>board</h1>
     </div>
 
     <div class="header__search" role="search">
@@ -40,11 +61,28 @@ const formattedDate = computed(() =>
     </div>
 
     <div class="header__actions">
-      <button class="header__action-btn header__action-btn--notification" type="button" aria-label="Notifications">
+      <button
+        class="header__action-btn header__action-btn--theme"
+        type="button"
+        :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+        @click="toggleDark"
+      >
+        <span class="header__theme-icon">{{ isDark ? '☀️' : '🌙' }}</span>
+      </button>
+
+      <button
+        class="header__action-btn header__action-btn--notification"
+        type="button"
+        aria-label="Notifications"
+      >
         <AppIcon name="notification" :size="18" />
       </button>
 
-      <button class="header__action-btn header__action-btn--calendar" type="button" aria-label="Calendar">
+      <button
+        class="header__action-btn header__action-btn--calendar"
+        type="button"
+        aria-label="Calendar"
+      >
         <AppIcon name="calendar" :size="14" />
       </button>
 
@@ -70,6 +108,44 @@ const formattedDate = computed(() =>
   left: 0;
   right: 0;
   z-index: 100;
+  transition:
+    box-shadow 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.header--scrolled {
+  box-shadow: none;
+}
+
+.header__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 34px;
+  height: 34px;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s;
+}
+
+.header__hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--color-text-primary);
+  border-radius: 1px;
+  transition: transform 0.2s;
+}
+
+.header__hamburger:hover {
+  background-color: var(--color-surface);
+}
+
+@media (max-width: 768px) {
+  .header__hamburger {
+    display: flex;
+  }
 }
 
 .header__brand {
@@ -91,6 +167,11 @@ const formattedDate = computed(() =>
   max-width: 695px;
   margin-left: var(--spacing-2xl);
   position: relative;
+  transition: max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.header__search:focus-within {
+  max-width: 750px;
 }
 
 .header__search-input {
@@ -99,17 +180,13 @@ const formattedDate = computed(() =>
   padding: 0 var(--spacing-md);
   padding-right: 44px;
   background-color: var(--color-background);
-  border: none;
+  border: 2px solid transparent;
   border-radius: var(--radius-sm);
   font-family: 'Montserrat', sans-serif;
   font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--color-text-primary);
-  box-shadow: -26px 108px 31px 0px rgba(0, 0, 0, 0),
-    -17px 69px 28px 0px rgba(0, 0, 0, 0.01),
-    -9px 39px 24px 0px rgba(0, 0, 0, 0.02),
-    -4px 17px 18px 0px rgba(0, 0, 0, 0.03),
-    -1px 4px 10px 0px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s ease;
 }
 
 .header__search-input::placeholder {
@@ -117,8 +194,8 @@ const formattedDate = computed(() =>
 }
 
 .header__search-input:focus {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 1px;
+  outline: none;
+  border-color: var(--color-primary);
 }
 
 .header__search-btn {
@@ -157,11 +234,32 @@ const formattedDate = computed(() =>
   background-color: var(--color-primary);
   border-radius: var(--radius-sm);
   color: white;
-  transition: background-color 0.2s;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.header__action-btn--theme {
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+}
+
+.header__theme-icon {
+  font-size: 16px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.header__action-btn--theme:hover .header__theme-icon {
+  transform: rotate(20deg) scale(1.2);
 }
 
 .header__action-btn:hover {
   background-color: var(--color-primary-dark);
+  transform: scale(1.08);
+}
+
+.header__action-btn:active {
+  transform: scale(0.95);
 }
 
 .header__date {
@@ -181,5 +279,25 @@ const formattedDate = computed(() =>
   font-size: var(--font-size-base);
   font-weight: 500;
   color: var(--color-accent-blue);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .header {
+    padding: 0 var(--spacing-md);
+    height: 60px;
+  }
+
+  .header__search {
+    display: none;
+  }
+
+  .header__date {
+    display: none;
+  }
+
+  .header__action-btn--calendar {
+    display: none;
+  }
 }
 </style>

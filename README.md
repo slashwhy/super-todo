@@ -45,15 +45,15 @@
 ┌──────────────────────────────────────────────────────────────────────────────┐
 │                        GitHub Copilot Agent Mode                             │
 ├──────────────────────────────────────────────────────────────────────────────┤
-│  Agents (7)           │  Instructions (10)    │  Skills (11)                 │
+│  Agents (8)           │  Instructions (10)    │  Skills (11)                 │
 │  ├── Implement        │  ├── Global           │  ├── Architectural Docs      │
 │  ├── Specify          │  ├── Backend Routes   │  ├── Backend Routes          │
 │  ├── Test Unit        │  ├── Pinia Stores     │  ├── Code Documentation      │
 │  ├── Test E2E         │  ├── Prisma Database  │  ├── E2E Testing             │
-│  ├── Onboarding       │  ├── Styling          │  ├── Pinia Stores            │
-│  ├── Socratic Mentor  │  ├── Testing Backend  │  ├── Prisma Database         │
-│  └── Agentic Workflows│  ├── Testing E2E      │  ├── Security Review         │
-│                       │  ├── Testing Frontend │  ├── Styling                 │
+│  ├── Feature Tester   │  ├── Styling          │  ├── Pinia Stores            │
+│  ├── Onboarding       │  ├── Testing Backend  │  ├── Prisma Database         │
+│  ├── Socratic Mentor  │  ├── Testing E2E      │  ├── Security Review         │
+│  └── Agentic Workflows│  ├── Testing Frontend │  ├── Styling                 │
 │                       │  ├── Vue Components   │  ├── Unit Testing            │
 │                       │  └── Vue Composables  │  ├── Vue Components          │
 │                       │                       │  └── Vue Composables         │
@@ -133,12 +133,12 @@ npm run dev                    # App → http://localhost:5173
 
 ### GitHub Copilot Documentation
 
-| Resource                                                 | Purpose                           |
-| -------------------------------------------------------- | --------------------------------- |
-| [What is GitHub Copilot?][copilot-what-is]               | Overview and capabilities         |
-| [Response Customization][copilot-response-customization] | Examples and best practices       |
+| Resource                                                 | Purpose                                                                         |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| [What is GitHub Copilot?][copilot-what-is]               | Overview and capabilities                                                       |
+| [Response Customization][copilot-response-customization] | Examples and best practices                                                     |
 | [Customization Cheat Sheet][copilot-cheat-sheet]         | Compare all customization features (instructions, agents, prompts, skills, MCP) |
-| [Trust Center][copilot-trust-center]                     | Security, privacy, and compliance |
+| [Trust Center][copilot-trust-center]                     | Security, privacy, and compliance                                               |
 
 ### Model Context Protocol
 
@@ -150,9 +150,9 @@ npm run dev                    # App → http://localhost:5173
 
 ### Learning & Inspiration
 
-| Resource                           | Purpose                               |
-| ---------------------------------- | ------------------------------------- |
-| [Awesome Copilot][awesome-copilot] | Community examples and best practices |
+| Resource                                               | Purpose                                             |
+| ------------------------------------------------------ | --------------------------------------------------- |
+| [Awesome Copilot][awesome-copilot]                     | Community examples and best practices               |
 | [Customization Library][copilot-customization-library] | Official curated examples of customization features |
 
 ## 📄 About This Project

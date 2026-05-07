@@ -4,35 +4,35 @@
   --color-primary: #ff6767;
   --color-primary-light: #ff8080;
   --color-primary-dark: #e85555;
-  
+
   /* Accent Colors */
   --color-accent-blue: #3abeff;
   --color-accent-green: #04c400;
   --color-accent-red: #f21e1e;
   --color-accent-purple: #0225ff;
-  
+
   /* Neutral Colors */
-  --color-background: #f5f8ff;
-  --color-surface: #f8f8f8;
+  --color-background: #eef1f8;
+  --color-surface: #f5f5f5;
   --color-surface-alt: #ffffff;
   --color-border: rgba(161, 163, 171, 0.63);
-  
+
   /* Text Colors */
   --color-text-primary: #000000;
   --color-text-secondary: #747474;
   --color-text-muted: #a1a3ab;
   --color-text-white: #ffffff;
-  
+
   /* Shadows */
-  --shadow-sm: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  --shadow-md: 0px 4px 12px 0px rgba(0, 0, 0, 0.07);
-  --shadow-lg: 0px 4px 12px 0px rgba(0, 0, 0, 0.08);
-  
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+
   /* Border Radius */
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
-  
+
   /* Spacing */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
@@ -40,11 +40,11 @@
   --spacing-lg: 24px;
   --spacing-xl: 32px;
   --spacing-2xl: 48px;
-  
+
   /* Layout */
   --sidebar-width: 280px;
   --header-height: 100px;
-  
+
   /* Typography */
   --font-family: 'Inter', sans-serif;
   --font-size-xs: 10px;
@@ -55,4 +55,25 @@
   --font-size-xl: 20px;
   --font-size-2xl: 32px;
   --font-size-3xl: 36px;
+
+  /* Animation */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dark Mode */
+:root.dark {
+  --color-background: #151623;
+  --color-surface: #1e1f32;
+  --color-surface-alt: #282940;
+  --color-border: rgba(255, 255, 255, 0.12);
+
+  --color-text-primary: #f0f0f5;
+  --color-text-secondary: #a0a0b0;
+  --color-text-muted: #6b6b80;
+
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
 }

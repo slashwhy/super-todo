@@ -8,11 +8,9 @@
       "type": "http",
       "url": "https://mcp.atlassian.com/v1/sse"
     },
-    "io.github.ChromeDevTools/chrome-devtools-mcp": {
+    "chrome-devtools": {
       "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp"],
-      "env": {},
-      "type": "stdio"
+      "args": ["chrome-devtools-mcp@latest", "--isolated=true"]
     },
     "playwright": {
       "command": "npx",

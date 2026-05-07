@@ -1,12 +1,15 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
-  icon?: string
-  title: string
-  description?: string
-}>(), {
-  icon: '📋',
-  description: ''
-})
+withDefaults(
+  defineProps<{
+    icon?: string
+    title: string
+    description?: string
+  }>(),
+  {
+    icon: '📋',
+    description: '',
+  },
+)
 </script>
 
 <template>
@@ -30,11 +33,30 @@ withDefaults(defineProps<{
   background-color: var(--color-surface-alt);
   border-radius: var(--radius-md);
   border: 1px dashed var(--color-border);
+  animation: empty-fade-in 0.4s ease;
+}
+
+@keyframes empty-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
 }
 
 .empty-state__icon {
   font-size: 48px;
   margin-bottom: var(--spacing-md);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 .empty-state__title {

@@ -1,16 +1,27 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import TaskList from '@/components/tasks/TaskList.vue'
+import TaskDetailModal from '@/components/tasks/TaskDetailModal.vue'
 import { useTasksStore } from '@/stores/tasks'
+import type { Task } from '@/types/task'
 
 const tasksStore = useTasksStore()
 const { vitalTasks, loading, error } = storeToRefs(tasksStore)
 
+const selectedTask = ref<Task | null>(null)
+
 onMounted(async () => {
-  // Fetch tasks filtered by isVital
   await tasksStore.fetchTasks({ isVital: 'true' })
 })
+
+function handleTaskClick(task: Task) {
+  selectedTask.value = task
+}
+
+async function handleTaskChanged() {
+  await tasksStore.fetchTasks({ isVital: 'true' })
+}
 </script>
 
 <template>
@@ -19,7 +30,7 @@ onMounted(async () => {
       <h1 class="page__title">⭐ Vital Tasks</h1>
       <span class="page__count">{{ vitalTasks.length }} tasks</span>
     </div>
-    
+
     <p class="page__description">
       Tasks marked as vital require immediate attention and priority handling.
     </p>
@@ -30,14 +41,25 @@ onMounted(async () => {
     </div>
 
     <div class="page__content">
-      <TaskList 
-        :tasks="vitalTasks" 
-        :loading="loading" 
+      <TaskList
+        :tasks="vitalTasks"
+        :loading="loading"
         empty-icon="⭐"
         empty-title="No vital tasks"
         empty-description="Mark important tasks as vital to prioritize them and see them here."
+        @task-click="handleTaskClick"
+        @task-updated="handleTaskChanged"
       />
     </div>
+
+    <!-- Detail Modal -->
+    <TaskDetailModal
+      v-if="selectedTask"
+      :task="selectedTask"
+      @close="selectedTask = null"
+      @updated="handleTaskChanged"
+      @deleted="handleTaskChanged"
+    />
   </div>
 </template>
 
@@ -88,5 +110,4 @@ onMounted(async () => {
   flex-direction: column;
   gap: var(--spacing-lg);
 }
-
 </style>
