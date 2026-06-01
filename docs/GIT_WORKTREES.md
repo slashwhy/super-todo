@@ -189,6 +189,17 @@ git branch -d feature/big-feature
 ```
 
 
+## Claude Code: Native Worktree Support
+
+Claude Code has built-in worktree support via `isolation: "worktree"` on subagent calls. Key points:
+
+- When a subagent runs with `isolation: "worktree"`, Claude Code handles create/work/cleanup automatically
+- The `.trees/` convention from this guide still applies and is recommended for manual parallel work
+- The same `git worktree add .trees/feature-name` commands work identically for both tools
+
+For orchestrated parallel work (e.g. three features in parallel from a single Claude Code session), the built-in isolation removes the manual worktree setup step. For VS Code + Copilot parallel work, the manual `.trees/` workflow above remains the pattern.
+
+
 ## 🔍 Troubleshooting
 
 | Issue | Solution |

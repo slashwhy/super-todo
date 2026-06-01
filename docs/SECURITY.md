@@ -10,12 +10,13 @@
 
 ### Use Enterprise Tiers
 
-| Service                   | Data Used for Training? | Recommendation                |
-| ------------------------- | ----------------------- | ----------------------------- |
-| GitHub Copilot (Business) | No                      | ✅ Recommended                |
-| Anthropic (Enterprise)    | No                      | ✅ Best for sensitive code    |
-| Claude.ai (Free)          | May be                  | ⚠️ Avoid for proprietary code |
-| Free tier services        | Unclear                 | ⚠️ Avoid for proprietary code |
+| Service                        | Data Used for Training?                     | Recommendation                                        |
+| ------------------------------ | ------------------------------------------- | ----------------------------------------------------- |
+| GitHub Copilot (Business)      | No                                          | ✅ Recommended                                        |
+| Anthropic (Enterprise)         | No                                          | ✅ Best for sensitive code                            |
+| Claude Code (Anthropic API)    | No (API usage not used for training)        | ✅ Recommended for sensitive code with API key        |
+| Claude.ai (Free)               | May be                                      | ⚠️ Avoid for proprietary code                        |
+| Free tier services             | Unclear                                     | ⚠️ Avoid for proprietary code                        |
 
 **Reference:** [GitHub Copilot Trust Center](https://copilot.github.trust.page/)
 
@@ -313,6 +314,12 @@ Use this checklist when onboarding or auditing AI-assisted development setup:
 - [ ] No credentials hardcoded in `mcp.json` (use `${env:VAR}` syntax)
 - [ ] Each MCP server documented with **risk rating**
 - [ ] External MCP servers use **OAuth** or short-lived tokens
+
+### 🤖 Claude Code Configuration
+
+- [ ] `.claude/settings.json` `permissions` block restricts tool access (same principle as Copilot tool whitelisting)
+- [ ] `PreToolUse` hooks in `.claude/settings.json` provide programmatic safety gates — review hook scripts with the same scrutiny as [Hook Script Risks](#6--hook-script-risks)
+- [ ] Run `/fewer-permission-prompts` to auto-generate a minimal allowlist from actual usage (avoids over-broad permissions)
 
 ### 🐳 Environment Level
 

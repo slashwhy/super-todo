@@ -1,6 +1,8 @@
-# Todo App - Copilot Instructions
+# Todo App - AI Agent Instructions
 
 A monorepo task management app with Vue 3 frontend and Express/Prisma backend.
+
+> **Cross-tool compatibility:** This file follows the [AGENTS.md open standard](https://agentsmdinit.com) and is read by both **GitHub Copilot** and **Claude Code** automatically. Keep conventions here tool-agnostic.
 
 ## Tech Stack
 
@@ -116,6 +118,8 @@ cd backend && npm run test:run  # Backend tests
 
 ## CI & Agentic Workflows
 
+### GitHub Copilot (gh-aw)
+
 ```bash
 # Compile agentic workflows after changes
 gh aw compile
@@ -130,3 +134,16 @@ gh aw logs <workflow-name>
 - CI runs on PRs to `main` (lint, test, build)
 - Agentic workflows: `continuous-docs`, `code-simplifier`, `security-reviewer`
 - Trigger security review on a PR: comment `/security-review`
+
+### Claude Code (CronCreate routines)
+
+```
+# Schedule a routine via Claude Code
+/schedule Create a weekly continuous-docs routine
+
+# On-demand security review
+/security-review
+```
+
+- Equivalent routines: `continuous-docs`, `code-simplifier`, `security-reviewer`
+- See `docs/CLAUDE_CODE.md` for setup instructions

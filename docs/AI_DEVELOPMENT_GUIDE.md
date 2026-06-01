@@ -31,21 +31,25 @@ This is a **showcase project** demonstrating best practices for using GitHub Cop
 
 Quick lookup for all Copilot customization features:
 
-| Feature                 | Purpose                                  | File Type              | Documentation                                   |
-| ----------------------- | ---------------------------------------- | ---------------------- | ----------------------------------------------- |
-| **Smart Actions**       | Built-in IDE commands (no setup needed)  | N/A                    | [VS Code Copilot][copilot-smart-actions]        |
-| **Agent Environments**  | Local, background, and cloud agent types | N/A                    | [Agents Overview][vscode-agents-overview]       |
-| **Custom Prompts**      | Reusable task templates                  | `.prompt.md`           | [CUSTOM_PROMPTS.md][custom-prompts]             |
-| **Custom Instructions** | Coding standards & conventions           | `.instructions.md`     | [CUSTOM_INSTRUCTIONS.md][custom-instructions]   |
-| **Custom Agents**       | Specialized AI personas with roles       | `.agent.md`            | [CUSTOM_AGENTS.md][custom-agents]               |
-| **Subagents**           | Delegated subtasks in isolated context   | N/A (runtime)          | [CONTEXT_OPTIMIZATION.md][context-optimization] |
-| **Skills**              | On-demand knowledge modules              | `SKILL.md`             | [SKILLS.md][skills]                             |
-| **Hooks**               | Agent session lifecycle automation       | `.github/hooks/*.json` | [HOOKS.md][hooks]                               |
-| **MCP**                 | External tool connections                | `mcp.json`             | [MCP.md][mcp]                                   |
+| Feature                 | Purpose                                  | Copilot File Type      | Claude Code Equivalent                   | Documentation                                   |
+| ----------------------- | ---------------------------------------- | ---------------------- | ---------------------------------------- | ----------------------------------------------- |
+| **Smart Actions**       | Built-in IDE commands (no setup needed)  | N/A                    | Built-in Skills (verify, run, review…)   | [VS Code Copilot][copilot-smart-actions]        |
+| **Agent Environments**  | Local, background, and cloud agent types | N/A                    | Interactive / headless / scheduled modes | [Agents Overview][vscode-agents-overview]       |
+| **Custom Prompts**      | Reusable task templates                  | `.prompt.md`           | `.claude/commands/*.md` (slash commands) | [CUSTOM_PROMPTS.md][custom-prompts]             |
+| **Custom Instructions** | Coding standards & conventions           | `.instructions.md`     | `frontend/CLAUDE.md`, `backend/CLAUDE.md`| [CUSTOM_INSTRUCTIONS.md][custom-instructions]   |
+| **Custom Agents**       | Specialized AI personas with roles       | `.agent.md`            | Built-in subagent types + `CLAUDE.md`    | [CUSTOM_AGENTS.md][custom-agents]               |
+| **Subagents**           | Delegated subtasks in isolated context   | N/A (runtime)          | Explore / Plan / general-purpose agents  | [CONTEXT_OPTIMIZATION.md][context-optimization] |
+| **Skills**              | On-demand knowledge modules              | `SKILL.md`             | Referenced via `@` imports in commands   | [SKILLS.md][skills]                             |
+| **Hooks**               | Agent session lifecycle automation       | `.github/hooks/*.json` | `.claude/settings.json` hooks block      | [HOOKS.md][hooks]                               |
+| **MCP**                 | External tool connections                | `.vscode/mcp.json`     | `.claude/settings.json` mcpServers       | [MCP.md][mcp]                                   |
 
-**Learning path:** Smart Actions → Prompts → Instructions → Agents → Hooks → MCP
+**GitHub Copilot learning path:** Smart Actions → Prompts → Instructions → Agents → Hooks → MCP
+
+**Claude Code learning path:** Built-in Skills → Slash Commands → CLAUDE.md → Hooks → MCP
 
 > 📖 **Official comparison:** [Customization Cheat Sheet][copilot-cheat-sheet] — compare all features, usage scenarios, and IDE support in one place.
+>
+> 📖 **Claude Code guide:** [CLAUDE_CODE.md][claude-code] — Claude Code equivalent features, plan mode, auto memory, slash commands, hooks, MCP.
 
 ## Built-in Smart Actions
 
@@ -84,14 +88,14 @@ The `.github/` directory is more than configuration — it is a **deliberate har
 
 Each layer of the harness plays a defined role:
 
-| Component             | Location                | Role                                                     |
-| --------------------- | ----------------------- | -------------------------------------------------------- |
-| **Global Rules**      | `AGENTS.md`             | Baseline conventions applied across all tools and agents |
-| **Instructions**      | `.github/instructions/` | Path-scoped coding standards and domain patterns         |
-| **Agent Definitions** | `.github/agents/`       | Personas, role boundaries, and tool constraints          |
-| **Skills**            | `.github/skills/`       | On-demand knowledge modules loaded when relevant         |
-| **Hooks**             | `.github/hooks/`        | Session lifecycle automation (safety guards, formatting) |
-| **Workflows**         | `.github/workflows/`    | CI and agentic pipeline automation                       |
+| Component             | Copilot Location        | Claude Code Location              | Role                                                     |
+| --------------------- | ----------------------- | --------------------------------- | -------------------------------------------------------- |
+| **Global Rules**      | `AGENTS.md`             | `CLAUDE.md` (imports `@AGENTS.md`)| Baseline conventions applied across all tools and agents |
+| **Instructions**      | `.github/instructions/` | `frontend/CLAUDE.md`, `backend/CLAUDE.md` | Path-scoped coding standards and domain patterns  |
+| **Agent Definitions** | `.github/agents/`       | Built-in subagent types + `CLAUDE.md` | Personas, role boundaries, and tool constraints      |
+| **Skills**            | `.github/skills/`       | Referenced in `.claude/commands/` via `@` imports | On-demand knowledge modules loaded when relevant |
+| **Hooks**             | `.github/hooks/`        | `.claude/settings.json` hooks block | Session lifecycle automation (safety guards, formatting)|
+| **Workflows**         | `.github/workflows/`    | `CronCreate` scheduled routines   | CI and agentic pipeline automation                       |
 
 The harness evolves continuously: when agents produce incorrect outputs or violate conventions, the harness is updated rather than just re-prompting. This creates a **continuous improvement loop** where observed failures feed back into better constraints.
 
@@ -148,6 +152,19 @@ VS Code supports different agent environments. Your custom agents (`.agent.md` f
 
 See [Developer Responsibilities][responsibilities] for detailed accountability and code review practices.
 
+### Claude Code Subagent System
+
+Claude Code ships four built-in subagent types that map closely to the Copilot agent roles in this project:
+
+| Claude Code Subagent      | Role                                              | Copilot Equivalent                        |
+| ------------------------- | ------------------------------------------------- | ----------------------------------------- |
+| **Explore**               | Read-only codebase search, no writes              | Research phase of `@Specify`              |
+| **Plan**                  | Designs approaches, produces a written plan       | Planning phase of `@Specify`              |
+| **General-purpose**       | Full implementation with tool access              | `@Implement`                              |
+| **Code-reviewer**         | Independent review in a clean context             | Security review skill                     |
+
+The same plan-before-code principle applies: Claude Code's `/specify` slash command drives an Explore → Plan sequence before implementation begins, mirroring the `@Specify` → `@Implement` handoff. See [CLAUDE_CODE.md][claude-code] for details.
+
 ## Documentation by Topic
 
 Pick a topic below to get started. Each guide includes real examples from this project.
@@ -166,19 +183,20 @@ Pick a topic below to get started. Each guide includes real examples from this p
 | [⚡ **Context Optimization**][context-optimization]   | Maximizing efficiency with large codebases, optimizing token usage, and advanced patterns for scaling                        |
 | [⚙️ **Hooks**][hooks]                                 | Automating agent behavior with pre/post tool checks, safety guards, and formatting                                           |
 | [🔄 **Agentic Workflows & CI**][agentic-workflows]    | Server-side AI workflows (docs, code quality, security) and CI pipeline configuration                                        |
+| [🤖 **Claude Code**][claude-code]                     | Claude Code equivalent features, plan mode, auto memory, slash commands, hooks, and MCP configuration                       |
 
 ## When to Use What?
 
 Choose the right tool for your needs:
 
-| Need                                                | Solution                                          | File                                     |
-| --------------------------------------------------- | ------------------------------------------------- | ---------------------------------------- |
-| 🌍 Rules that apply **everywhere**                  | [Global Instructions][when-global-instructions]   | `AGENTS.md` (root)                       |
-| 📋 Rules for **specific file types** or **folders** | [Path-Specific Instructions][custom-instructions] | `.github/instructions/*.instructions.md` |
-| 🤖 A **different persona/permissions**              | [Custom Agent][custom-agents]                     | `.github/agents/*.agent.md`              |
-| 🛠️ **Complex procedures/scripts**                   | [Agent Skill][skills]                             | `.github/skills/*/SKILL.md`              |
-| 🎯 **Reusable task templates**                      | [Custom Prompts][custom-prompts]                  | `.github/prompts/*.prompt.md`            |
-| ⚙️ **Automated checks during agent sessions**       | [Hooks][hooks]                                    | `.github/hooks/*.json`                   |
+| Need                                                | Solution                                          | Copilot File                             | Claude Code File                          |
+| --------------------------------------------------- | ------------------------------------------------- | ---------------------------------------- | ----------------------------------------- |
+| 🌍 Rules that apply **everywhere**                  | [Global Instructions][when-global-instructions]   | `AGENTS.md` (root)                       | `CLAUDE.md` (imports `@AGENTS.md`)        |
+| 📋 Rules for **specific file types** or **folders** | [Path-Specific Instructions][custom-instructions] | `.github/instructions/*.instructions.md` | `frontend/CLAUDE.md`, `backend/CLAUDE.md` |
+| 🤖 A **different persona/permissions**              | [Custom Agent][custom-agents]                     | `.github/agents/*.agent.md`              | Built-in subagent types + `CLAUDE.md`     |
+| 🛠️ **Complex procedures/scripts**                   | [Agent Skill][skills]                             | `.github/skills/*/SKILL.md`              | `@` imports in `.claude/commands/*.md`    |
+| 🎯 **Reusable task templates**                      | [Custom Prompts][custom-prompts]                  | `.github/prompts/*.prompt.md`            | `.claude/commands/*.md` (slash commands)  |
+| ⚙️ **Automated checks during agent sessions**       | [Hooks][hooks]                                    | `.github/hooks/*.json`                   | `.claude/settings.json` hooks block       |
 
 > 📖 **Official reference:** [Customization Cheat Sheet][copilot-cheat-sheet] — full comparison including subagents and IDE/surface support matrix.
 
@@ -194,8 +212,18 @@ Choose the right tool for your needs:
 
 AGENTS.md                                    # 🌍 Global rules (cross-tool compatible)
 
+.claude/
+├── commands/                            # 🎯 12 slash commands (≈ .github/prompts/)
+├── hooks/                               # ⚙️ Safety guard + auto-formatter scripts
+└── settings.json                        # ⚙️ Hooks, permissions, MCP config
+
+CLAUDE.md                                    # 🤖 Root conventions (imports AGENTS.md)
+frontend/CLAUDE.md                           # 📋 Frontend-scoped context (imports 6 instruction files)
+backend/CLAUDE.md                            # 📋 Backend-scoped context (imports 3 instruction files)
+
 docs/
 ├── AI_DEVELOPMENT_GUIDE.md              # ← You are here (high-level overview)
+├── CLAUDE_CODE.md                       # 🤖 Claude Code equivalent features guide
 ├── CUSTOM_AGENTS.md                     # 🤖 Agent definitions
 ├── SKILLS.md                            # 🎓 Agent skills guide
 ├── CUSTOM_INSTRUCTIONS.md               # 📋 Instruction hierarchy & best practices
@@ -283,6 +311,7 @@ Optimize across four dimensions:
 
 [skills-reference]: ./SKILLS.md
 [skills]: ./SKILLS.md
+[claude-code]: ./CLAUDE_CODE.md
 [built-in-smart-actions]: #built-in-smart-actions
 [when-global-instructions]: ../AGENTS.md
 

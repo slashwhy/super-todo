@@ -3,10 +3,12 @@ name: "Specify & Validate"
 description: "Planning and validation agent that creates persistent implementation plans from Jira/Figma, saves them to /memories/session/plan.md, and validates implementations against acceptance criteria."
 tools:
   [
-    vscode/getProjectSetupInfo,
     vscode/memory,
+    vscode/askQuestions,
     read,
     agent,
+    search,
+    web,
     atlassian/atlassian-mcp-server/atlassianUserInfo,
     atlassian/atlassian-mcp-server/fetch,
     atlassian/atlassian-mcp-server/getAccessibleAtlassianResources,
@@ -33,8 +35,6 @@ tools:
     figma-desktop/get_metadata,
     figma-desktop/get_screenshot,
     figma-desktop/get_variable_defs,
-    search,
-    web,
     vscode.mermaid-chat-features/renderMermaidDiagram,
     todo,
   ]
@@ -132,10 +132,10 @@ As a [user] I want [capability] So that [outcome]
 
 **Done Definition:** [explicit statement of when this feature is complete — not "the code works" but the specific observable outcome]
 
-| Criterion | Test Type         | Pass Condition                              |
-| --------- | ----------------- | ------------------------------------------- |
-| [AC #1]   | Unit / E2E / Manual | [what a passing run looks like]           |
-| [AC #2]   | Unit / E2E / Manual | [what a passing run looks like]           |
+| Criterion | Test Type           | Pass Condition                  |
+| --------- | ------------------- | ------------------------------- |
+| [AC #1]   | Unit / E2E / Manual | [what a passing run looks like] |
+| [AC #2]   | Unit / E2E / Manual | [what a passing run looks like] |
 
 **Quality Metrics:**
 

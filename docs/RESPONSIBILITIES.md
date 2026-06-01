@@ -100,6 +100,18 @@ Key: AI generates ideas. You decide what ships.
 
 This isn't "let AI do the work." It's "let AI do the repetitive work while you focus on quality, security, and decision-making."
 
+### Claude Code Workflow
+
+```
+YOU PLAN              YOU APPROVE           YOU REVIEW           YOU MERGE
+    ↓                     ↓                     ↓                    ↓
+/specify → PLAN.md → /implement → [review] → /code-review → [✅ You] → Merge
+   or
+Plan mode (Shift+Tab) → [✅ You approve plan] → Claude implements → [✅ You] → Merge
+```
+
+You remain responsible for reviewing all AI-generated changes, regardless of which tool produced them.
+
 ---
 
 ## AI-Assisted Version Control

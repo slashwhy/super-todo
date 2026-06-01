@@ -17,6 +17,7 @@
 
     // SECURITY: Dev Containers for isolated development
     // See: docs/SECURITY.md for why this matters
-    "ms-vscode-remote.remote-containers"
+    "ms-vscode-remote.remote-containers",
+    "anthropic.claude-code"
   ]
 }

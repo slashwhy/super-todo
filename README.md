@@ -2,7 +2,7 @@
 
 > 🔄 **Living Project** – Continuously updated with the latest AI-assisted development practices, patterns, and learnings.
 
-> **Vue 3 Todo Dashboard** – A **reference implementation** demonstrating multi-agent AI development with GitHub Copilot.
+> **Vue 3 Todo Dashboard** – A **reference implementation** demonstrating multi-agent AI development with **GitHub Copilot** and **Claude Code**.
 >
 > This project showcases **how professional teams use AI to boost productivity while maintaining quality, safety, and developer control**.
 
@@ -69,6 +69,31 @@
 │  ├── Atlassian (Jira/Confluence)     ├── Chrome DevTools                     │
 │  ├── Figma Desktop                   └── Playwright                          │
 └──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                         Claude Code (CLI)                                    │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  Agents (7)           │  Instructions         │  Built-in Skills (6)         │
+│  ├── @specify         │  ├── CLAUDE.md (root) │  ├── /code-review            │
+│  ├── @implement       │  │   @AGENTS.md       │  ├── /security-review        │
+│  ├── @test-unit       │  ├── frontend/        │  ├── /verify                 │
+│  ├── @test-e2e        │  │   CLAUDE.md        │  ├── /run                    │
+│  ├── @feature-tester  │  └── backend/         │  ├── /init                   │
+│  ├── @onboarding      │      CLAUDE.md        │  └── /fewer-permission-prompts│
+│  └── @mentor          │                       │                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  Slash Commands (12)              │  Hooks (.claude/settings.json)           │
+│  ├── /specify, /implement         │  ├── PreToolUse: safety-guard            │
+│  ├── /test-unit, /test-e2e        │  └── PostToolUse: auto-format            │
+│  ├── /generate-component          │                                          │
+│  ├── /generate-api-endpoint       │  Plan Mode · Auto Memory                 │
+│  ├── /generate-pinia-store        │  Worktree Isolation · CronCreate         │
+│  └── /security-review, /onboard   │                                          │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  MCP Integrations (4 — same as Copilot, configured in .mcp.json)             │
+│  ├── Atlassian (Jira/Confluence)     ├── Chrome DevTools                     │
+│  ├── Figma Desktop                   └── Playwright                          │
+└──────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## 🛠 Tech Stack
@@ -78,7 +103,7 @@
 | **Frontend** | Vue 3 + TypeScript + Vite          | [frontend/README.md][frontend-readme] |
 | **Backend**  | Express + Prisma + PostgreSQL      | [backend/README.md][backend-readme]   |
 | **Testing**  | Vitest, Playwright                 | Unit & E2E                            |
-| **AI**       | GitHub Copilot, Custom Agents, MCP | See [docs/][ai-guide]                 |
+| **AI**       | GitHub Copilot + Claude Code, Custom Agents, MCP | See [docs/][ai-guide], [Claude Code][claude-code-guide] |
 
 ## 🚀 Getting Started
 
@@ -86,7 +111,8 @@
 
 - Node.js `>=22.12.0`
 - Docker (for PostgreSQL)
-- VS Code with [GitHub Copilot Extension][copilot-extension]
+- **VS Code** with [GitHub Copilot Extension][copilot-extension] — for the Copilot agent system
+- **Claude Code CLI** (`npm install -g @anthropic-ai/claude-code`) — for the terminal-native agent system
 
 ### Quick Start (Dev Container – Recommended)
 
@@ -140,6 +166,15 @@ npm run dev                    # App → http://localhost:5173
 | [Customization Cheat Sheet][copilot-cheat-sheet]         | Compare all customization features (instructions, agents, prompts, skills, MCP) |
 | [Trust Center][copilot-trust-center]                     | Security, privacy, and compliance                                               |
 
+### Claude Code Documentation
+
+| Resource | Purpose |
+|---|---|
+| [What is Claude Code?][claude-code-what-is] | Overview, installation, and CLI reference |
+| [CLAUDE.md Memory System][claude-code-memory] | How CLAUDE.md hierarchy and auto memory work |
+| [Settings Reference][claude-code-settings] | Hooks, permissions, mcpServers configuration |
+| [Claude Code GitHub][claude-code-github] | Issues, changelog, and IDE extensions |
+
 ### Model Context Protocol
 
 | Resource                                  | Purpose                        |
@@ -175,6 +210,7 @@ npm run dev                    # App → http://localhost:5173
 <!-- Project Documentation -->
 
 [ai-guide]: docs/AI_DEVELOPMENT_GUIDE.md
+[claude-code-guide]: docs/CLAUDE_CODE.md
 [skill-levels]: docs/AI_SKILL_LEVELS.md
 [custom-agents]: docs/CUSTOM_AGENTS.md
 [custom-instructions]: docs/CUSTOM_INSTRUCTIONS.md
@@ -199,6 +235,11 @@ npm run dev                    # App → http://localhost:5173
 [vue-extension]: https://marketplace.visualstudio.com/items?itemName=Vue.volar
 
 <!-- GitHub Copilot Documentation -->
+
+[claude-code-what-is]: https://docs.anthropic.com/en/docs/claude-code/overview
+[claude-code-memory]: https://docs.anthropic.com/en/docs/claude-code/memory
+[claude-code-settings]: https://docs.anthropic.com/en/docs/claude-code/settings
+[claude-code-github]: https://github.com/anthropics/claude-code
 
 [copilot-what-is]: https://docs.github.com/en/copilot/get-started/what-is-github-copilot
 [copilot-response-customization]: https://docs.github.com/en/copilot/concepts/prompting/response-customization

@@ -145,6 +145,33 @@ Every plan includes a "Documentation Impact Assessment" section. @Implement chec
 
 This ensures that features, bug fixes, library updates, and refactors don't silently invalidate project documentation.
 
+## Claude Code: Subagent System
+
+Claude Code provides built-in subagent types — no `.agent.md` files required. Agent behavior is described in `CLAUDE.md` rather than separate agent definition files.
+
+**Four built-in subagent types:**
+
+| Subagent type | Role | Copilot equivalent |
+| ------------- | ---- | ------------------ |
+| **Explore** | Fast, read-only codebase search and research | Research phase of `@Specify` |
+| **Plan** | Design approaches and implementation plans — with Plan mode approval gate before execution | Planning phase of `@Specify` |
+| **general-purpose** | Multi-step implementation | `@Implement` |
+| **code-reviewer** | Independent code review of a branch or set of changes | `@Specify & Validate` (validation pass) |
+
+**Isolation:** Claude Code's `isolation: "worktree"` option provides built-in git worktree isolation when spawning subagents — equivalent to Copilot Background Agents working in a separate branch.
+
+**Copilot agent → Claude Code mapping:**
+
+| Copilot Agent | Claude Code Equivalent | Notes |
+| --- | --- | --- |
+| `@Specify` (research) | Explore subagent | Read-only codebase research |
+| `@Specify` (planning) | Plan subagent + Plan mode approval | Structured plan review before implementation |
+| `@Implement` | general-purpose agent | Executes approved plan |
+| `@Test Unit` / `@Test E2E` | `/run` + `/verify` skills | Built-in skills, not separate agents |
+| `@Feature Tester` | `/verify` skill | Interactive app verification |
+| `@Onboarding` | `/onboard` slash command | Project orientation |
+| `@Socratic Mentor` | `/mentor` slash command | Socratic learning guide |
+
 ## �️ Architectural Patterns
 
 The agent workflow implements several architectural patterns drawn from multi-agent system research. Understanding these helps when extending the system or debugging workflow failures.

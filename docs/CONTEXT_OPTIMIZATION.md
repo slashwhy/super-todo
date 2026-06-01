@@ -133,6 +133,16 @@ Plans are persisted to `/memories/session/plan.md`:
 | Chore       | `chore-update-vue`      |
 | Docs        | `docs-api-reference`    |
 
+### Claude Code: Plan Mode + Auto Memory
+
+Claude Code provides equivalent mechanisms with less manual ceremony:
+
+- **Plan mode** (`Shift+Tab`) is the structural equivalent of `@Specify → PLAN.md → new session → @Implement` — Claude presents a full plan and waits for approval before acting
+- **Auto memory** at `~/.claude/projects/` provides cross-session persistence without explicit plan files, reducing the need for manual handoff artifacts on short tasks
+- For complex features, `/specify` writes an explicit `PLAN.md` as a visible handoff artifact — equivalent to the `/memories/session/plan.md` pattern and equally useful for team alignment
+
+The same context-budget reasoning applies: using Plan mode keeps the planning tokens separate from the implementation tokens, preserving the context window for actual code.
+
 ### Context Anxiety
 
 **Context Anxiety** describes a specific model behavior degradation that occurs as the context window approaches its limit. Symptoms include:

@@ -110,6 +110,14 @@ Different skill levels need different relationships with AI tools. This matrix m
 4. Use `@socratic-mentor` to mentor juniors through code review discussions
 5. Focus on instruction and skill file quality — these are your leverage points
 
+### Claude Code Equivalents by Skill Level
+
+| Developer Level | Recommended Starting Point | Claude Code Workflow |
+|---|---|---|
+| Junior | `/onboard` → `/mentor` → guided `/specify` | Use Plan mode; review every step; pair with `/verify` |
+| Mid-Level | `/specify` → `/implement` → `/test-unit` | Full slash command workflow; use `/code-review` before merge |
+| Senior | Full slash command set + CronCreate routines | Parallel subagents with worktree isolation; schedule automated routines |
+
 ## Dos and Don'ts
 
 ### For All Levels

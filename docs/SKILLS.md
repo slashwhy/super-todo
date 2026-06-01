@@ -216,6 +216,21 @@ To use: copy the skill directory to `.github/skills/`, review and customize the 
 
 > ⚠️ **Always review shared skills** before using them. Check scripts for security implications.
 
+## Claude Code: Built-in Skills
+
+Claude Code ships with built-in slash skills that require no `SKILL.md` files. The table below maps them to their Copilot equivalents:
+
+| Claude Code Skill | Copilot Equivalent | Notes |
+| --- | --- | --- |
+| `/code-review` | `code-documentation` + `security-review` skills | Built-in, reviews current diff |
+| `/security-review` | `security-review` skill | Built-in OWASP checklist; project's custom `/security-review` command adds stack-specific patterns |
+| `/verify` | `@Feature Tester` agent | Interactive app verification with Chrome DevTools |
+| `/run` | Manual dev server start | Launches app and observes behavior |
+| `/init` | `@Onboarding` agent | Generates CLAUDE.md from the codebase |
+| `/fewer-permission-prompts` | No equivalent | Scans transcripts, auto-generates allowlist |
+
+Custom skills for Claude Code live in `.claude/commands/` (same mechanism as custom prompts). The project's `.github/skills/*/SKILL.md` files are referenced by `.claude/commands/*.md` via `@` imports.
+
 ## 🔗 Related
 
 - [Custom Agents](./CUSTOM_AGENTS.md) — Agent definitions that leverage skills

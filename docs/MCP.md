@@ -308,6 +308,20 @@ Alternatively, MCP servers can be scoped to a specific agent by adding a `mcp-se
 }
 ```
 
+### Claude Code: MCP Configuration
+
+The same MCP servers are configured in `.claude/settings.json` under the `mcpServers` key. The server definitions are identical — only the config file location and top-level key differ (`servers` in `.vscode/mcp.json` → `mcpServers` in `.claude/settings.json`).
+
+```json
+// .claude/settings.json
+{
+  "mcpServers": {
+    "figma-desktop": { "type": "http", "url": "http://127.0.0.1:3845/mcp" },
+    "atlassian": { "type": "http", "url": "https://mcp.atlassian.com/v1/sse" }
+  }
+}
+```
+
 ## 🔒 Security Considerations
 
 MCP servers extend agent capabilities but introduce security risks. Key concerns:

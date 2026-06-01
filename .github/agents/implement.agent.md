@@ -21,7 +21,7 @@ tools:
     vscode.mermaid-chat-features/renderMermaidDiagram,
     todo,
   ]
-model: Claude Sonnet 4.6 (copilot)
+model: ‘
 user-invocable: true
 disable-model-invocation: true
 handoffs:

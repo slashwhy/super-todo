@@ -49,6 +49,37 @@ Standardized, consistent output
 ```
 
 
+## Claude Code: Slash Commands
+
+`.claude/commands/*.md` files are the Claude Code equivalent of `.github/prompts/*.prompt.md`. They appear as `/command-name` in the Claude Code interface and are invokable from the terminal.
+
+**Key differences from Copilot prompts:**
+
+| Aspect | Copilot (`.prompt.md`) | Claude Code (`.claude/commands/*.md`) |
+| ------ | ---------------------- | ------------------------------------- |
+| **Location** | `.github/prompts/` | `.claude/commands/` |
+| **Invocation** | `/` in chat | `/` in Claude Code, or `claude "/command"` in terminal |
+| **Agent routing** | `agent:` frontmatter property | No named agents — skills invoked via `@path` imports |
+| **Skill references** | `#skill:<name>` or inline | `@.github/skills/unit-testing/SKILL.md` (direct path import) |
+| **Terminal use** | Not directly | `claude "/specify plan TASK-123"` |
+
+**This project's slash commands** (in `.claude/commands/`):
+
+| Command | Purpose |
+| ------- | ------- |
+| `/specify` | Create an implementation plan (research + plan phases) |
+| `/implement` | Execute an approved plan |
+| `/test-unit` | Generate Vitest unit tests |
+| `/test-e2e` | Generate Playwright E2E tests |
+| `/generate-component` | Vue 3 component scaffold |
+| `/generate-api-endpoint` | Express route with Prisma queries |
+| `/generate-pinia-store` | Pinia Setup Store scaffold |
+| `/generate-unit-test` | Vitest test for a component or route |
+| `/generate-e2e-test` | Playwright test with Page Object |
+| `/security-review` | Security review using the security-review skill |
+| `/onboard` | Project orientation for newcomers |
+| `/mentor` | Socratic learning guide |
+
 ## ✍️ Creating Prompts
 
 ### Minimal Agent Delegation (Preferred)
@@ -115,13 +146,14 @@ Generate a GraphQL resolver with Redis caching.
 
 ## 🔄 Prompt vs Instruction vs Agent vs Skill
 
-| Feature | Custom Prompt | Custom Instruction | Custom Agent | Subagent | Skill |
-|---------|---------------|-------------------|--------------|----------|-------|
-| **Purpose** | Trigger agent for task | Coding standards | Specialized persona | Isolated subtask | Reusable knowledge |
-| **Persistence** | On-demand | Always applied | On-demand | Runtime only | On-demand |
-| **Scope** | One interaction | All matching files | Entire workflow | Isolated context | Referenced by agents |
-| **File type** | `.prompt.md` | `.instructions.md` | `.agent.md` | N/A | `SKILL.md` |
-| **Best for** | Quick task triggers | Conventions | Multi-step processes | Codebase research, test runs | Domain checklists |
+| Feature | Custom Prompt | Custom Instruction | Custom Agent | Subagent | Skill | **Claude Code equivalent** |
+|---------|---------------|-------------------|--------------|----------|-------|---------------------------|
+| **Purpose** | Trigger agent for task | Coding standards | Specialized persona | Isolated subtask | Reusable knowledge | — |
+| **Persistence** | On-demand | Always applied | On-demand | Runtime only | On-demand | — |
+| **Scope** | One interaction | All matching files | Entire workflow | Isolated context | Referenced by agents | — |
+| **File type** | `.prompt.md` | `.instructions.md` | `.agent.md` | N/A | `SKILL.md` | — |
+| **Best for** | Quick task triggers | Conventions | Multi-step processes | Codebase research, test runs | Domain checklists | — |
+| **Claude Code form** | `.claude/commands/*.md` slash command | `CLAUDE.md` hierarchy | Built-in subagent type | Explore / Plan subagent | Same `SKILL.md` via `@` import | ✅ |
 
 > 📖 **Official comparison:** [Customization Cheat Sheet][copilot-cheat-sheet] — also covers subagents and MCP, with IDE/surface support matrix.
 

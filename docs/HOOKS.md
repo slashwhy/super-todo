@@ -169,6 +169,43 @@ Automatically runs Prettier on frontend files after successful agent edits, ensu
 - Logs formatting actions to `.github/hooks/logs/format.log`
 - Gracefully skips if Prettier is not available
 
+## Claude Code Hooks
+
+Claude Code hooks are configured in `.claude/settings.json` under the `hooks` key and follow the same lifecycle model as Copilot hooks.
+
+- `PreToolUse` — runs before a tool executes; can block the action
+- `PostToolUse` — runs after a tool completes; fire-and-forget
+
+### Format Differences vs. Copilot
+
+| Aspect | Copilot | Claude Code |
+| --- | --- | --- |
+| Config location | `.github/hooks/project-hooks.json` | `.claude/settings.json` `hooks` block |
+| Event casing | `preToolUse`, `postToolUse` | `PreToolUse`, `PostToolUse` |
+| Tool name format | `edit`, `create`, `bash` | `Write`, `Edit`, `MultiEdit`, `Bash` |
+| Stdin keys | `toolName`, `toolArgs` | `tool_name`, `tool_input` |
+| Block response | `{"permissionDecision":"deny","permissionDecisionReason":"..."}` | `{"decision":"block","reason":"..."}` |
+| Script location | `.github/hooks/scripts/` | `.claude/hooks/` |
+
+### This Project's Claude Code Hook Configuration
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [{
+      "matcher": "Bash|Write|Edit|MultiEdit",
+      "hooks": [{ "type": "command", "command": "bash .claude/hooks/safety-guard.sh" }]
+    }],
+    "PostToolUse": [{
+      "matcher": "Write|Edit|MultiEdit",
+      "hooks": [{ "type": "command", "command": "bash .claude/hooks/auto-format.sh" }]
+    }]
+  }
+}
+```
+
+The hook scripts live in `.claude/hooks/` and mirror the Copilot equivalents in `.github/hooks/scripts/`, with `tool_name`/`tool_input` (snake_case) keys instead of `toolName`/`toolArgs`.
+
 ## 🧪 Testing Hooks Locally
 
 Test hooks by piping JSON input to the script:

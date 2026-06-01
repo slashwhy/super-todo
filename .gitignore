@@ -17,6 +17,9 @@ coverage
 playwright-report/
 test-results/
 
+# Claude Code session-specific settings (user-local permissions, not for commit)
+.claude/settings.local.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

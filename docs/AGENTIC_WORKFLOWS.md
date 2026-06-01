@@ -124,6 +124,24 @@ Scans for OWASP Top 10 vulnerabilities adapted to this stack:
 **Scheduled runs:** Scan full codebase → create issue with findings
 **`/security-review` on PR:** Review PR diff → post comment with findings
 
+## Claude Code: Scheduled Routines (CronCreate)
+
+`CronCreate` is the Claude Code equivalent of `gh aw compile` — it registers remote Claude Code agents that run on a cron schedule without needing a compiled YAML file or `copilot-setup-steps.yml`.
+
+### Equivalents for This Project's Workflows
+
+| gh-aw Workflow | Claude Code Routine | Schedule | On-demand |
+| --- | --- | --- | --- |
+| `continuous-docs.md` | `continuous-docs` routine | Weekly | Manual trigger |
+| `code-simplifier.md` | `code-simplifier` routine | Weekly (Monday) | Manual trigger |
+| `security-reviewer.md` | `security-reviewer` routine | Weekly (Wednesday) | `/security-review` command |
+
+### Key Differences vs. gh-aw
+
+- Routines are registered via Claude Code's scheduling API, not compiled YAML
+- PR creation uses `gh pr create` via Bash (not `safe-outputs.create-pull-request`)
+- No `copilot-setup-steps.yml` needed — Claude Code handles environment setup
+
 ## 🛠️ Setup Guide
 
 ### Prerequisites

@@ -10,12 +10,12 @@
 
 ## Quick Reference
 
-| Type              | Location                                 | Use When                                                                   |
-| ----------------- | ---------------------------------------- | -------------------------------------------------------------------------- |
-| **Global**        | `AGENTS.md` (root)                       | Project-wide coding standards, always loaded (cross-tool compatible)       |
-| **Path-specific** | `.github/instructions/*.instructions.md` | Rules for specific file types (uses `applyTo` glob)                        |
-| **Agent**         | `.github/agents/*.agent.md`              | Specialized personas with tools & handoffs                                 |
-| **Skills**        | `.github/skills/*/SKILL.md`              | Reusable workflows with scripts (see [Skills Reference][skills-reference]) |
+| Type              | Location                                 | Use When                                                                   | Claude Code equivalent                        |
+| ----------------- | ---------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------------- |
+| **Global**        | `AGENTS.md` (root)                       | Project-wide coding standards, always loaded (cross-tool compatible)       | `CLAUDE.md` (root, imports `@AGENTS.md`)      |
+| **Path-specific** | `.github/instructions/*.instructions.md` | Rules for specific file types (uses `applyTo` glob)                        | `frontend/CLAUDE.md` / `backend/CLAUDE.md`    |
+| **Agent**         | `.github/agents/*.agent.md`              | Specialized personas with tools & handoffs                                 | Built-in subagent types (no `.agent.md` file) |
+| **Skills**        | `.github/skills/*/SKILL.md`              | Reusable workflows with scripts (see [Skills Reference][skills-reference]) | Same `SKILL.md` files (shared via `@` import) |
 
 **Priority:** Personal > Repository > Organization (all combined, conflicts favor more specific)
 
@@ -186,6 +186,31 @@ This project uses `AGENTS.md` in the project root as its global instructions fil
 **Location:** `.github/agents/*.agent.md`
 
 Loaded when an agent is invoked. See [Custom Agents][custom-agents] for details.
+
+## Claude Code: CLAUDE.md Hierarchy
+
+Claude Code uses `CLAUDE.md` files instead of per-file instruction frontmatter. Key differences and equivalences:
+
+**How loading works:** Claude Code loads `CLAUDE.md` files recursively based on the current working directory. The root `CLAUDE.md` always loads; subdirectory `CLAUDE.md` files load when the cwd is inside that subtree.
+
+**This project's setup:**
+
+| File | Loads when | What it imports |
+| ---- | ---------- | --------------- |
+| `CLAUDE.md` (root) | Always | `@AGENTS.md` — single source of truth, no duplication |
+| `frontend/CLAUDE.md` | cwd inside `frontend/**` | 6 instruction files from `.github/instructions/` |
+| `backend/CLAUDE.md` | cwd inside `backend/**` | 3 instruction files from `.github/instructions/` |
+
+Using `@AGENTS.md` in the root `CLAUDE.md` keeps the setup DRY: global instructions are authored once and consumed by both Copilot and Claude Code.
+
+**Copilot vs. Claude Code — path scoping mechanisms:**
+
+| Tool | Mechanism | Example |
+| ---- | --------- | ------- |
+| **Copilot** | `applyTo` glob in frontmatter — matches files by pattern regardless of directory | `applyTo: "**/*.vue"` activates for any `.vue` file |
+| **Claude Code** | Directory-scoped `CLAUDE.md` — activates when cwd is inside the directory | `frontend/CLAUDE.md` loads when working in `frontend/**` |
+
+Both achieve the same goal — targeted instructions for specific areas of the codebase — through different mechanisms. Copilot's `applyTo` is file-pattern driven; Claude Code's hierarchy is directory driven.
 
 ## 💡 Writing Tips
 
