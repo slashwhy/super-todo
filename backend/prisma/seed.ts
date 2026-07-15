@@ -39,6 +39,9 @@ async function main() {
   const priorityLow = await prisma.taskPriority.create({
     data: { name: 'Low', color: '#22c55e', order: 3 },
   })
+  const priorityOptional = await prisma.taskPriority.create({
+    data: { name: 'Optional', color: '#9ca3af', order: 4 },
+  })
 
   console.log('📁 Creating categories...')
   const categoryPersonal = await prisma.category.create({
