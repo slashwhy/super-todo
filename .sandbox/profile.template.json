@@ -1,0 +1,50 @@
+{
+  "$schema": "/Users/mkuckert/.config/nono/nono-profile.schema.json",
+  "extends": ["nolabs-ai/claude"],
+  "meta": {
+    "name": "super-todo",
+    "version": "1"
+  },
+  "groups": {
+    "include": ["bun_runtime", "node_runtime"]
+  },
+  "workdir": {
+    "access": "readwrite"
+  },
+  "filesystem": {
+    "allow": ["~/.npm"],
+    "deny": [],
+    "read_file": ["~/.gitconfig", "~/.gitignore", "~/.bashrc"],
+    "read": ["~/.docker", "~/.CFUserTextEncoding"],
+    "unix_socket": ["unix:///var/run/docker.sock"],
+    "bypass_protection": ["$HOME/.docker", "~/.bashrc"]
+  },
+  "environment": {
+    "allow_vars": [
+      "HOME",
+      "SHELL",
+      "TERM",
+      "PATH",
+      "LSCOLORS",
+      "LS_COLORS",
+      "LC_ALL",
+      "LANG",
+      "PWD",
+      "USER",
+      "EDITOR"
+    ],
+    "set_vars": {
+      "CLAUDE_CODE_GLOB_NO_IGNORE": "false",
+      "CLAUDE_CODE_HIDE_CWD": "1",
+      "CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS": "5",
+      "CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH": "3",
+      "CLAUDE_CODE_MAX_TURNS": "200",
+      "CLAUDE_CODE_SUBPROCESS_ENV_SCRUB": "1",
+      "DISABLE_AUTO_COMPACT": "1",
+      "DISABLE_FEEDBACK_COMMAND": "1",
+      "DISABLE_INSTALL_GITHUB_APP_COMMAND": "1",
+      "CLAUDE_CODE_RESUME_INTERRUPTED_TURN": "0",
+      "DO_NOT_TRACK": "1"
+    }
+  }
+}
