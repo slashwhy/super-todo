@@ -12,7 +12,7 @@ tools:
     web,
     vscode.mermaid-chat-features/renderMermaidDiagram,
   ]
-model: Claude Opus 4.6 (copilot)
+model: Claude Opus 5.5 (copilot)
 user-invocable: true
 disable-model-invocation: true
 handoffs:

@@ -13,7 +13,7 @@ tools:
     web,
     vscode.mermaid-chat-features/renderMermaidDiagram,
   ]
-model: Claude Sonnet 4.6 (copilot)
+model: Claude Sonnet 5 (copilot)
 user-invocable: true
 disable-model-invocation: true
 handoffs:

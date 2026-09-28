@@ -15,7 +15,7 @@
     "windsurf": false,
     "cursor-global": false,
     "cursor-workspace": false
-  },
+},
 
   // SECURITY: Require approval for MCP tool calls
   // Human-in-the-loop prevents agent tool overreach

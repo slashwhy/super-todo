@@ -38,7 +38,7 @@ tools:
     vscode.mermaid-chat-features/renderMermaidDiagram,
     todo,
   ]
-model: Claude Opus 4.6 (copilot)
+model: Claude Opus 5.5 (copilot)
 handoffs:
   - label: "Start Implementation"
     agent: Implement

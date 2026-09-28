@@ -15,7 +15,7 @@ tools:
     vscode.mermaid-chat-features/renderMermaidDiagram,
     todo,
   ]
-model: Claude Sonnet 4.6 (copilot)
+model: Claude Sonnet 5 (copilot)
 handoffs:
   - label: "Add E2E Tests"
     agent: Test E2E
