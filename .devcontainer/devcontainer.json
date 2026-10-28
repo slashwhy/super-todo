@@ -32,7 +32,7 @@
   // =============================================================================
   "features": {
     // Docker-in-Docker for running containers (e.g., Playwright, test DBs)
-    "ghcr.io/devcontainers/features/docker-in-docker:2.12.1": {
+    "ghcr.io/devcontainers/features/docker-in-docker:4.1.0": {
       "moby": false,
       "installDockerBuildx": true
     },
@@ -79,8 +79,8 @@
   "postCreateCommand": "echo 'Dev container ready!'",
 
   // Run after container starts (every time)
-  // Starts PostgreSQL via docker-compose and runs migrations
-  "postStartCommand": "cd backend && docker compose up -d && npm run db:migrate",
+  // Waits for PostgreSQL from the backend Compose file, then runs migrations
+  "postStartCommand": "cd backend && docker compose up -d --wait postgres && npm run db:migrate",
 
   // =============================================================================
   // Port Forwarding
